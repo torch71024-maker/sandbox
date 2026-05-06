@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Sandbox</title>
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:#0d0d1a;font-family:'Nunito',sans-serif;color:#fff;user-select:none}
+.hidden{display:none!important}
+
+/* ── MAIN PAGE ── */
+#main-page{height:100%;display:flex;flex-direction:column;align-items:center;overflow-y:auto;padding:24px 16px 40px}
+.main-bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 20% 30%,#1a0a3e 0%,#0d0d1a 55%),radial-gradient(ellipse at 80% 70%,#0a1a3e 0%,transparent 50%)}
+/* animated stars */
+.stars{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.star{position:absolute;border-radius:50%;animation:twinkle var(--d,3s) ease-in-out infinite;opacity:0}
+@keyframes twinkle{0%,100%{opacity:0}50%{opacity:var(--o,.8)}}
+
+.main-title{font-family:'Boogaloo',cursive;font-size:clamp(48px,12vw,80px);letter-spacing:4px;margin-bottom:4px;line-height:1;text-align:center}
+.main-title span{display:inline-block;animation:titleBob 2s ease-in-out infinite}
+.main-title span:nth-child(1){color:#ff6b6b;animation-delay:.0s}
+.main-title span:nth-child(2){color:#ffd166;animation-delay:.1s}
+.main-title span:nth-child(3){color:#06d6a0;animation-delay:.2s}
+.main-title span:nth-child(4){color:#118ab2;animation-delay:.3s}
+.main-title span:nth-child(5){color:#e040fb;animation-delay:.4s}
+.main-title span:nth-child(6){color:#ff9100;animation-delay:.5s}
+.main-title span:nth-child(7){color:#40c4ff;animation-delay:.6s}
+@keyframes titleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.main-sub{font-size:14px;color:rgba(255,255,255,.45);margin-bottom:32px;letter-spacing:.5px;text-align:center}
+
+.sandbox-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;max-width:440px}
+.sb-btn{border:none;border-radius:18px;padding:20px 14px 18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .14s,box-shadow .14s;position:relative;overflow:hidden}
+.sb-btn::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.06);opacity:0;transition:opacity .14s}
+.sb-btn:hover::before{opacity:1}
+.sb-btn:active{transform:scale(.94)}
+.sb-btn .sb-ico{font-size:44px;filter:drop-shadow(0 3px 10px rgba(0,0,0,.4));transition:transform .14s}
+.sb-btn:hover .sb-ico{transform:scale(1.12)}
+.sb-btn .sb-label{font-family:'Boogaloo',cursive;font-size:18px;letter-spacing:.5px}
+.sb-btn .sb-desc{font-size:10px;opacity:.65;font-weight:700;letter-spacing:.3px;text-align:center;line-height:1.4}
+.sb-btn.soon .sb-ico{filter:grayscale(.6) drop-shadow(0 3px 10px rgba(0,0,0,.4))}
+.sb-btn.soon .sb-label{opacity:.6}
+.soon-badge{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.15);border-radius:6px;padding:2px 7px;font-size:9px;font-weight:800;letter-spacing:.5px;color:rgba(255,255,255,.7)}
+
+/* colors per button */
+.btn-sand{background:linear-gradient(135deg,#c8952a,#f5c518)}
+.btn-water{background:linear-gradient(135deg,#1565c0,#42a5f5)}
+.btn-fire{background:linear-gradient(135deg,#b71c1c,#ff7043)}
+.btn-balls{background:linear-gradient(135deg,#4a148c,#ab47bc)}
+.btn-fworks{background:linear-gradient(135deg,#1b5e20,#66bb6a)}
+.btn-wind{background:linear-gradient(135deg,#006064,#26c6da)}
+.btn-life{background:linear-gradient(135deg,#1a237e,#3f51b5)}
+.btn-paint{background:linear-gradient(135deg,#880e4f,#f06292)}
+
+/* ── SAND PAGE ── */
+#sand-page{height:100%;display:flex;flex-direction:column;background:#000;touch-action:none}
+.sand-header{background:#111;padding:8px 12px;display:flex;align-items:center;gap:10px;border-bottom:2px solid #222;flex-shrink:0}
+.back-btn{background:#222;border:none;border-radius:8px;padding:7px 13px;color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;cursor:pointer;transition:all .14s}
+.back-btn:hover{background:#333}
+.sand-title{font-family:'Boogaloo',cursive;font-size:18px;color:#f5c518;letter-spacing:1px}
+.sand-info{margin-left:auto;font-size:10px;color:#666;font-weight:700}
+.sand-canvas-wrap{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+#sand-canvas{display:block;cursor:crosshair;image-rendering:pixelated;touch-action:none}
+.sand-controls{background:#111;border-top:2px solid #222;padding:8px 10px;flex-shrink:0}
+/* Material palette */
+.mat-row{display:flex;gap:5px;overflow-x:auto;padding-bottom:5px;margin-bottom:6px}
+.mat-row::-webkit-scrollbar{height:3px}
+.mat-row::-webkit-scrollbar-thumb{background:#333}
+.mat-btn{flex-shrink:0;border:2px solid transparent;border-radius:8px;padding:6px 10px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;transition:all .12s;display:flex;align-items:center;gap:5px;white-space:nowrap;color:#fff}
+.mat-btn.active{border-color:#fff;transform:scale(1.06)}
+.mat-btn:active{transform:scale(.94)}
+/* Brush row */
+.brush-row{display:flex;align-items:center;gap:8px}
+.brush-label{font-size:10px;color:#666;font-weight:700}
+.brush-btns{display:flex;gap:4px}
+.brush-btn{width:28px;height:28px;border:2px solid #333;border-radius:6px;background:#222;cursor:pointer;font-size:10px;font-weight:800;color:#888;transition:all .12s;display:flex;align-items:center;justify-content:center}
+.brush-btn.active{border-color:#f5c518;color:#f5c518}
+.tool-btns{margin-left:auto;display:flex;gap:5px}
+.tool-btn{background:#222;border:1.5px solid #333;border-radius:7px;padding:5px 10px;color:#aaa;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;cursor:pointer;transition:all .12s}
+.tool-btn:hover{border-color:#555;color:#fff}
+.tool-btn:active{transform:scale(.93)}
+</style>
+</head>
+<body>
+
+<!-- ═══ MAIN PAGE ═══ -->
+<div id="main-page">
+  <div class="main-bg"></div>
+  <div class="stars" id="stars"></div>
+  <div class="main-title">
+    <span>S</span><span>A</span><span>N</span><span>D</span><span>B</span><span>O</span><span>X</span>
+  </div>
+  <div class="main-sub">✦ Interactive Physics Playground ✦</div>
+  <div class="sandbox-grid" style="max-width:260px">
+    <button class="sb-btn btn-sand" onclick="openSand()" style="grid-column:1/-1">
+      <div class="sb-ico">⏳</div>
+      <div class="sb-label">Falling Sand</div>
+      <div class="sb-desc" style="font-size:11px;line-height:1.6;text-align:left;margin-top:4px">
+        Sand falls and piles. Water flows and pushes sand.<br>
+        Fire spreads to wood, oil, and plants — and is put out by water.<br>
+        Lava flows slowly, ignites flammables, and cools to dark rubble.<br>
+        Acid dissolves nearly everything it touches.<br>
+        Snow melts near heat. Steam rises and triggers rain when it accumulates.<br>
+        Plants grow fast near water. 13 materials, 4 brush sizes.
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- ═══ SAND PAGE ═══ -->
+<div id="sand-page" class="hidden">
+  <div class="sand-header">
+    <button class="back-btn" onclick="closeSand()">← Back</button>
+    <div class="sand-title">⏳ Falling Sand</div>
+    <div class="sand-info" id="sand-fps">60 fps</div>
+  </div>
+  <div class="sand-canvas-wrap" id="canvas-wrap">
+    <canvas id="sand-canvas"></canvas>
+  </div>
+  <div class="sand-controls">
+    <div class="mat-row" id="mat-row"></div>
+    <div class="brush-row">
+      <div class="brush-label">BRUSH</div>
+      <div class="brush-btns">
+        <button class="brush-btn active" data-size="1" onclick="setBrush(1)">S</button>
+        <button class="brush-btn" data-size="3" onclick="setBrush(3)">M</button>
+        <button class="brush-btn" data-size="6" onclick="setBrush(6)">L</button>
+        <button class="brush-btn" data-size="12" onclick="setBrush(12)">XL</button>
+      </div>
+      <div class="tool-btns">
+        <button class="tool-btn" onclick="clearSand()">🗑️ Clear</button>
+        <button class="tool-btn" onclick="pauseSand()">⏸ Pause</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STARS ──
+function makeStars() {
+  const c = document.getElementById('stars');
+  for (let i=0;i<80;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    const sz=Math.random()*2.5+1;
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:white;--d:${(Math.random()*3+1.5).toFixed(1)}s;--o:${(Math.random()*.6+.2).toFixed(2)};animation-delay:${(Math.random()*3).toFixed(1)}s`;
+    c.appendChild(s);
+  }
+}
+makeStars();
+
+// ══════════════════════════════════════════════════════════
+// FALLING SAND — CONSTANTS
+// ══════════════════════════════════════════════════════════
+const EMPTY=0,SAND=1,WATER=2,FIRE=3,STONE=4,WOOD=5,OIL=6,ACID=7,SNOW=8,LAVA=9,SMOKE=10,STEAM=11,COOLED=12,PLANT=13,ERASER=99;
+
+const MAT_DEFS = [
+  {type:SAND,  label:'Sand',   icon:'🟡', color:'#c8a020', bg:'#8B6914'},
+  {type:WATER, label:'Water',  icon:'💧', color:'#4080e0', bg:'#1a4a9a'},
+  {type:FIRE,  label:'Fire',   icon:'🔥', color:'#ff6020', bg:'#8B1a00'},
+  {type:STONE, label:'Stone',  icon:'🪨', color:'#888888', bg:'#444444'},
+  {type:WOOD,  label:'Wood',   icon:'🪵', color:'#8B5010', bg:'#4a2a08'},
+  {type:OIL,   label:'Oil',    icon:'🫙', color:'#a08020', bg:'#5a4010'},
+  {type:ACID,  label:'Acid',   icon:'🟢', color:'#60ff20', bg:'#1a6a00'},
+  {type:SNOW,  label:'Snow',   icon:'❄️', color:'#c0d8ff', bg:'#4a5a8a'},
+  {type:STEAM, label:'Steam',  icon:'💨', color:'#c0d0e8', bg:'#384868'},
+  {type:LAVA,  label:'Lava',   icon:'🌋', color:'#ff4000', bg:'#8B1800'},
+  {type:PLANT, label:'Plant',  icon:'🌿', color:'#20a040', bg:'#0a4a1a'},
+  {type:ERASER,label:'Erase',  icon:'🔲', color:'#666666', bg:'#1a1a1a'},
+];
+
+// RGBA color palettes per material (ABGR for ImageData little-endian)
+function pack(r,g,b,a=255){return((a&0xff)<<24)|((b&0xff)<<16)|((g&0xff)<<8)|(r&0xff)>>>0}
+function clamp(v,lo,hi){return v<lo?lo:v>hi?hi:v}
+function rnd(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+
+const COLORS = {
+  [SAND]:  ()=>pack(rnd(190,215),rnd(150,175),rnd(50,80)),
+  [WATER]: ()=>pack(rnd(30,70), rnd(100,160),rnd(200,255),rnd(200,230)),
+  [FIRE]:  ()=>pack(rnd(230,255),rnd(rnd(0,120),120),0),
+  [STONE]: ()=>pack(rnd(110,150),rnd(110,150),rnd(110,150)),
+  [WOOD]:  ()=>pack(rnd(100,140),rnd(60,90), rnd(20,40)),
+  [OIL]:   ()=>pack(rnd(100,130),rnd(80,110),rnd(20,40)),
+  [ACID]:  ()=>pack(rnd(50,100), rnd(220,255),rnd(20,60), rnd(200,240)),
+  [SNOW]:  ()=>pack(rnd(200,230),rnd(215,245),rnd(230,255)),
+  [LAVA]:  ()=>pack(rnd(220,255),rnd(rnd(20,80),80),0),
+  [SMOKE]: ()=>pack(rnd(80,120), rnd(80,120), rnd(80,120),rnd(120,180)),
+  [STEAM]: ()=>pack(rnd(140,180),rnd(160,200),rnd(200,230),rnd(180,230)),
+  [COOLED]:()=>pack(rnd(55,75),rnd(55,75),rnd(60,80)),
+  [PLANT]: ()=>pack(rnd(20,50),  rnd(140,200),rnd(30,70)),
+};
+
+// ══════════════════════════════════════════════════════════
+// SAND SIMULATION STATE
+// ══════════════════════════════════════════════════════════
+const CELL=3; // pixels per cell
+let cols,rows,types,cellColors,extra;
+let canvas,ctx,imgData,imgBuf;
+let sandRunning=false,sandPaused=false;
+let rafSand=null,lastFpsTime=Date.now(),frameCount=0;
+let currentMat=SAND,brushSize=1;
+let drawing=false,drawX=0,drawY=0;
+const CLOUD_ROWS=8;
+let updated; // per-frame update flag
+
+function openSand(){
+  document.getElementById('main-page').classList.add('hidden');
+  document.getElementById('sand-page').classList.remove('hidden');
+  if(!sandRunning) initSand();
+}
+function closeSand(){
+  document.getElementById('sand-page').classList.add('hidden');
+  document.getElementById('main-page').classList.remove('hidden');
+}
+
+function initSand(){
+  canvas=document.getElementById('sand-canvas');
+  const wrap=document.getElementById('canvas-wrap');
+  const w=Math.floor(wrap.clientWidth/CELL)*CELL;
+  const h=Math.floor(wrap.clientHeight/CELL)*CELL;
+  canvas.width=w; canvas.height=h;
+  cols=Math.floor(w/CELL); rows=Math.floor(h/CELL);
+  types=new Uint8Array(cols*rows);
+  cellColors=new Uint32Array(cols*rows);
+  extra=new Uint8Array(cols*rows);
+  ctx=canvas.getContext('2d');
+  imgData=ctx.createImageData(w,h);
+  imgBuf=new Uint32Array(imgData.data.buffer);
+  updated=new Uint8Array(cols*rows);
+  buildMatPalette();
+  attachCanvasEvents();
+  sandRunning=true;
+  sandPaused=false;
+  rafSand=requestAnimationFrame(sandLoop);
+}
+
+// ══════════════════════════════════════════════════════════
+// PALETTE UI
+// ══════════════════════════════════════════════════════════
+function buildMatPalette(){
+  const row=document.getElementById('mat-row');
+  row.innerHTML='';
+  MAT_DEFS.forEach(m=>{
+    const btn=document.createElement('button');
+    btn.className='mat-btn'+(m.type===currentMat?' active':'');
+    btn.style.background=m.bg;
+    btn.innerHTML=`${m.icon} ${m.label}`;
+    btn.onclick=()=>{
+      currentMat=m.type;
+      document.querySelectorAll('.mat-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+    row.appendChild(btn);
+  });
+}
+function setBrush(s){
+  brushSize=s;
+  document.querySelectorAll('.brush-btn').forEach(b=>{b.classList.toggle('active',+b.dataset.size===s);});
+}
+function clearSand(){types.fill(0);cellColors.fill(0);extra.fill(0);}
+let _wasPaused=false;
+function pauseSand(){
+  sandPaused=!sandPaused;
+  document.querySelector('[onclick="pauseSand()"]').textContent=sandPaused?'▶ Play':'⏸ Pause';
+}
+
+// ══════════════════════════════════════════════════════════
+// CANVAS EVENTS
+// ══════════════════════════════════════════════════════════
+function attachCanvasEvents(){
+  canvas.addEventListener('mousedown',e=>{drawing=true;draw(e);});
+  canvas.addEventListener('mousemove',e=>{if(drawing)draw(e);});
+  canvas.addEventListener('mouseup',()=>drawing=false);
+  canvas.addEventListener('mouseleave',()=>drawing=false);
+  canvas.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;drawTouch(e);},{passive:false});
+  canvas.addEventListener('touchmove',e=>{e.preventDefault();if(drawing)drawTouch(e);},{passive:false});
+  canvas.addEventListener('touchend',()=>drawing=false);
+}
+function draw(e){
+  const r=canvas.getBoundingClientRect();
+  const cx=Math.floor((e.clientX-r.left)/CELL);
+  const cy=Math.floor((e.clientY-r.top)/CELL);
+  placeAt(cx,cy);
+}
+function drawTouch(e){
+  const r=canvas.getBoundingClientRect();
+  const t=e.touches[0];
+  const cx=Math.floor((t.clientX-r.left)/CELL);
+  const cy=Math.floor((t.clientY-r.top)/CELL);
+  placeAt(cx,cy);
+}
+function placeAt(cx,cy){
+  const r=brushSize;
+  for(let dy=-r;dy<=r;dy++){
+    for(let dx=-r;dx<=r;dx++){
+      if(dx*dx+dy*dy>r*r+r) continue;
+      const x=cx+dx,y=cy+dy;
+      if(x<0||x>=cols||y<0||y>=rows) continue;
+      const i=y*cols+x;
+      if(currentMat===ERASER){types[i]=0;cellColors[i]=0;extra[i]=0;}
+      // void removed
+      else{
+        types[i]=currentMat;
+        cellColors[i]=(COLORS[currentMat]||COLORS[SAND])();
+        extra[i]=currentMat===FIRE?rnd(60,100):currentMat===SMOKE?rnd(40,80):currentMat===STEAM?1:currentMat===LAVA?rnd(80,120):0;
+      }
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// GAME LOOP
+// ══════════════════════════════════════════════════════════
+function sandLoop(){
+  rafSand=requestAnimationFrame(sandLoop);
+  if(!sandPaused) updateSand();
+  renderSand();
+  // FPS
+  frameCount++;
+  const now=Date.now();
+  if(now-lastFpsTime>=1000){
+    document.getElementById('sand-fps').textContent=frameCount+' fps';
+    frameCount=0;lastFpsTime=now;
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// UPDATE
+// ══════════════════════════════════════════════════════════
+function updateSand(){
+  updated.fill(0);
+  const altDir=Math.random()<0.5;
+  // Scan bottom-to-top
+  for(let y=rows-1;y>=0;y--){
+    for(let xi=0;xi<cols;xi++){
+      const x=altDir?xi:cols-1-xi;
+      const i=y*cols+x;
+      if(updated[i]||types[i]===EMPTY) continue;
+      switch(types[i]){
+        case SAND:  updSand(x,y,i); break;
+        case WATER: updWater(x,y,i); break;
+        case FIRE:  updFire(x,y,i); break;
+        case OIL:   updOil(x,y,i); break;
+        case ACID:  updAcid(x,y,i); break;
+        case SNOW:  updSnow(x,y,i); break;
+        case LAVA:  updLava(x,y,i); break;
+        case SMOKE: updSmoke(x,y,i); break;
+        case STEAM: updSteam(x,y,i); break;
+        case COOLED:updCooled(x,y,i); break;
+        case PLANT: updPlant(x,y,i); break;
+      }
+    }
+  }
+}
+
+function inB(x,y){return x>=0&&x<cols&&y>=0&&y<rows;}
+function T(x,y){return inB(x,y)?types[y*cols+x]:STONE;}
+function isEmpty(x,y){const t=T(x,y);return t===EMPTY;}
+function isLiquid(x,y){const t=T(x,y);return t===WATER||t===ACID||t===OIL;}
+function isGas(x,y){const t=T(x,y);return t===SMOKE||t===STEAM||t===FIRE;}
+function isBurnable(x,y){const t=T(x,y);return t===WOOD||t===OIL||t===PLANT||t===SNOW;}
+
+function mv(x,y,nx,ny){
+  const i=y*cols+x,ni=ny*cols+nx;
+  types[ni]=types[i];cellColors[ni]=cellColors[i];extra[ni]=extra[i];
+  types[i]=0;cellColors[i]=0;extra[i]=0;
+  updated[ni]=1;
+}
+function sw(x,y,nx,ny){
+  const i=y*cols+x,ni=ny*cols+nx;
+  let t=types[i];types[i]=types[ni];types[ni]=t;
+  let c=cellColors[i];cellColors[i]=cellColors[ni];cellColors[ni]=c;
+  let e=extra[i];extra[i]=extra[ni];extra[ni]=e;
+  updated[ni]=1;
+}
+function set(x,y,type,col,ex){
+  const i=y*cols+x;
+  types[i]=type;cellColors[i]=col!==undefined?col:(COLORS[type]?(COLORS[type]()):0);extra[i]=ex||0;
+}
+function clr(x,y){const i=y*cols+x;types[i]=0;cellColors[i]=0;extra[i]=0;}
+
+// ── SAND ──
+function updSand(x,y,i){
+  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
+  if(isLiquid(x,y+1)){sw(x,y,x,y+1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
+  if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
+  // Heat glow: translucent orange when adjacent to fire or lava
+  const heated=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>{const t=T(x+dx,y+dy);return t===FIRE||t===LAVA;});
+  if(heated){
+    const flicker=rnd(0,30);
+    cellColors[i]=pack(rnd(220,245),rnd(100,150)+flicker,rnd(20,50),rnd(160,210));
+  }
+}
+
+// ── WATER ──
+function updWater(x,y,i){
+  // Water is denser than oil — falls through oil
+  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
+  if(T(x,y+1)===OIL){sw(x,y,x,y+1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
+  if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
+  // Horizontal flow — push sand out of the way
+  if(T(x+d,y)===SAND){
+    if(isEmpty(x+d*2,y)){mv(x+d,y,x+d*2,y);mv(x,y,x+d,y);return;}
+    if(isEmpty(x+d,y+1)){mv(x+d,y,x+d,y+1);mv(x,y,x+d,y);return;}
+    if(isEmpty(x+d,y-1)){mv(x+d,y,x+d,y-1);mv(x,y,x+d,y);return;}
+  }
+  if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}
+  if(T(x-d,y)===SAND){
+    if(isEmpty(x-d*2,y)){mv(x-d,y,x-d*2,y);mv(x,y,x-d,y);return;}
+    if(isEmpty(x-d,y+1)){mv(x-d,y,x-d,y+1);mv(x,y,x-d,y);return;}
+    if(isEmpty(x-d,y-1)){mv(x-d,y,x-d,y-1);mv(x,y,x-d,y);return;}
+  }
+  if(isEmpty(x-d,y)){mv(x,y,x-d,y);return;}
+  // Evaporate near lava (fast)
+  if(T(x,y+1)===LAVA||T(x+1,y)===LAVA||T(x-1,y)===LAVA){
+    if(Math.random()<0.05)set(x,y,STEAM,COLORS[STEAM](),1);
+  }
+
+}
+
+// ── FIRE ──
+function updFire(x,y,i){
+  extra[i]--;
+  // Extinguished by adjacent water
+  const dirs4=[[0,1],[1,0],[-1,0],[0,-1]];
+  const nearWater=dirs4.some(([dx,dy])=>T(x+dx,y+dy)===WATER);
+  if(nearWater&&Math.random()<0.18){
+    if(Math.random()<0.3)set(x,y,SMOKE,COLORS[SMOKE](),rnd(20,40));
+    else clr(x,y);
+    return;
+  }
+  if(extra[i]<=0){
+    if(Math.random()<0.4)set(x,y,SMOKE,COLORS[SMOKE](),rnd(30,60));
+    else clr(x,y);
+    return;
+  }
+  // Color: yellow-white when fresh, red when dying
+  const t=extra[i]/100;
+  cellColors[i]=pack(255,Math.floor(t*200),Math.floor(t*t*80));
+  // Rise
+  if(isEmpty(x,y-1)&&Math.random()<0.7){mv(x,y,x,y-1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y-1)&&Math.random()<0.3){mv(x,y,x+d,y-1);return;}
+  // Spread to flammable neighbours (not water)
+  dirs4.forEach(([dx,dy])=>{
+    const nx=x+dx,ny=y+dy;
+    if(!inB(nx,ny)||!isBurnable(nx,ny))return;
+    if(Math.random()<0.015){set(nx,ny,FIRE,COLORS[FIRE](),rnd(60,100));updated[ny*cols+nx]=1;}
+  });
+  // Produce smoke
+  if(isEmpty(x,y-1)&&Math.random()<0.05)set(x,y-1,SMOKE,COLORS[SMOKE](),rnd(20,50));
+}
+
+// ── OIL ──
+function updOil(x,y,i){
+  // Oil is lighter than water — does NOT displace water below
+  // Water will fall through oil (handled in updWater), naturally pushing oil up
+  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
+  if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
+  if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}
+  if(isEmpty(x-d,y)){mv(x,y,x-d,y);return;}
+}
+
+// ── ACID ──
+function updAcid(x,y,i){
+  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
+  if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
+  if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}
+  if(isEmpty(x-d,y)){mv(x,y,x-d,y);return;}
+  // Dissolve adjacent cells (not void, not lava, not acid)
+  [[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{
+    const nx=x+dx,ny=y+dy;
+    const nt=T(nx,ny);
+    if(nt===EMPTY||nt===ACID||nt===LAVA||nt===FIRE) return;
+    if(Math.random()<0.03){
+      clr(nx,ny);
+      if(Math.random()<0.4) clr(x,y); // acid also consumes itself
+    }
+  });
+}
+
+// ── SNOW ──
+function updSnow(x,y,i){
+  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
+  if(isLiquid(x,y+1)){sw(x,y,x,y+1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
+  if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
+  // Melt near fire or lava (fast)
+  const ns=[[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];
+  for(const[dx,dy]of ns){
+    const nt=T(x+dx,y+dy);
+    if((nt===FIRE||nt===LAVA)&&Math.random()<0.06){set(x,y,WATER,COLORS[WATER](),0);return;}
+    if(nt===WATER&&Math.random()<0.008){set(x,y,WATER,COLORS[WATER](),0);return;}
+  }
+  // Very slow ambient melt
+  if(Math.random()<0.0004){set(x,y,WATER,COLORS[WATER](),0);}
+}
+
+// ── LAVA ──
+function updLava(x,y,i){
+  extra[i]--;
+  if(extra[i]<=0){
+    // Cool to dark grey sand-like cooled lava
+    set(x,y,COOLED,COLORS[COOLED](),0);return;
+  }
+  // Pulse color orange→dark red as cools
+  const t=extra[i]/120;
+  cellColors[i]=pack(255,clamp(Math.floor(t*120),0,200),0);
+  if(isEmpty(x,y+1)&&Math.random()<0.4){mv(x,y,x,y+1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y+1)&&Math.random()<0.2){mv(x,y,x+d,y+1);return;}
+  if(isEmpty(x+d,y)&&Math.random()<0.1){mv(x,y,x+d,y);return;}
+  if(isEmpty(x-d,y)&&Math.random()<0.1){mv(x,y,x-d,y);return;}
+  // Ignite flammable
+  [[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{
+    const nx=x+dx,ny=y+dy;
+    if(isBurnable(nx,ny)&&Math.random()<0.02){set(nx,ny,FIRE,COLORS[FIRE](),rnd(60,100));}
+  });
+  // Vaporize water
+  [[0,1],[1,0],[-1,0]].forEach(([dx,dy])=>{
+    if(T(x+dx,y+dy)===WATER&&Math.random()<0.04){set(x+dx,y+dy,STEAM,COLORS[STEAM](),1);}
+  });
+}
+
+// ── SMOKE ──
+function updSmoke(x,y,i){
+  extra[i]--;
+  if(extra[i]<=0){clr(x,y);return;}
+  const a=Math.floor((extra[i]/80)*180);
+  cellColors[i]=pack(rnd(80,130),rnd(80,130),rnd(80,130),clamp(a,30,180));
+  if(isEmpty(x,y-1)&&Math.random()<0.8){mv(x,y,x,y-1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y-1)&&Math.random()<0.4){mv(x,y,x+d,y-1);return;}
+  if(isEmpty(x+d,y)&&Math.random()<0.3){mv(x,y,x+d,y);return;}
+  if(isEmpty(x-d,y)&&Math.random()<0.3){mv(x,y,x-d,y);return;}
+}
+
+// ── STEAM ──
+// extra[] = cloud density: 1=wispy, 10+=dense cloud. Rains when density>=6.
+function updSteam(x,y,i){
+  const inCloud = y < CLOUD_ROWS;
+  if(inCloud){
+    // Merge with adjacent steam — absorb their density
+    const dirs=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];
+    for(const[dx,dy]of dirs){
+      const nx=x+dx,ny=y+dy;
+      if(!inB(nx,ny))continue;
+      const ni=ny*cols+nx;
+      if(types[ni]===STEAM&&!updated[ni]&&Math.random()<0.3){
+        extra[i]=Math.min(15,extra[i]+extra[ni]);
+        types[ni]=EMPTY;cellColors[ni]=0;extra[ni]=0;updated[ni]=1;
+        break;
+      }
+    }
+    // Color: wispy pale → dark dense cloud
+    const dens=Math.min(1,extra[i]/10);
+    const g=Math.floor(200-dens*100);
+    const b=Math.floor(220-dens*80);
+    const a=Math.floor(110+dens*145);
+    cellColors[i]=pack(g,g+8,b,a);
+    // Drift slowly sideways
+    if(Math.random()<0.06){
+      const d=Math.random()<0.5?1:-1;
+      if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}
+    }
+    // Rain: dense enough steam drops water below (30% become water, 70% dissipate)
+    if(extra[i]>=6&&Math.random()<0.003*(extra[i]-4)){
+      for(let ry=y+1;ry<Math.min(y+5,rows);ry++){
+        if(isEmpty(x,ry)){
+          if(Math.random()<0.30) set(x,ry,WATER,COLORS[WATER](),0);
+          extra[i]=Math.max(0,extra[i]-2);
+          if(extra[i]<=0) clr(x,y);
+          return;
+        }
+      }
+      extra[i]=Math.max(0,extra[i]-1);
+      if(extra[i]<=0) clr(x,y);
+    }
+    return;
+  }
+  // Rising phase — go up fast
+  if(isEmpty(x,y-1)){mv(x,y,x,y-1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y-1)){mv(x,y,x+d,y-1);return;}
+  if(isEmpty(x-d,y-1)){mv(x,y,x-d,y-1);return;}
+  if(isEmpty(x+d,y)&&Math.random()<0.5){mv(x,y,x+d,y);return;}
+  if(isEmpty(x-d,y)&&Math.random()<0.5){mv(x,y,x-d,y);return;}
+  // Stuck — slowly dissipate below cloud zone
+  if(Math.random()<0.006) clr(x,y);
+}
+
+// ── PLANT ──
+function updPlant(x,y,i){
+  // 3x growth rate when touching water
+  const touchingWater=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===WATER);
+  const growRate=touchingWater?0.006:0.002;
+  if(Math.random()<growRate){
+    [[0,-1],[1,0],[-1,0],[1,-1],[-1,-1]].forEach(([dx,dy])=>{
+      const nx=x+dx,ny=y+dy;
+      if(isEmpty(nx,ny)&&Math.random()<0.35){
+        set(nx,ny,PLANT,COLORS[PLANT](),0);
+        updated[ny*cols+nx]=1;
+      }
+    });
+    // Absorb water to grow
+    if(touchingWater&&Math.random()<0.008){
+      [[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{
+        if(T(x+dx,y+dy)===WATER&&Math.random()<0.5){clr(x+dx,y+dy);}
+      });
+    }
+  }
+  // Fall if nothing below
+  if(isEmpty(x,y+1)){mv(x,y,x,y+1);}
+}
+
+// ── COOLED LAVA (sand-like dark grey) ──
+function updCooled(x,y,i){
+  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
+  if(isLiquid(x,y+1)){sw(x,y,x,y+1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
+  if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
+}
+
+// ══════════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════════
+function renderSand(){
+  // Fill black
+  imgBuf.fill(0xFF050508);
+  for(let y=0;y<rows;y++){
+    for(let x=0;x<cols;x++){
+      const i=y*cols+x;
+      if(!types[i]) continue;
+      const col=cellColors[i];
+      const px=y*CELL,py=x*CELL;
+      // Fill CELL x CELL block
+      for(let dy=0;dy<CELL;dy++){
+        const row=(y*CELL+dy)*canvas.width+x*CELL;
+        for(let dx=0;dx<CELL;dx++){
+          imgBuf[row+dx]=col;
+        }
+      }
+    }
+  }
+  ctx.putImageData(imgData,0,0);
+
+}
+</script>
+</body>
+</html>
