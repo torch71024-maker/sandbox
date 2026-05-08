@@ -847,80 +847,200 @@ function tickRSB(){
 // ═══════════════════════════════════
 let chaosPhase='peace',chaosTmr=0,chaosEff=-1;
 const PEACE_T=3600,CHAOS_T=600;
-const CNAMES=['💥 Mass Explosions','🟢 Acid Rain','🔥 Fire Storm','💨 Water→Steam','🌋 Lava Flood',
- '🪨 Sand→Stone','🟡 Stone→Sand','☄️ Meteor Shower','⚡ Lightning Storm','🔮 Crystal Invasion',
- '🌿 Mass Plant Growth','🚒 All Fire Out','🙃 Gravity Flip','🪱 Worm Invasion','🔀 Cell Swap',
- '⚫ Particle Melter','🔥 All Wood Burns','🫙 Oil Ignition','🟡 Everything→Sand','✨ Phosphorus Rain',
- '❄️ Lava Cools','💥 Gunpowder Storm','❄️ Snow Storm','💨 Steam Explosion','⚙️ Mass Rust',
- '🔀 Teleport','🟢 Acid Flood','🎆 Firework Barrage','🌿 Plant→Fire','💧 Water Flood',
- '🌋 Cooled→Lava','💣 Center Blast','🎨 Color Chaos','🙃 Grid Flip','🌿 Moss Invasion',
- '🟢 Acid→Water','🔥 Fire Rain','💨 Smoke Clear','🔮 Crystal Growth','🧃 Juice Rain',
- '✨ Phosphorus+Water','🌈 Row Colors','🌊 Tsunami','🫙 Oil→Fire','💦 Steam Geysers',
- '🎆 Mass Launch','🌿 Vine Coverage','💣 30% Delete','❄️ Everything→Snow','⬆️ Antigravity'];
-function initChaos(){chaosPhase='peace';chaosTmr=PEACE_T;updateChaosUI();}
-function updateChaosUI(){
-  const ip=chaosPhase==='peace',s=Math.ceil(chaosTmr/60),m=Math.floor(s/60),sec=s%60;
-  const pl=document.getElementById('chaos-pl');
-  pl.textContent=ip?'PEACE 😌':'CHAOS 💀';pl.style.color=ip?'#4af':'#f44';pl.style.background=ip?'rgba(64,170,255,.15)':'rgba(255,68,68,.15)';
-  document.getElementById('chaos-tmr').textContent=(ip?'':' ⚠️')+m+':'+(sec<10?'0':'')+sec;
-  document.getElementById('chaos-tmr').style.color=ip?'#ffd700':'#ff4444';
-  document.getElementById('chaos-eff').textContent=ip?'':CNAMES[chaosEff]||'';
-}
-function tickChaos(){
-  if(appMode!=='chaos')return;
-  chaosTmr--;
-  if(chaosPhase==='peace'&&chaosTmr<=0){chaosPhase='chaos';chaosTmr=CHAOS_T;chaosEff=rnd(0,49);triggerChaos(chaosEff);}
-  else if(chaosPhase==='chaos'&&chaosTmr<=0){chaosPhase='peace';chaosTmr=PEACE_T;chaosEff=-1;}
-  if(chaosPhase==='chaos')contChaos(chaosEff);
-  if(tickCount%60===0)updateChaosUI();
-}
+const CNAMES=[
+ '💥 NUCLEAR STRIKE','🌋 LAVA APOCALYPSE','🟢 ACID BATH','☄️ METEOR STORM','🙃 WORLD FLIP',
+ '🌊 MEGA TSUNAMI','❄️ TOTAL FREEZE','🔥 EVERYTHING BURNS','🔮 CRYSTAL INVASION','⚫ VOID SWARM',
+ '💣 EXPLOSION GRID','🌧️ ACID DELUGE','🪨 WRECKING BALL STORM','🌋 TOTAL MELTDOWN','🟡 SAND TSUNAMI',
+ '💥 SUPERNOVA','🍄 FUNGAL APOCALYPSE','⚡ LIGHTNING STORM','🌿 PLANT TAKEOVER','🔀 MATTER SCRAMBLE',
+ '🌋 VOLCANIC ERUPTION','🔮 CRYSTAL BLIZZARD','🪱 WORM APOCALYPSE','✨ PHOSPHORUS STORM','⬛ OBSIDIAN FIELD',
+ '🍯 HONEY FLOOD','💣 GUNPOWDER FIELD','🫙 OIL+FIRE','❄️ SNOW AVALANCHE','🎆 FIREWORK BARRAGE',
+ '🔥 FIRE SPIRAL','💨 STEAM EXPLOSION','🌊 WATER WORLD','🙃 GRAVITY FLIP','🌿 MOSS FLOOD',
+ '💥 CHAIN REACTION','🌋 LAVA RAIN','🟢 ACID COLUMNS','🔮 CRYSTAL SPIRES','⚫ VOID CREEP',
+ '💀 70% DELETION','🌋 LAVA COLUMNS','💀 TOTAL DELETION','🌊 FLOOD FROM ABOVE','🪨 STONE RAIN',
+ '💥 PERIMETER BLAST','❄️→🔥 FREEZE+BURN','🌋 LAVA+WATER FIELDS','🎨 COLOR EXPLOSION','☠️ EVERYTHING AT ONCE'
+];
+
 function triggerChaos(e){
   switch(e){
-    case 0:for(let i=0;i<8;i++)setTimeout(()=>{if(running&&!paused)explodeGP(rnd(5,cols-5),rnd(5,rows-5));},i*450);break;
-    case 4:for(let x=0;x<cols;x++)for(let y=rows-5;y<rows;y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(160,240));break;
-    case 5:for(let i=0;i<types.length;i++)if(types[i]===SAND){types[i]=STONE;cellColors[i]=COLORS[STONE]();}break;
-    case 6:for(let i=0;i<types.length;i++)if(types[i]===STONE){types[i]=SAND;cellColors[i]=COLORS[SAND]();}break;
-    case 7:for(let i=0;i<5;i++)meteors.push({id:nextEid++,x:rnd(5,cols-5),y:0,alive:true});break;
-    case 11:for(let i=0;i<types.length;i++)if(types[i]===FIRE){types[i]=SMOKE;cellColors[i]=COLORS[SMOKE]();extra[i]=rnd(20,50);}break;
-    case 12:case 33:for(let y=0;y<Math.floor(rows/2);y++){const y2=rows-1-y;for(let x=0;x<cols;x++){const i1=y*cols+x,i2=y2*cols+x;let t=types[i1];types[i1]=types[i2];types[i2]=t;let c=cellColors[i1];cellColors[i1]=cellColors[i2];cellColors[i2]=c;let ex=extra[i1];extra[i1]=extra[i2];extra[i2]=ex;}}break;
-    case 13:for(let i=0;i<6;i++)spawnWorm(rnd(0,cols-5),rnd(0,rows/2));break;
-    case 15:pmelters.push({id:nextEid++,x:Math.floor(cols/2),y:Math.floor(rows/2),age:0});break;
-    case 16:for(let i=0;i<types.length;i++)if(types[i]===WOOD&&Math.random()<0.7){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(60,100);}break;
-    case 17:for(let i=0;i<types.length;i++)if(types[i]===OIL){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(40,80);}break;
-    case 18:for(let i=0;i<types.length;i++)if(types[i]!==EMPTY){types[i]=SAND;cellColors[i]=COLORS[SAND]();extra[i]=0;}break;
-    case 20:for(let i=0;i<types.length;i++)if(types[i]===LAVA){types[i]=COOLED;cellColors[i]=COLORS[COOLED]();extra[i]=0;}break;
-    case 23:for(let i=0;i<types.length;i++)if(types[i]===WATER){types[i]=STEAM;cellColors[i]=COLORS[STEAM]();extra[i]=1;}break;
-    case 25:for(let i=0;i<types.length;i++)if(Math.random()<0.3&&types[i]!==EMPTY){const j=Math.floor(Math.random()*types.length);let t=types[i];types[i]=types[j];types[j]=t;let c=cellColors[i];cellColors[i]=cellColors[j];cellColors[j]=c;}break;
-    case 28:for(let i=0;i<types.length;i++)if(types[i]===PLANT&&Math.random()<0.5){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(30,70);}break;
-    case 30:for(let i=0;i<types.length;i++)if(types[i]===COOLED){types[i]=LAVA;cellColors[i]=COLORS[LAVA]();extra[i]=rnd(80,160);}break;
-    case 31:explodeGP(Math.floor(cols/2),Math.floor(rows/2));break;
-    case 34:for(let i=0;i<mossLayer.length;i++)if(isSolid(i%cols,Math.floor(i/cols)))mossLayer[i]=1;break;
-    case 35:for(let i=0;i<types.length;i++)if(types[i]===ACID){types[i]=WATER;cellColors[i]=COLORS[WATER]();}break;
-    case 37:for(let i=0;i<types.length;i++)if(types[i]===SMOKE){types[i]=0;cellColors[i]=0;extra[i]=0;}break;
-    case 43:for(let i=0;i<types.length;i++)if(types[i]===OIL){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(30,60);}break;
-    case 47:for(let i=0;i<types.length;i++)if(Math.random()<0.3&&types[i]!==EMPTY){types[i]=0;cellColors[i]=0;extra[i]=0;}break;
-    case 48:for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==STONE&&types[i]!==METAL){types[i]=SNOW;cellColors[i]=COLORS[SNOW]();}break;
-    case 49:for(let x=0;x<cols;x++)for(let y=0;y<Math.min(rows,28);y++)if(isEmpty(x,y))set(x,y,ANTIGRAVITY,COLORS[ANTIGRAVITY]());break;
+    case 0:{// Nuclear strike — wave of explosions outward from center
+      const cx=Math.floor(cols/2),cy=Math.floor(rows/2);
+      for(let w=0;w<6;w++)setTimeout(()=>{const R=w*8+8;for(let dy=-R;dy<=R;dy++)for(let dx=-R;dx<=R;dx++){const dist=Math.sqrt(dx*dx+dy*dy);if(dist<R-4||dist>R)continue;const nx=cx+dx,ny=cy+dy;if(!inB(nx,ny))continue;clr(nx,ny);if(Math.random()<0.6)set(nx,ny,FIRE,COLORS[FIRE](),rnd(50,120));}},w*350);
+      break;}
+    case 1:{// Lava apocalypse — bottom half becomes lava
+      for(let x=0;x<cols;x++)for(let y=Math.floor(rows/2);y<rows;y++)if(types[y*cols+x]!==STONE&&types[y*cols+x]!==METAL&&types[y*cols+x]!==OBSIDIAN)set(x,y,LAVA,COLORS[LAVA](),rnd(100,240));
+      break;}
+    case 2:{// Acid bath — acid walls close inward
+      for(let y=0;y<rows;y++){set(0,y,ACID,COLORS[ACID]());set(cols-1,y,ACID,COLORS[ACID]());}
+      for(let x=0;x<cols;x++)for(let y=rows-6;y<rows;y++)if(isEmpty(x,y))set(x,y,ACID,COLORS[ACID]());
+      break;}
+    case 3:{for(let i=0;i<15;i++)meteors.push({id:nextEid++,x:rnd(5,cols-5),y:0,alive:true});break;}
+    case 4:case 33:{// World flip
+      for(let y=0;y<Math.floor(rows/2);y++){const y2=rows-1-y;for(let x=0;x<cols;x++){const i1=y*cols+x,i2=y2*cols+x;let t=types[i1];types[i1]=types[i2];types[i2]=t;let c=cellColors[i1];cellColors[i1]=cellColors[i2];cellColors[i2]=c;let ex=extra[i1];extra[i1]=extra[i2];extra[i2]=ex;}}
+      break;}
+    case 5:{// Mega tsunami — wall of water from one side
+      for(let x=0;x<Math.floor(cols*0.35);x++)for(let y=0;y<rows;y++)if(types[y*cols+x]!==STONE&&types[y*cols+x]!==METAL)set(x,y,WATER,COLORS[WATER]());
+      break;}
+    case 6:{// Total freeze
+      for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==STONE&&types[i]!==METAL&&types[i]!==OBSIDIAN){types[i]=SNOW;cellColors[i]=COLORS[SNOW]();extra[i]=0;}
+      break;}
+    case 7:{// Everything burns — all flammables ignite simultaneously
+      for(let i=0;i<types.length;i++){const t=types[i];if(t===WOOD||t===PLANT||t===OIL||t===FUNGUS||t===HONEY){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(60,120);}else if(t===SAND&&Math.random()<0.2){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(20,50);}}
+      break;}
+    case 8:{// Crystal invasion — from 20 points at once
+      for(let i=0;i<20;i++){const x=rnd(0,cols-1),y=rnd(0,rows-1);if(types[y*cols+x]===SAND||types[y*cols+x]===STONE||types[y*cols+x]===COOLED||types[y*cols+x]===EMPTY){set(x,y,CRYSTAL,COLORS[CRYSTAL]());}}
+      break;}
+    case 9:{// Void swarm — 4 particle melters at corners + center
+      [[0.25,0.25],[0.75,0.25],[0.25,0.75],[0.75,0.75],[0.5,0.5]].forEach(([fx,fy])=>pmelters.push({id:nextEid++,x:Math.floor(cols*fx),y:Math.floor(rows*fy),age:0}));
+      break;}
+    case 10:{// Explosion grid — timed across map
+      for(let gx=0;gx<cols;gx+=Math.floor(cols/7))for(let gy=0;gy<rows;gy+=Math.floor(rows/5))setTimeout(()=>explodeGP(gx+rnd(-3,3),gy+rnd(-3,3)),Math.floor(Math.random()*3000));
+      break;}
+    case 12:{// Wrecking ball storm — 8 balls
+      for(let i=0;i<8;i++)wreckingBalls.push({id:nextEid++,x:rnd(10,cols-10),y:0,alive:true,r:8});
+      break;}
+    case 13:{// Total meltdown
+      for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==LAVA&&types[i]!==OBSIDIAN&&types[i]!==ANTIGRAVITY){types[i]=LAVA;cellColors[i]=COLORS[LAVA]();extra[i]=rnd(80,240);}
+      break;}
+    case 14:{// Sand tsunami from right
+      for(let x=Math.floor(cols*0.65);x<cols;x++)for(let y=0;y<rows;y++)if(isEmpty(x,y))set(x,y,SAND,COLORS[SAND]());
+      break;}
+    case 15:{// Supernova — 5 huge chain explosions
+      const pts=[[Math.floor(cols/2),Math.floor(rows/2)],[Math.floor(cols*0.25),Math.floor(rows*0.5)],[Math.floor(cols*0.75),Math.floor(rows*0.5)],[Math.floor(cols*0.5),Math.floor(rows*0.25)],[Math.floor(cols*0.5),Math.floor(rows*0.75)]];
+      pts.forEach((p,i)=>setTimeout(()=>explodeGP(p[0],p[1]),i*700));
+      break;}
+    case 16:{// Fungal apocalypse
+      for(let i=0;i<types.length;i++)if(types[i]===DEAD_ORG||types[i]===WOOD||types[i]===PLANT){types[i]=FUNGUS;cellColors[i]=COLORS[FUNGUS]();}
+      for(let i=0;i<30;i++){const x=rnd(0,cols-1),y=rnd(0,rows-1);if(isEmpty(x,y))set(x,y,FUNGUS,COLORS[FUNGUS]());}
+      break;}
+    case 17:{// Lightning apocalypse — 30 strikes instantly
+      for(let i=0;i<30;i++)setTimeout(()=>strikeLightning(rnd(0,cols-1),rows-1),i*180);
+      break;}
+    case 18:{// Plant takeover — sand becomes plant
+      for(let i=0;i<types.length;i++)if(types[i]===SAND&&Math.random()<0.5){types[i]=PLANT;cellColors[i]=COLORS[PLANT]();extra[i]=0;}
+      break;}
+    case 19:{// Matter scramble — shuffle all non-empty cells
+      for(let i=types.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));if(!types[i]&&!types[j])continue;let t=types[i];types[i]=types[j];types[j]=t;let c=cellColors[i];cellColors[i]=cellColors[j];cellColors[j]=c;let ex=extra[i];extra[i]=extra[j];extra[j]=ex;}
+      break;}
+    case 20:{// Volcanic eruption — lava pillar from bottom
+      const vx=Math.floor(cols/2);for(let x=vx-6;x<=vx+6;x++)for(let y=Math.floor(rows*0.35);y<rows;y++)if(types[y*cols+x]!==STONE&&types[y*cols+x]!==METAL)set(x,y,LAVA,COLORS[LAVA](),rnd(120,240));
+      break;}
+    case 21:{// Crystal blizzard from sky
+      for(let x=0;x<cols;x+=rnd(2,6)){const h=rnd(8,Math.floor(rows*0.5));for(let y=0;y<h;y++)if(inB(x,y))set(x,y,CRYSTAL,COLORS[CRYSTAL]());}
+      break;}
+    case 22:{for(let i=0;i<25;i++)spawnWorm(rnd(0,cols-5),rnd(2,rows/2));break;}
+    case 23:{// Phosphorus + water rain
+      for(let x=0;x<cols;x+=3){if(isEmpty(x,0))set(x,0,PHOSPHORUS,COLORS[PHOSPHORUS]());if(isEmpty(x+1,0))set(x+1,0,WATER,COLORS[WATER]());}
+      break;}
+    case 24:{// Obsidian field — lava bottom then water top
+      for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.55);y<rows;y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(100,200));
+      setTimeout(()=>{for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.45);y++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());},2500);
+      break;}
+    case 25:{// Honey flood — bottom third
+      for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.65);y<rows;y++)if(isEmpty(x,y))set(x,y,HONEY,COLORS[HONEY]());
+      break;}
+    case 26:{// Gunpowder field — fill then ignite
+      for(let x=0;x<cols;x+=3)for(let y=0;y<rows;y+=3)if(isEmpty(x,y))set(x,y,GUNPOWDER,COLORS[GUNPOWDER](),2);
+      break;}
+    case 27:{// Oil flood + fire
+      for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.5);y<rows;y++)if(isEmpty(x,y))set(x,y,OIL,COLORS[OIL]());
+      setTimeout(()=>{for(let x=0;x<cols;x+=8)set(x,Math.floor(rows*0.5),FIRE,COLORS[FIRE](),rnd(60,100));},2000);
+      break;}
+    case 28:{// Snow avalanche — fill top
+      for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.45);y++)if(isEmpty(x,y))set(x,y,SNOW,COLORS[SNOW]());
+      break;}
+    case 29:{// Firework barrage
+      for(let x=0;x<cols;x+=4)for(let y=Math.floor(rows*0.4);y<rows;y+=4)if(isEmpty(x,y))set(x,y,FIREWORK,COLORS[FIREWORK](),255);
+      break;}
+    case 30:{// Fire spiral outward from center
+      const fcx=Math.floor(cols/2),fcy=Math.floor(rows/2);
+      for(let a=0,r2=0;r2<Math.max(cols,rows);a+=0.12,r2=a*2.5){const fx=Math.floor(fcx+Math.cos(a)*r2),fy=Math.floor(fcy+Math.sin(a)*r2);if(inB(fx,fy))set(fx,fy,FIRE,COLORS[FIRE](),rnd(40,90));}
+      break;}
+    case 31:{// Steam explosion — all water → steam
+      for(let i=0;i<types.length;i++)if(types[i]===WATER){types[i]=STEAM;cellColors[i]=COLORS[STEAM]();extra[i]=rnd(5,15);}
+      break;}
+    case 32:{// Water world — fill empty cells and convert sand/snow
+      for(let i=0;i<types.length;i++)if(types[i]===EMPTY||types[i]===SAND||types[i]===SNOW){types[i]=WATER;cellColors[i]=COLORS[WATER]();}
+      break;}
+    case 34:{// Moss floods entire map
+      for(let i=0;i<mossLayer.length;i++)if(isSolid(i%cols,Math.floor(i/cols)))mossLayer[i]=1;
+      break;}
+    case 35:{// Chain reaction — horizontal gunpowder strips
+      for(let y=Math.floor(rows*0.15);y<rows;y+=Math.floor(rows/7))for(let x=0;x<cols;x++)if(isEmpty(x,y))set(x,y,GUNPOWDER,COLORS[GUNPOWDER](),1);
+      break;}
+    case 36:{// Lava rain from sky
+      for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.3);y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(80,180));
+      break;}
+    case 37:{// Acid columns across map
+      for(let x=0;x<cols;x+=Math.floor(cols/10))for(let y=0;y<rows;y++)set(x,y,ACID,COLORS[ACID]());
+      break;}
+    case 38:{// Crystal spires from bottom
+      for(let x=0;x<cols;x+=rnd(4,9)){const h=rnd(Math.floor(rows*0.25),Math.floor(rows*0.8));for(let y=rows-1;y>rows-h;y--)if(isEmpty(x,y)||types[y*cols+x]===SAND||types[y*cols+x]===COOLED)set(x,y,CRYSTAL,COLORS[CRYSTAL]());}
+      break;}
+    case 39:{// Void creep — melters spawn in sequence
+      for(let i=0;i<6;i++)setTimeout(()=>pmelters.push({id:nextEid++,x:rnd(0,cols-1),y:rnd(0,rows-1),age:0}),i*700);
+      break;}
+    case 40:case 42:{// Mass deletion
+      const pct=e===42?0.7:0.6;for(let i=0;i<types.length;i++)if(Math.random()<pct&&types[i]!==EMPTY){types[i]=0;cellColors[i]=0;extra[i]=0;}
+      break;}
+    case 41:{// Lava columns from bottom
+      for(let x=0;x<cols;x+=Math.floor(cols/9)){const h=rnd(Math.floor(rows*0.3),rows);for(let y=rows-1;y>rows-h;y--)set(x,y,LAVA,COLORS[LAVA](),rnd(100,240));}
+      break;}
+    case 43:{// Flood from above
+      for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.5);y++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());
+      break;}
+    case 44:{// Stone rain — stone columns from top
+      for(let x=0;x<cols;x+=rnd(2,5))for(let y=0;y<Math.floor(rows*0.35);y++)set(x,y,STONE,COLORS[STONE]());
+      break;}
+    case 45:{// Perimeter blast — explosions around edges
+      for(let i=0;i<24;i++){const t=i/24,px=i<8?Math.floor(t*8*cols/8):i<16?cols-1:i<20?Math.floor((i-16)*cols/4):0,py=i<8?0:i<16?Math.floor((i-8)*rows/8):i<20?rows-1:Math.floor((i-20)*rows/4);setTimeout(()=>explodeGP(clamp(px,0,cols-1),clamp(py,0,rows-1)),i*250);}
+      break;}
+    case 46:{// Freeze & burn
+      for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==STONE&&types[i]!==METAL){types[i]=SNOW;cellColors[i]=COLORS[SNOW]();}
+      setTimeout(()=>{for(let x=0;x<cols;x+=6)set(x,rows-1,FIRE,COLORS[FIRE](),rnd(60,100));},2500);
+      break;}
+    case 47:{// Lava + water collision landscape
+      for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.55);y<rows;y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(100,200));
+      for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.4);y++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());
+      break;}
+    case 48:{// Color explosion
+      for(let i=0;i<types.length;i++)if(types[i]!==EMPTY)cellColors[i]=pack(rnd(0,255),rnd(0,255),rnd(0,255));
+      break;}
+    case 49:{// Everything at once
+      triggerChaos(rnd(0,15));
+      setTimeout(()=>triggerChaos(rnd(16,35)),1500);
+      setTimeout(()=>triggerChaos(rnd(36,48)),3500);
+      break;}
   }
 }
 function contChaos(e){
-  if(tickCount%12!==0)return;
+  if(tickCount%4!==0)return;
   switch(e){
-    case 1:if(Math.random()<0.3){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,ACID,COLORS[ACID]());}break;
-    case 2:if(Math.random()<0.35){const x=rnd(0,cols-1),y=rnd(0,rows-1);if(isEmpty(x,y))set(x,y,FIRE,COLORS[FIRE](),rnd(40,80));}break;
-    case 3:if(Math.random()<0.15){const i=Math.floor(Math.random()*types.length);if(types[i]===WATER){types[i]=STEAM;cellColors[i]=COLORS[STEAM]();extra[i]=1;}}break;
-    case 8:if(Math.random()<0.2)strikeLightning(rnd(0,cols-1),rnd(rows/2,rows-1));break;
-    case 9:if(Math.random()<0.4){const i=Math.floor(Math.random()*types.length);if(types[i]===SAND||types[i]===STONE){types[i]=CRYSTAL;cellColors[i]=COLORS[CRYSTAL]();}}break;
-    case 19:if(Math.random()<0.2){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,PHOSPHORUS,COLORS[PHOSPHORUS]());}break;
-    case 21:if(Math.random()<0.1){const x=rnd(0,cols-1),y=rnd(rows/2,rows-1);if(isEmpty(x,y))set(x,y,GUNPOWDER,COLORS[GUNPOWDER](),1);}break;
-    case 22:if(Math.random()<0.35){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,SNOW,COLORS[SNOW]());}break;
-    case 26:if(Math.random()<0.25){const y=rnd(0,rows-1);if(isEmpty(0,y))set(0,y,ACID,COLORS[ACID]());if(isEmpty(cols-1,y))set(cols-1,y,ACID,COLORS[ACID]());}break;
-    case 29:if(Math.random()<0.35){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,WATER,COLORS[WATER]());}break;
-    case 32:if(Math.random()<0.4){const i=Math.floor(Math.random()*types.length);if(types[i]!==EMPTY)cellColors[i]=pack(rnd(0,255),rnd(0,255),rnd(0,255));}break;
-    case 36:if(Math.random()<0.25){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,FIRE,COLORS[FIRE](),rnd(30,70));}break;
-    case 38:if(Math.random()<0.3){const i=Math.floor(Math.random()*types.length);if(types[i]===SAND||types[i]===STONE){types[i]=CRYSTAL;cellColors[i]=COLORS[CRYSTAL]();}}break;
-    case 42:if(Math.random()<0.25){const y=rnd(rows/3,rows-1);if(isEmpty(0,y))set(0,y,WATER,COLORS[WATER]());}break;
-    case 46:if(Math.random()<0.4){const i=Math.floor(Math.random()*types.length);if(isSolid(i%cols,Math.floor(i/cols)))mossLayer[i]=1;}break;
+    case 2:// Acid walls creep inward
+      for(let y=0;y<rows;y+=2){if(Math.random()<0.4&&isEmpty(0,y))set(0,y,ACID,COLORS[ACID]());if(Math.random()<0.4&&isEmpty(cols-1,y))set(cols-1,y,ACID,COLORS[ACID]());}break;
+    case 8:// Crystal keeps spreading
+      if(Math.random()<0.6){const i2=Math.floor(Math.random()*types.length);if(types[i2]===SAND||types[i2]===STONE||types[i2]===COOLED){types[i2]=CRYSTAL;cellColors[i2]=COLORS[CRYSTAL]();}}break;
+    case 11:// Acid deluge — heavy rain
+      for(let i2=0;i2<8;i2++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,ACID,COLORS[ACID]());}break;
+    case 16:// Fungus keeps spreading aggressively
+      if(Math.random()<0.5){const i2=Math.floor(Math.random()*types.length);if(types[i2]===WOOD||types[i2]===DEAD_ORG||types[i2]===SAND){types[i2]=FUNGUS;cellColors[i2]=COLORS[FUNGUS]();}}break;
+    case 17:// Lightning keeps striking
+      if(Math.random()<0.3)strikeLightning(rnd(0,cols-1),rows-1);break;
+    case 18:// Plants keep growing
+      if(Math.random()<0.4){const i2=Math.floor(Math.random()*types.length);if(types[i2]===SAND){types[i2]=PLANT;cellColors[i2]=COLORS[PLANT]();extra[i2]=0;}}break;
+    case 21:// Crystal keeps falling
+      for(let i2=0;i2<4;i2++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,CRYSTAL,COLORS[CRYSTAL]());}break;
+    case 23:// Phosphorus + water keeps raining
+      for(let i2=0;i2<3;i2++){const x=rnd(0,cols-2);if(isEmpty(x,0))set(x,0,PHOSPHORUS,COLORS[PHOSPHORUS]());if(isEmpty(x+1,0))set(x+1,0,WATER,COLORS[WATER]());}break;
+    case 26:// Gunpowder keeps appearing
+      for(let i2=0;i2<3;i2++){const x=rnd(0,cols-1),y=rnd(0,rows-1);if(isEmpty(x,y))set(x,y,GUNPOWDER,COLORS[GUNPOWDER](),1);}break;
+    case 36:// Lava keeps raining
+      for(let i2=0;i2<5;i2++){const x=rnd(0,cols-1);if(isEmpty(x,0)||types[0*cols+x]===SAND)set(x,0,LAVA,COLORS[LAVA](),rnd(80,160));}break;
+    case 37:// Acid columns keep appearing
+      if(Math.random()<0.3){const x=rnd(0,cols-1);for(let y=0;y<rows;y+=3)if(isEmpty(x,y))set(x,y,ACID,COLORS[ACID]());}break;
+    case 44:// Stone keeps falling
+      for(let i2=0;i2<4;i2++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,STONE,COLORS[STONE]());}break;
+    case 48:// Colors keep changing
+      if(Math.random()<0.4){const i2=Math.floor(Math.random()*types.length);if(types[i2]!==EMPTY)cellColors[i2]=pack(rnd(0,255),rnd(0,255),rnd(0,255));}break;
   }
 }
 
