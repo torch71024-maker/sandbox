@@ -159,7 +159,7 @@ html,body{height:100%;overflow:hidden;background:#0d0d1a;font-family:'Nunito',sa
 const EMPTY=0,SAND=1,WATER=2,FIRE=3,STONE=4,WOOD=5,OIL=6,ACID=7,SNOW=8,
       LAVA=9,SMOKE=10,STEAM=11,COOLED=12,PLANT=13,METAL=15,
       FRUIT=17,ASH=18,FIREWORK=19,WORM_CELL=21,DEAD_ORG=23,
-      GUNPOWDER=25,CRYSTAL=28,ANTIGRAVITY=29,PHOSPHORUS=30,JUICE=31,GLASS=32,ERASER=99,PAINT_MODE=98;
+      GUNPOWDER=25,CRYSTAL=28,ANTIGRAVITY=29,PHOSPHORUS=30,JUICE=31,GLASS=32,HONEY=33,OBSIDIAN=34,FUNGUS=35,ERASER=99,PAINT_MODE=98;
 const CLOUD_ROWS=8;
 const SPARK_COLS=[[255,60,60],[60,200,255],[80,255,60],[255,240,40],[255,80,220],[60,180,255],[255,160,30]];
 
@@ -179,6 +179,8 @@ const MAT_DEFS=[
   {t:CRYSTAL,   l:'Crystal',    i:'🔮',bg:'#0a3060'},
   {t:ANTIGRAVITY, l:'Antigravity',i:'🟣',bg:'#200040'},
   {t:PHOSPHORUS,  l:'Phosphorus', i:'✨',bg:'#1a3a00'},
+  {t:HONEY,       l:'Honey',      i:'🍯',bg:'#4a2800'},
+  {t:FUNGUS,      l:'Fungus',     i:'🍄',bg:'#2a0a3a'},
   {t:PAINT_MODE,l:'Paint',      i:'🎨',bg:'#6a1040'},
   {t:ERASER,    l:'Erase',      i:'🔲',bg:'#1a1a1a'},
 ];
@@ -193,6 +195,8 @@ const ITEM_DEFS=[
   {id:'lightning', l:'Lightning',      i:'⚡',bg:'#1a1a4a'},
   {id:'geyser',    l:'Geyser',         i:'💦',bg:'#003a4a'},
   {id:'juicer',   l:'Juicer',         i:'🧃',bg:'#3a2a00'},
+  {id:'wreckingball',l:'Wrecking Ball',i:'🪨',bg:'#2a1a00'},
+  {id:'seed',      l:'Seed',           i:'🌱',bg:'#0a2a00'},
 ];
 
 // ══ COLORS ══
@@ -223,6 +227,9 @@ const COLORS={
   [CRYSTAL]: ()=>pack(rnd(100,180),rnd(180,240),rnd(220,255),rnd(200,240)),
   [ANTIGRAVITY]:()=>pack(rnd(120,160),0,rnd(190,230)),
   [JUICE]:()=>pack(rnd(220,255),rnd(140,180),rnd(0,20),rnd(200,230)),
+  [HONEY]:()=>pack(rnd(200,240),rnd(120,160),rnd(0,20),rnd(220,245)),
+  [OBSIDIAN]:()=>pack(rnd(10,30),rnd(10,30),rnd(20,40)),
+  [FUNGUS]:()=>pack(rnd(100,150),rnd(40,80),rnd(100,150)),
   [GLASS]:()=>pack(rnd(160,200),rnd(210,240),rnd(220,250),rnd(170,210)),
   [PHOSPHORUS]:  ()=>pack(rnd(50,90),rnd(220,255),0),
 };
@@ -234,7 +241,7 @@ let running=false,paused=false,tickCount=0;
 let lastFpsT=Date.now(),fpsCount=0;
 let curMat=SAND,curItem=null,brushSize=1;
 let drawing=false,etMode=false,paintColor=pack(255,68,68);
-let worms=[],flyingFW=[],fwParticles=[],pmelters=[],meteors=[],lbolts=[],geysers=[],juicer=null;
+let worms=[],flyingFW=[],fwParticles=[],pmelters=[],meteors=[],lbolts=[],geysers=[],juicer=null,wreckingBalls=[];
 let nextEid=0;
 
 // ══ STARS ══
@@ -271,7 +278,7 @@ function buildUI(){
   document.getElementById('pcl').addEventListener('input',e=>{const h=e.target.value;paintColor=pack(parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16));});
 }
 function setBrush(s){brushSize=s;document.querySelectorAll('.bb2').forEach(b=>b.classList.toggle('on',+b.dataset.sz===s));}
-function clearAll(){types.fill(0);cellColors.fill(0);extra.fill(0);mossLayer.fill(0);worms=[];flyingFW=[];fwParticles=[];pmelters=[];meteors=[];lbolts=[];geysers=[];juicer=null;}
+function clearAll(){types.fill(0);cellColors.fill(0);extra.fill(0);mossLayer.fill(0);worms=[];flyingFW=[];fwParticles=[];pmelters=[];meteors=[];lbolts=[];geysers=[];juicer=null;wreckingBalls=[];}
 function togglePause(){paused=!paused;document.getElementById('pb').textContent=paused?'▶ Play':'⏸ Pause';}
 function toggleET(){etMode=!etMode;const b=document.getElementById('etb');b.classList.toggle('amd',etMode);b.textContent=etMode?'🎯 Click...':'🎯 Erase Target';document.querySelectorAll('.mb,.ib').forEach(b2=>b2.classList.toggle('etm',etMode));}
 function doneET(){etMode=false;document.getElementById('etb').classList.remove('amd');document.getElementById('etb').textContent='🎯 Erase Target';document.querySelectorAll('.mb,.ib').forEach(b=>b.classList.remove('etm'));}
@@ -283,6 +290,8 @@ function doETItem(id){
   if(id==='moss'){mossLayer.fill(0);}
   if(id==='gunpowder'){for(let i=0;i<types.length;i++)if(types[i]===GUNPOWDER){types[i]=0;cellColors[i]=0;extra[i]=0;}}
   if(id==='meteor'){meteors=[];}
+  if(id==='wreckingball'){wreckingBalls=[];}
+  if(id==='seed'){}
   if(id==='juicer'){juicer=null;for(let i2=0;i2<types.length;i2++)if(types[i2]===JUICE){types[i2]=0;cellColors[i2]=0;extra[i2]=0;}}
   if(id==='geyser'){geysers=[];for(let ig=0;ig<types.length;ig++)if(extra[ig]===200){types[ig]=0;cellColors[ig]=0;extra[ig]=0;}}
   if(id==='tree'){for(let i=0;i<types.length;i++)if(types[i]===FRUIT){types[i]=0;cellColors[i]=0;extra[i]=0;}}
@@ -343,6 +352,8 @@ function placeItem(id,x,y){
   else if(id==='lightning')strikeLightning(x,y);
   else if(id==='geyser')placeGeyser(x,y);
   else if(id==='juicer')placeJuicer(x,y);
+  else if(id==='wreckingball')wreckingBalls.push({id:nextEid++,x,y:0,alive:true,r:8});
+  else if(id==='seed')placeSeed(x,y);
 }
 
 // ══ TREE ══
@@ -495,7 +506,7 @@ function updateGeysers(){
 // ══ GAME LOOP ══
 function gameLoop(){
   requestAnimationFrame(gameLoop);
-  if(!paused){updateSim();updateWorms();updateFireworks();updatePMelters();updateMoss();updateMeteors();updateGeysers();updateJuicer();}tickRSB();tickChaos();tickTasks();
+  if(!paused){updateSim();updateWorms();updateFireworks();updatePMelters();updateMoss();updateMeteors();updateGeysers();updateJuicer();}updateWreckingBalls();tickRSB();tickChaos();tickTasks();
   render();
   fpsCount++;const now=Date.now();if(now-lastFpsT>=1000){document.getElementById('fp').textContent=fpsCount+' fps';fpsCount=0;lastFpsT=now;}tickCount++;
 }
@@ -518,18 +529,62 @@ function updateSim(){
       case ANTIGRAVITY:updAntigravity(x,y,i);break;
       case PHOSPHORUS:  updPhosphorus(x,y,i);break;
       case JUICE:       updJuice(x,y,i);break;
+      case HONEY:      updHoney(x,y,i);break;
+      case FUNGUS:     updFungus(x,y,i);break;
     }
   }
 }
 
 // ══ MATERIAL UPDATES ══
-function updSand(x,y,i){const hot=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy));if(hot){const f=rnd(0,30);cellColors[i]=pack(rnd(220,245),rnd(100,150)+f,rnd(20,50),rnd(160,210));if(Math.random()<0.004){set(x,y,GLASS,COLORS[GLASS]());return;}}if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(isLiquid(x,y+1)){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);}}
+function updSand(x,y,i){const hot=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy));if(hot){const f=rnd(0,30);cellColors[i]=pack(rnd(220,245),rnd(100,150)+f,rnd(20,50),rnd(160,210));if(Math.random()<0.004){formGlass(x,y);return;}}if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(isLiquid(x,y+1)){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);}}
 function updWater(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(T(x,y+1)===OIL){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}for(const dd of[d,-d]){if(T(x+dd,y)===SAND){if(isEmpty(x+dd*2,y)){mv(x+dd,y,x+dd*2,y);mv(x,y,x+dd,y);return;}if(isEmpty(x+dd,y+1)){mv(x+dd,y,x+dd,y+1);mv(x,y,x+dd,y);return;}}if(isEmpty(x+dd,y)){mv(x,y,x+dd,y);return;}}if([[0,1],[1,0],[-1,0]].some(([dx,dy])=>T(x+dx,y+dy)===LAVA)&&Math.random()<0.05)set(x,y,STEAM,COLORS[STEAM](),1);}
 function updFire(x,y,i){extra[i]--;if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===WATER)&&Math.random()<0.18){if(Math.random()<0.3)set(x,y,SMOKE,COLORS[SMOKE](),rnd(20,40));else clr(x,y);return;}if(extra[i]<=0){if(Math.random()<0.4)set(x,y,SMOKE,COLORS[SMOKE](),rnd(20,50));else clr(x,y);return;}const t=extra[i]/100;cellColors[i]=pack(255,Math.floor(t*200),Math.floor(t*t*80));if(isEmpty(x,y-1)&&Math.random()<0.7){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y-1)&&Math.random()<0.3){mv(x,y,x+d,y-1);return;}[[0,-1],[1,0],[-1,0],[0,1]].forEach(([dx,dy])=>{if(!inB(x+dx,y+dy)||!isBurnable(x+dx,y+dy))return;if(Math.random()<0.015){set(x+dx,y+dy,FIRE,COLORS[FIRE](),rnd(60,100));updated[(y+dy)*cols+(x+dx)]=1;}});if(isEmpty(x,y-1)&&Math.random()<0.05)set(x,y-1,SMOKE,COLORS[SMOKE](),rnd(20,50));}
 function updOil(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)){mv(x,y,x-d,y);}}
 function updAcid(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)){mv(x,y,x-d,y);return;}[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{const nt=T(x+dx,y+dy);if(nt===EMPTY||nt===ACID||nt===METAL||nt===LAVA||nt===FIRE)return;if(Math.random()<0.03){clr(x+dx,y+dy);if(Math.random()<0.4)clr(x,y);}});}
 function updSnow(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(isLiquid(x,y+1)){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}[[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,1]].forEach(([dx,dy])=>{const nt=T(x+dx,y+dy);if((nt===FIRE||nt===LAVA)&&Math.random()<0.06)set(x,y,WATER,COLORS[WATER](),0);if(nt===WATER&&Math.random()<0.008)set(x,y,WATER,COLORS[WATER](),0);});if(Math.random()<0.0004)set(x,y,WATER,COLORS[WATER](),0);}
-function updLava(x,y,i){extra[i]--;if(extra[i]<=0){set(x,y,COOLED,COLORS[COOLED](),0);return;}const t=extra[i]/240;cellColors[i]=pack(255,clamp(Math.floor(t*120),0,200),0);if(isEmpty(x,y+1)&&Math.random()<0.4){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)&&Math.random()<0.2){mv(x,y,x+d,y+1);return;}if(isEmpty(x+d,y)&&Math.random()<0.1){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.1){mv(x,y,x-d,y);return;}[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{if(isBurnable(x+dx,y+dy)&&Math.random()<0.02)set(x+dx,y+dy,FIRE,COLORS[FIRE](),rnd(60,100));if(T(x+dx,y+dy)===WATER&&Math.random()<0.04)set(x+dx,y+dy,STEAM,COLORS[STEAM](),1);});}
+function formObsidian(startX,startY){
+  // BFS: convert up to 10 lava cells that touch water → obsidian
+  let count=0;
+  const queue=[{x:startX,y:startY}];
+  const visited=new Set();
+  while(queue.length&&count<10){
+    const {x:cx,y:cy}=queue.shift();
+    const key=cy*cols+cx;
+    if(visited.has(key))continue;
+    visited.add(key);
+    if(T(cx,cy)!==LAVA)continue;
+    const nearWater=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(cx+dx,cy+dy)===WATER);
+    if(!nearWater)continue;
+    set(cx,cy,OBSIDIAN,COLORS[OBSIDIAN]());
+    count++;
+    [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{
+      const nx=cx+dx,ny=cy+dy;
+      if(inB(nx,ny)&&T(nx,ny)===LAVA&&!visited.has(ny*cols+nx))queue.push({x:nx,y:ny});
+    });
+  }
+}
+function formGlass(startX,startY){
+  // BFS: convert up to 10 sand cells that touch fire/lava → glass
+  let count=0;
+  const queue=[{x:startX,y:startY}];
+  const visited=new Set();
+  while(queue.length&&count<10){
+    const {x:cx,y:cy}=queue.shift();
+    const key=cy*cols+cx;
+    if(visited.has(key))continue;
+    visited.add(key);
+    if(T(cx,cy)!==SAND)continue;
+    const nearHeat=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(cx+dx,cy+dy));
+    if(!nearHeat)continue;
+    set(cx,cy,GLASS,COLORS[GLASS]());
+    count++;
+    [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{
+      const nx=cx+dx,ny=cy+dy;
+      if(inB(nx,ny)&&T(nx,ny)===SAND&&!visited.has(ny*cols+nx))queue.push({x:nx,y:ny});
+    });
+  }
+}
+function updLava(x,y,i){extra[i]--;if(extra[i]<=0){set(x,y,COOLED,COLORS[COOLED](),0);return;}const t=extra[i]/240;cellColors[i]=pack(255,clamp(Math.floor(t*120),0,200),0);if(isEmpty(x,y+1)&&Math.random()<0.4){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)&&Math.random()<0.2){mv(x,y,x+d,y+1);return;}if(isEmpty(x+d,y)&&Math.random()<0.1){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.1){mv(x,y,x-d,y);return;}[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{if(isBurnable(x+dx,y+dy)&&Math.random()<0.02)set(x+dx,y+dy,FIRE,COLORS[FIRE](),rnd(60,100));if(T(x+dx,y+dy)===WATER){if(Math.random()<0.08){formObsidian(x,y);set(x+dx,y+dy,STEAM,COLORS[STEAM](),1);}else if(Math.random()<0.04)set(x+dx,y+dy,STEAM,COLORS[STEAM](),1);}});}
 function updSmoke(x,y,i){extra[i]--;if(extra[i]<=0){clr(x,y);return;}cellColors[i]=pack(rnd(80,130),rnd(80,130),rnd(80,130),clamp(Math.floor(extra[i]/80*180),30,180));if(isEmpty(x,y-1)&&Math.random()<0.8){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y)&&Math.random()<0.35){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.35){mv(x,y,x-d,y);}}
 function updSteam(x,y,i){const inC=y<CLOUD_ROWS;if(inC){[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]].forEach(([dx,dy])=>{const nx=x+dx,ny=y+dy;if(!inB(nx,ny))return;const ni=ny*cols+nx;if(types[ni]===STEAM&&!updated[ni]&&Math.random()<0.3){extra[i]=Math.min(15,extra[i]+extra[ni]);types[ni]=0;cellColors[ni]=0;extra[ni]=0;updated[ni]=1;}});const dens=Math.min(1,extra[i]/10);cellColors[i]=pack(Math.floor(200-dens*100),Math.floor(208-dens*100),Math.floor(220-dens*80),Math.floor(110+dens*145));if(Math.random()<0.06){const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}}if(extra[i]>=6&&Math.random()<0.003*(extra[i]-4)){for(let ry=y+1;ry<Math.min(y+5,rows);ry++){if(isEmpty(x,ry)){if(Math.random()<0.3)set(x,ry,WATER,COLORS[WATER](),0);extra[i]=Math.max(0,extra[i]-2);if(extra[i]<=0)clr(x,y);return;}}extra[i]=Math.max(0,extra[i]-1);if(extra[i]<=0)clr(x,y);}return;}if(isEmpty(x,y-1)){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y-1)){mv(x,y,x+d,y-1);return;}if(isEmpty(x-d,y-1)){mv(x,y,x-d,y-1);return;}if(isEmpty(x+d,y)&&Math.random()<0.5){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.5){mv(x,y,x-d,y);return;}if(Math.random()<0.006)clr(x,y);}
 function updCooled(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(isLiquid(x,y+1)){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);}}
@@ -605,7 +660,6 @@ function updPhosphorus(x,y,i){
   if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
   if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
   if([[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===WATER)){set(x,y,FIRE,COLORS[FIRE](),rnd(80,140));return;}
-  if(Math.random()<0.0003)set(x,y,FIRE,COLORS[FIRE](),rnd(60,100));
 }
 
 
@@ -637,6 +691,55 @@ function updateJuicer(){
   if(!juicer)return;
   juicer.age++;
   if(juicer.age>=600){juicer.released=true;juicer=null;}
+}
+function updHoney(x,y,i){
+  if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy))&&Math.random()<0.002){set(x,y,FIRE,COLORS[FIRE](),rnd(40,80));return;}
+  if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.03){clr(x,y);return;}
+  if(tickCount%6!==0)return; // slow motion — updates every 6 ticks
+  // Flows exactly like water but 6x slower
+  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
+  if(T(x,y+1)===OIL){sw(x,y,x,y+1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
+  if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
+  if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}
+  if(isEmpty(x-d,y)){mv(x,y,x-d,y);}
+}
+function updFungus(x,y,i){
+  if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy))&&Math.random()<0.03){set(x,y,FIRE,COLORS[FIRE](),rnd(30,60));return;}
+  if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.05){clr(x,y);return;}
+  if(Math.random()>0.004)return;
+  const dirs=[[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];dirs.sort(()=>Math.random()-0.5);
+  for(const[dx,dy]of dirs){const nx=x+dx,ny=y+dy;if(!inB(nx,ny))continue;const nt=T(nx,ny);
+    if(nt===DEAD_ORG||nt===WOOD){set(nx,ny,FUNGUS,COLORS[FUNGUS](),0);break;}
+    if(nt===EMPTY){const hf=[[0,1],[1,0],[-1,0],[0,-1]].some(([sx,sy])=>{const st=T(nx+sx,ny+sy);return st===DEAD_ORG||st===WOOD||st===FUNGUS;});if(hf){set(nx,ny,FUNGUS,COLORS[FUNGUS](),0);break;}}
+  }
+}
+function updateWreckingBalls(){
+  wreckingBalls=wreckingBalls.filter(wb=>{
+    if(!wb.alive)return false;
+    for(let step=0;step<3;step++){
+      wb.y++;if(wb.y>=rows){wb.alive=false;return false;}
+      let blocked=false;
+      for(let dy=-wb.r;dy<=wb.r;dy++)for(let dx=-wb.r;dx<=wb.r;dx++){
+        if(dx*dx+dy*dy>wb.r*wb.r)continue;const nx=wb.x+dx,ny=wb.y+dy;if(!inB(nx,ny))continue;
+        const nt=T(nx,ny);if(nt===OBSIDIAN)blocked=true;
+        if(nt!==EMPTY&&nt!==WORM_CELL){if(nt===GUNPOWDER)explodeGP(nx,ny);clr(nx,ny);}
+      }
+      if(blocked||wb.y+wb.r>=rows-2){
+        for(let dy=-wb.r;dy<=wb.r;dy++)for(let dx=-wb.r;dx<=wb.r;dx++){if(dx*dx+dy*dy<=wb.r*wb.r&&inB(wb.x+dx,wb.y+dy))set(wb.x+dx,wb.y+dy,STONE,COLORS[STONE]());}
+        wb.alive=false;return false;
+      }
+    }return true;
+  });
+}
+function placeSeed(x,y){
+  const type=rnd(0,4);
+  if(type===0){const h=rnd(8,16);for(let dy=0;dy<h;dy++)if(inB(x,y-dy))set(x,y-dy,WOOD,COLORS[WOOD]());for(let i=0;i<rnd(3,6);i++){const by=y-rnd(3,h-1),bl=rnd(3,8),dir=Math.random()<0.5?1:-1;for(let bx=0;bx<bl;bx++){if(inB(x+dir*bx,by))set(x+dir*bx,by,WOOD,COLORS[WOOD]());if(inB(x+dir*bx,by-1)&&Math.random()<0.5)set(x+dir*bx,by-1,PLANT,COLORS[PLANT](),0);}}}
+  else if(type===1){for(let i=0;i<rnd(5,10);i++){const cx=x+rnd(-6,6),cy=y+rnd(-2,0),h=rnd(4,10);for(let dy=0;dy<h;dy++)if(inB(cx,cy-dy))set(cx,cy-dy,CRYSTAL,COLORS[CRYSTAL]());}}
+  else if(type===2){for(let dy=0;dy<rnd(6,12);dy++)for(let dx=-rnd(1,4);dx<=rnd(1,4);dx++)if(inB(x+dx,y-dy)&&isEmpty(x+dx,y-dy)&&Math.random()<0.55)set(x+dx,y-dy,PLANT,COLORS[PLANT](),0);}
+  else if(type===3){const h=rnd(5,10);for(let dy=0;dy<h;dy++)if(inB(x,y-dy))set(x,y-dy,WOOD,COLORS[WOOD]());const capR=rnd(4,8);for(let dx=-capR;dx<=capR;dx++)for(let dy=-3;dy<=0;dy++)if(inB(x+dx,y-h+dy)&&Math.abs(dx)<=capR+dy)set(x+dx,y-h+dy,FUNGUS,COLORS[FUNGUS](),0);}
+  else{const r=rnd(5,9);for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++)if(dx*dx+dy*dy<=r*r&&inB(x+dx,y+dy))set(x+dx,y+dy,STONE,COLORS[STONE]());for(let i2=0;i2<mossLayer.length;i2++){const mx=i2%cols,my=Math.floor(i2/cols);if(Math.sqrt((mx-x)**2+(my-y)**2)<=r+1&&isSolid(mx,my))mossLayer[i2]=1;}}
 }
 // ══ RENDER ══
 function render(){
@@ -685,6 +788,7 @@ function render(){
 
 
   if(juicer){const jx=juicer.x*CELL,jy=juicer.y*CELL;const spin=tickCount*0.15,life=1-juicer.age/600;ctx.save();ctx.strokeStyle=`rgba(255,180,0,${(0.8*life).toFixed(2)})`;ctx.lineWidth=2;for(let r=0;r<3;r++){const a=spin+r*2.09;ctx.beginPath();ctx.arc(jx+Math.cos(a)*CELL*3,jy+Math.sin(a)*CELL*3,CELL,0,Math.PI*2);ctx.stroke();}ctx.fillStyle=`rgba(255,140,0,${(0.4*life).toFixed(2)})`;ctx.beginPath();ctx.arc(jx,jy,CELL*2,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 9px sans-serif';ctx.fillText(Math.ceil((600-juicer.age)/60)+'s',jx-4,jy+3);ctx.restore();}
+  wreckingBalls.forEach(wb=>{if(!wb.alive)return;const px=wb.x*CELL,py=wb.y*CELL,R=wb.r*CELL;ctx.save();const g=ctx.createRadialGradient(px-R*.3,py-R*.3,R*.1,px,py,R);g.addColorStop(0,'rgba(180,120,60,.95)');g.addColorStop(1,'rgba(60,40,20,.9)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,R,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(80,50,20,.8)';ctx.lineWidth=2;ctx.stroke();ctx.restore();});
   // Meteors
   meteors.forEach(m=>{
     if(!m.alive)return;const px=m.x*CELL,py=m.y*CELL,R=7*CELL;
@@ -848,26 +952,33 @@ function cntT(t){
 function makeTask(){
   const am=[...tUnlocked.mats].filter(t=>t!==WORM_CELL);
   if(!am.length)return{desc:'Place 50 Sand',prog:()=>Math.min(1,cntT(SAND)/50)};
+  const canHeat=tUnlocked.mats.has(FIRE)||tUnlocked.mats.has(LAVA);
+  const canSteam=tUnlocked.mats.has(WATER)&&canHeat;
+  const canAsh=canHeat&&(tUnlocked.mats.has(WOOD)||tUnlocked.mats.has(PLANT)||tUnlocked.mats.has(OIL)||tUnlocked.mats.has(FUNGUS));
+  const canGlass=tUnlocked.mats.has(SAND)&&canHeat;
+  const canObsidian=tUnlocked.mats.has(LAVA)&&tUnlocked.mats.has(WATER);
   const gens=[
     ()=>{const t=am[rnd(0,am.length-1)],n=(rnd(1,10))*100;return{desc:`Have ${n} ${MN[t]||'cells'} on screen`,prog:()=>Math.min(1,cntT(t)/n)};},
-    ()=>{const t=am[rnd(0,am.length-1)],n=(rnd(2,20))*50;return{desc:`Fill screen with ${n} ${MN[t]||'cells'}`,prog:()=>Math.min(1,cntT(t)/n)};},
+    ()=>{const t=am[rnd(0,am.length-1)],n=rnd(2,20)*50;return{desc:`Fill with ${n} ${MN[t]||'cells'}`,prog:()=>Math.min(1,cntT(t)/n)};},
     ()=>{const t=am[rnd(0,am.length-1)],n=rnd(1,5)*20;return{desc:`Place ${n} ${MN[t]||'cells'}`,prog:()=>Math.min(1,cntT(t)/n)};},
-    ()=>({desc:`Have ${rnd(1,4)} live worms at once`,prog:()=>Math.min(1,worms.length/rnd(1,4))}),
+    ()=>{const n=rnd(1,4);return{desc:`Have ${n} live worm${n>1?'s':''} at once`,prog:()=>Math.min(1,worms.length/n)};},
     ()=>{const t1=am[rnd(0,am.length-1)],t2=am[rnd(0,am.length-1)],n=rnd(1,4)*50;return{desc:`Have ${n} ${MN[t1]} AND ${n} ${MN[t2]} at once`,prog:()=>Math.min(1,Math.min(cntT(t1),cntT(t2))/n)};},
-    ()=>{const n=rnd(1,8)*20;return{desc:`Create ${n} Steam cells`,prog:()=>Math.min(1,cntT(STEAM)/n)};},
-    ()=>{const n=rnd(1,5)*10;return{desc:`Have ${n} Ash cells`,prog:()=>Math.min(1,cntT(ASH)/n)};},
-    ()=>{const n=rnd(1,3)*5;return{desc:`Form ${n} Glass cells (heat Sand)`,prog:()=>Math.min(1,cntT(GLASS)/n)};},
-    ()=>({desc:'Clear board completely',prog:()=>types.every(t=>!t)?1:0}),
     ()=>{const t=am[rnd(0,am.length-1)],n=rnd(10,50)*100;return{desc:`Cover board: ${n} ${MN[t]||'cells'}`,prog:()=>Math.min(1,cntT(t)/n)};},
+    ()=>({desc:'Have a Dead Worm (let one age out)',prog:()=>cntT(DEAD_ORG)>=1?1:0}),
+    ()=>{const n=rnd(2,5);return{desc:`Have ${n} worms digging at once`,prog:()=>Math.min(1,worms.length/n)};},
+    ...(canSteam?[()=>{const n=rnd(1,6)*20;return{desc:`Create ${n} Steam cells (heat Water)`,prog:()=>Math.min(1,cntT(STEAM)/n)};}]:[]),
+    ...(canAsh?[()=>{const n=rnd(1,4)*10;return{desc:`Have ${n} Ash cells (burn something)`,prog:()=>Math.min(1,cntT(ASH)/n)};}]:[]),
+    ...(canGlass?[()=>{const n=rnd(1,3)*5;return{desc:`Form ${n} Glass (heat Sand)`,prog:()=>Math.min(1,cntT(GLASS)/n)};}]:[]),
     ...(tUnlocked.mats.has(LAVA)?[()=>{const n=rnd(2,8)*25;return{desc:`Cool ${n} Lava into rubble`,prog:()=>Math.min(1,cntT(COOLED)/n)};}]:[]),
+    ...(canObsidian?[()=>{const n=rnd(1,4)*3;return{desc:`Form ${n} Obsidian (Lava meets Water)`,prog:()=>Math.min(1,cntT(OBSIDIAN)/n)};}]:[]),
     ...(tUnlocked.mats.has(CRYSTAL)?[()=>{const n=rnd(2,10)*50;return{desc:`Grow ${n} Crystal cells`,prog:()=>Math.min(1,cntT(CRYSTAL)/n)};}]:[]),
     ...(tUnlocked.mats.has(PLANT)?[()=>{const n=rnd(2,10)*50;return{desc:`Grow ${n} Plant cells`,prog:()=>Math.min(1,cntT(PLANT)/n)};}]:[]),
+    ...(tUnlocked.mats.has(HONEY)?[()=>{const n=rnd(1,5)*20;return{desc:`Have ${n} Honey cells`,prog:()=>Math.min(1,cntT(HONEY)/n)};}]:[]),
+    ...(tUnlocked.mats.has(FUNGUS)?[()=>{const n=rnd(1,4)*20;return{desc:`Grow ${n} Fungus`,prog:()=>Math.min(1,cntT(FUNGUS)/n)};}]:[]),
     ...(tUnlocked.items.has('moss')?[()=>{const n=rnd(1,5)*100;return{desc:`Cover ${n} cells with Moss`,prog:()=>Math.min(1,(tCache._moss||0)/n)};}]:[]),
     ...(tUnlocked.items.has('firework')?[()=>({desc:'Have 3 fireworks in flight at once',prog:()=>Math.min(1,flyingFW.length/3)})]:[]),
     ...(tUnlocked.items.has('tree')?[()=>{const n=rnd(5,20);return{desc:`Grow ${n} Fruit from a Tree`,prog:()=>Math.min(1,cntT(FRUIT)/n)};}]:[]),
-    ...(tUnlocked.items.has('juicer')?[()=>{const n=rnd(3,10)*20;return{desc:`Release ${n} Juice cells`,prog:()=>Math.min(1,cntT(JUICE)/n)};}]:[]),
-    ()=>({desc:'Have Dead Worms on screen (let 1 die)',prog:()=>cntT(DEAD_ORG)>=1?1:0}),
-    ()=>{const n=rnd(2,6);return{desc:`Have ${n} worms digging at once`,prog:()=>Math.min(1,worms.length/n)};},
+    ...(tUnlocked.items.has('juicer')?[()=>{const n=rnd(3,10)*20;return{desc:`Release ${n} Juice from a Juicer`,prog:()=>Math.min(1,cntT(JUICE)/n)};}]:[]),
   ];
   return gens[rnd(0,gens.length-1)]();
 }
