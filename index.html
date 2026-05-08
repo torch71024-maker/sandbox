@@ -966,8 +966,6 @@ function makeTask(){
     ()=>{const t=am[rnd(0,am.length-1)],n=rnd(10,50)*100;return{desc:`Cover board: ${n} ${MN[t]||'cells'}`,prog:()=>Math.min(1,cntT(t)/n)};},
     ()=>({desc:'Have a Dead Worm (let one age out)',prog:()=>cntT(DEAD_ORG)>=1?1:0}),
     ()=>{const n=rnd(2,5);return{desc:`Have ${n} worms digging at once`,prog:()=>Math.min(1,worms.length/n)};},
-    ...(canSteam?[()=>{const n=rnd(1,6)*20;return{desc:`Create ${n} Steam cells (heat Water)`,prog:()=>Math.min(1,cntT(STEAM)/n)};}]:[]),
-    ...(canAsh?[()=>{const n=rnd(1,4)*10;return{desc:`Have ${n} Ash cells (burn something)`,prog:()=>Math.min(1,cntT(ASH)/n)};}]:[]),
     ...(canGlass?[()=>{const n=rnd(1,3)*5;return{desc:`Form ${n} Glass (heat Sand)`,prog:()=>Math.min(1,cntT(GLASS)/n)};}]:[]),
     ...(tUnlocked.mats.has(LAVA)?[()=>{const n=rnd(2,8)*25;return{desc:`Cool ${n} Lava into rubble`,prog:()=>Math.min(1,cntT(COOLED)/n)};}]:[]),
     ...(canObsidian?[()=>{const n=rnd(1,4)*3;return{desc:`Form ${n} Obsidian (Lava meets Water)`,prog:()=>Math.min(1,cntT(OBSIDIAN)/n)};}]:[]),
@@ -984,7 +982,7 @@ function makeTask(){
 }
 function initTasks(){
   tDone=0;tUnlocked={mats:new Set([SAND,WATER,WORM_CELL]),items:new Set(['worm']),brushes:new Set([1,3]),hasClear:false,hasET:false,hasPause:false};
-  activeTasks=[];for(let i=0;i<3;i++)activeTasks.push({...makeTask(),done:false});
+  activeTasks=[];for(let i=0;i<5;i++)activeTasks.push({...makeTask(),done:false});
   renderTaskUI();rebuildRestricted();
 }
 function tickTasks(){
@@ -999,7 +997,7 @@ function tickTasks(){
       showUnlock(u.n);
     }});
   }});
-  if(any){activeTasks=activeTasks.filter(t=>!t.done);while(activeTasks.length<3)activeTasks.push({...makeTask(),done:false});renderTaskUI();rebuildRestricted();}
+  if(any){activeTasks=activeTasks.filter(t=>!t.done);while(activeTasks.length<5)activeTasks.push({...makeTask(),done:false});renderTaskUI();rebuildRestricted();}
   if(tickCount%90===0)renderTaskUI();
 }
 function showUnlock(name){
