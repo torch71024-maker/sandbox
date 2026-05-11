@@ -29,7 +29,7 @@ html,body{height:100%;overflow:hidden;background:#0d0d1a;font-family:'Nunito',sa
 .sl{font-family:'Boogaloo',cursive;font-size:22px}
 .sd{font-size:10.5px;line-height:1.75;color:rgba(255,255,255,.85);width:100%}
 #sp{height:100%;display:flex;flex-direction:column;background:#000;touch-action:none}
-.shd{position:relative;background:#111;padding:7px 11px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #222;flex-shrink:0}
+.shd{background:#111;padding:7px 11px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #222;flex-shrink:0}
 .bkb{background:#222;border:none;border-radius:8px;padding:6px 12px;color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;cursor:pointer}
 .sti{font-family:'Boogaloo',cursive;font-size:17px;color:#f5c518}
 .fp{margin-left:auto;font-size:10px;color:#555;font-weight:700}
@@ -96,36 +96,24 @@ html,body{height:100%;overflow:hidden;background:#0d0d1a;font-family:'Nunito',sa
     </button>
     <button class="sb" onclick="openMode('random')" style="background:linear-gradient(135deg,#0a1a4a,#1a3a8a)">
       <div style="display:flex;align-items:center;gap:12px"><div class="si">🎲</div><div class="sl">Random Sandbox</div></div>
-      <div class="sd">Materials, items, and brush sizes are randomly available — changing on a random 1–5 minute timer. Even Clear, Erase Target, and Pause may vanish. You could have everything or nothing!</div>
+      <div class="sd">Materials, items, and brush sizes change randomly every 1–5 minutes. Even Clear and Pause may vanish!</div>
     </button>
     <button class="sb" onclick="openMode('chaos')" style="background:linear-gradient(135deg,#3a0a0a,#8a1a1a)">
       <div style="display:flex;align-items:center;gap:12px"><div class="si">💀</div><div class="sl">Chaos Sandbox</div></div>
-      <div class="sd">60 seconds of peace — then 10 seconds of random chaos. Acid rain, gravity flips, mass explosions, crystal invasions, meteor showers, 50 total disaster types. Then peace again.</div>
+      <div class="sd">60 seconds of peace — then 10 seconds of random chaos. 70 disaster types. Repeat forever.</div>
     </button>
     <button class="sb" onclick="openMode('tasks')" style="background:linear-gradient(135deg,#0a2a0a,#1a5a1a)">
       <div style="display:flex;align-items:center;gap:12px"><div class="si">📋</div><div class="sl">Sandbox Tasks</div></div>
-      <div class="sd">3 random tasks. Start with Sand, Water, Worms only. Complete tasks to unlock materials — Fire, Stone, Wood, Lava, and more. Unlock requirement doubles every time.</div>
+      <div class="sd">5 random tasks. Start with Sand, Water, Worms. Complete tasks to unlock more materials.</div>
     </button>
   </div>
 </div>
 
 <div id="sp" class="hidden">
-  <!-- Mode overlays shown in header -->
-  <div id="rsb-ov" class="hidden" style="display:flex;align-items:center;gap:8px;position:absolute;left:140px;right:80px;top:8px;z-index:10">
-    <span style="font-size:9px;color:#aaa;font-weight:800">RANDOM</span>
-    <span id="rsb-tmr" style="font-size:13px;font-weight:900;color:#ffd700;background:rgba(255,215,0,.12);border-radius:8px;padding:2px 8px">5:00</span>
-    <span id="rsb-inf" style="font-size:9px;color:#555;font-weight:700"></span>
-  </div>
-  <div id="chaos-ov" class="hidden" style="display:flex;align-items:center;gap:8px;position:absolute;left:140px;right:80px;top:8px;z-index:10">
-    <span id="chaos-pl" style="font-size:9px;font-weight:900;color:#4af;padding:2px 7px;border-radius:5px;background:rgba(64,170,255,.15)">PEACE</span>
-    <span id="chaos-tmr" style="font-size:13px;font-weight:900;color:#ffd700">1:00</span>
-    <span id="chaos-eff" style="font-size:9px;color:#f88;font-weight:700;overflow:hidden;white-space:nowrap;max-width:180px"></span>
-  </div>
-  <div id="tasks-ov" class="hidden" style="display:flex;align-items:center;gap:5px;position:absolute;left:140px;right:80px;top:6px;z-index:10;overflow:hidden">
-    <span style="font-size:8px;color:#4f4;font-weight:900;white-space:nowrap">✓<span id="tdone">0</span></span>
-    <div id="tlist" style="display:flex;gap:3px;overflow:hidden;flex:1"></div>
-  </div>
-  <div class="shd">
+  <div id="rsb-ov" class="hidden" style="display:flex;align-items:center;gap:8px;position:absolute;left:140px;right:80px;top:8px;z-index:10"><span style="font-size:9px;color:#aaa;font-weight:800">RANDOM</span><span id="rsb-tmr" style="font-size:13px;font-weight:900;color:#ffd700;background:rgba(255,215,0,.12);border-radius:8px;padding:2px 8px">5:00</span><span id="rsb-inf" style="font-size:9px;color:#555;font-weight:700"></span></div>
+  <div id="chaos-ov" class="hidden" style="display:flex;align-items:center;gap:8px;position:absolute;left:140px;right:80px;top:8px;z-index:10"><span id="chaos-pl" style="font-size:9px;font-weight:900;color:#4af;padding:2px 7px;border-radius:5px;background:rgba(64,170,255,.15)">PEACE</span><span id="chaos-tmr" style="font-size:13px;font-weight:900;color:#ffd700">1:00</span><span id="chaos-eff" style="font-size:9px;color:#f88;font-weight:700;overflow:hidden;white-space:nowrap;max-width:180px"></span></div>
+  <div id="tasks-ov" class="hidden" style="display:flex;align-items:center;gap:5px;position:absolute;left:140px;right:80px;top:6px;z-index:10;overflow:hidden"><span style="font-size:8px;color:#4f4;font-weight:900;white-space:nowrap">Done:<span id="tdone">0</span></span><div id="tlist" style="display:flex;gap:3px;overflow:hidden;flex:1"></div></div>
+  <div class="shd" style="position:relative">
     <button class="bkb" onclick="closeSand()">← Back</button>
     <div class="sti">⏳ Falling Sand</div>
     <div class="fp" id="fp">60 fps</div>
@@ -133,6 +121,7 @@ html,body{height:100%;overflow:hidden;background:#0d0d1a;font-family:'Nunito',sa
   <div class="cw" id="cw"><canvas id="c"></canvas></div>
   <div class="ctrl">
     <div class="rl">Materials</div><div class="mr" id="mr"></div>
+    <div class="mr" id="mr2"></div>
     <div id="ppr" class="hidden">
       <span style="font-size:10px;color:#aaa;font-weight:800">Color:</span>
       <input type="color" id="pcl" value="#ff4444">
@@ -159,31 +148,39 @@ html,body{height:100%;overflow:hidden;background:#0d0d1a;font-family:'Nunito',sa
 const EMPTY=0,SAND=1,WATER=2,FIRE=3,STONE=4,WOOD=5,OIL=6,ACID=7,SNOW=8,
       LAVA=9,SMOKE=10,STEAM=11,COOLED=12,PLANT=13,METAL=15,
       FRUIT=17,ASH=18,FIREWORK=19,WORM_CELL=21,DEAD_ORG=23,
-      GUNPOWDER=25,CRYSTAL=28,ANTIGRAVITY=29,PHOSPHORUS=30,JUICE=31,GLASS=32,HONEY=33,OBSIDIAN=34,FUNGUS=35,ERASER=99,PAINT_MODE=98,SPILL_MODE=97;
+      GUNPOWDER=25,CRYSTAL=28,ANTIGRAVITY=29,PHOSPHORUS=30,JUICE=31,GLASS=32,HONEY=33,OBSIDIAN=34,FUNGUS=35,WAX=36,MAGMA=37,NEON_GAS=38,SALT=39,PLASMA=40,ACID_CLOUD=42,ERASER=99,PAINT_MODE=98,SPILL_MODE=97;
 const CLOUD_ROWS=8;
 const SPARK_COLS=[[255,60,60],[60,200,255],[80,255,60],[255,240,40],[255,80,220],[60,180,255],[255,160,30]];
 
 const MAT_DEFS=[
-  {t:SAND,      l:'Sand',       i:'🟡',bg:'#8B6914'},
-  {t:WATER,     l:'Water',      i:'💧',bg:'#1a4a9a'},
-  {t:FIRE,      l:'Fire',       i:'🔥',bg:'#8B1a00'},
-  {t:STONE,     l:'Stone',      i:'🪨',bg:'#444'},
-  {t:WOOD,      l:'Wood',       i:'🪵',bg:'#4a2a08'},
-  {t:OIL,       l:'Oil',        i:'🫙',bg:'#5a4010'},
-  {t:ACID,      l:'Acid',       i:'🟢',bg:'#1a6a00'},
-  {t:SNOW,      l:'Snow',       i:'❄️',bg:'#4a5a8a'},
-  {t:LAVA,      l:'Lava',       i:'🌋',bg:'#8B1800'},
-  {t:STEAM,     l:'Steam',      i:'💨',bg:'#384868'},
-  {t:PLANT,     l:'Plant',      i:'🌿',bg:'#0a4a1a'},
-  {t:METAL,     l:'Metal',      i:'⚙️',bg:'#303040'},
-  {t:CRYSTAL,   l:'Crystal',    i:'🔮',bg:'#0a3060'},
-  {t:ANTIGRAVITY, l:'Antigravity',i:'🟣',bg:'#200040'},
-  {t:PHOSPHORUS,  l:'Phosphorus', i:'✨',bg:'#1a3a00'},
-  {t:HONEY,       l:'Honey',      i:'🍯',bg:'#4a2800'},
-  {t:FUNGUS,      l:'Fungus',     i:'🍄',bg:'#2a0a3a'},
-  {t:PAINT_MODE,l:'Paint',      i:'🎨',bg:'#6a1040'},
-  {t:SPILL_MODE, l:'Spill',      i:'🌈',bg:'#4a0a4a'},
-  {t:ERASER,    l:'Erase',      i:'🔲',bg:'#1a1a1a'},
+  {t:SAND,        l:'Sand',        i:'🟡',bg:'#8B6914'},
+  {t:WATER,       l:'Water',       i:'💧',bg:'#1a4a9a'},
+  {t:FIRE,        l:'Fire',        i:'🔥',bg:'#8B1a00'},
+  {t:STONE,       l:'Stone',       i:'🪨',bg:'#444'},
+  {t:WOOD,        l:'Wood',        i:'🪵',bg:'#4a2a08'},
+  {t:OIL,         l:'Oil',         i:'🫙',bg:'#5a4010'},
+  {t:ACID,        l:'Acid',        i:'🟢',bg:'#1a6a00'},
+  {t:SNOW,        l:'Snow',        i:'❄️',bg:'#4a5a8a'},
+  {t:LAVA,        l:'Lava',        i:'🌋',bg:'#8B1800'},
+  {t:STEAM,       l:'Steam',       i:'💨',bg:'#384868'},
+  {t:PLANT,       l:'Plant',       i:'🌿',bg:'#0a4a1a'},
+  {t:METAL,       l:'Metal',       i:'⚙️',bg:'#303040'},
+  {t:CRYSTAL,     l:'Crystal',     i:'🔮',bg:'#0a3060'},
+];
+const MAT_DEFS_2=[
+  {t:ANTIGRAVITY, l:'Antigravity', i:'🟣',bg:'#200040'},
+  {t:PHOSPHORUS,  l:'Phosphorus',  i:'✨',bg:'#1a3a00'},
+  {t:HONEY,       l:'Honey',       i:'🍯',bg:'#4a2800'},
+  {t:WAX,         l:'Wax',         i:'🕯️',bg:'#3a3020'},
+  {t:MAGMA,       l:'Magma',       i:'🔴',bg:'#5a0000'},
+  {t:SALT,        l:'Salt',        i:'🧂',bg:'#303038'},
+  {t:NEON_GAS,    l:'Neon Gas',    i:'💜',bg:'#1a003a'},
+  {t:PLASMA,      l:'Plasma',      i:'⚡',bg:'#002040'},
+  {t:ACID_CLOUD,  l:'Acid Cloud',  i:'🟨',bg:'#2a2a00'},
+  {t:FUNGUS,      l:'Fungus',      i:'🍄',bg:'#2a0a3a'},
+  {t:PAINT_MODE,  l:'Paint',       i:'🎨',bg:'#6a1040'},
+  {t:SPILL_MODE,  l:'Spill',       i:'🌈',bg:'#4a0a4a'},
+  {t:ERASER,      l:'Erase',       i:'🔲',bg:'#1a1a1a'},
 ];
 const ITEM_DEFS=[
   {id:'worm',      l:'Worm',           i:'🪱',bg:'#3a2a0a'},
@@ -195,9 +192,11 @@ const ITEM_DEFS=[
   {id:'meteor',    l:'Meteor',         i:'☄️',bg:'#4a1a00'},
   {id:'lightning', l:'Lightning',      i:'⚡',bg:'#1a1a4a'},
   {id:'geyser',    l:'Geyser',         i:'💦',bg:'#003a4a'},
-  {id:'juicer',   l:'Juicer',         i:'🧃',bg:'#3a2a00'},
-  {id:'wreckingball',l:'Wrecking Ball',i:'🪨',bg:'#2a1a00'},
+  {id:'juicer',    l:'Juicer',         i:'🧃',bg:'#3a2a00'},
+  {id:'wreckingball',l:'Wrecking Ball',  i:'🪨',bg:'#2a1a00'},
   {id:'seed',      l:'Seed',           i:'🌱',bg:'#0a2a00'},
+  {id:'magnet',    l:'Magnet',         i:'🧲',bg:'#2a0a0a'},
+  {id:'bubble',    l:'Bubble',         i:'🫧',bg:'#001a2a'},
 ];
 
 // ══ COLORS ══
@@ -228,10 +227,16 @@ const COLORS={
   [CRYSTAL]: ()=>pack(rnd(100,180),rnd(180,240),rnd(220,255),rnd(200,240)),
   [ANTIGRAVITY]:()=>pack(rnd(120,160),0,rnd(190,230)),
   [JUICE]:()=>pack(rnd(220,255),rnd(140,180),rnd(0,20),rnd(200,230)),
+  [GLASS]:()=>pack(rnd(160,200),rnd(210,240),rnd(220,250),rnd(170,210)),
   [HONEY]:()=>pack(rnd(200,240),rnd(120,160),rnd(0,20),rnd(220,245)),
   [OBSIDIAN]:()=>pack(rnd(10,30),rnd(10,30),rnd(20,40)),
   [FUNGUS]:()=>pack(rnd(100,150),rnd(40,80),rnd(100,150)),
-  [GLASS]:()=>pack(rnd(160,200),rnd(210,240),rnd(220,250),rnd(170,210)),
+  [WAX]:()=>pack(rnd(232,248),rnd(218,232),rnd(170,196)),
+  [MAGMA]:()=>pack(rnd(230,255),rnd(60,120),rnd(0,10)),
+  [NEON_GAS]:()=>pack(rnd(150,255),0,rnd(150,255),rnd(140,200)),
+  [SALT]:()=>pack(rnd(210,240),rnd(210,235),rnd(215,240)),
+  [PLASMA]:()=>pack(rnd(180,255),rnd(180,255),255,rnd(160,230)),
+  [ACID_CLOUD]:()=>pack(rnd(100,170),rnd(200,255),0,rnd(120,180)),
   [PHOSPHORUS]:  ()=>pack(rnd(50,90),rnd(220,255),0),
 };
 
@@ -242,7 +247,7 @@ let running=false,paused=false,tickCount=0;
 let lastFpsT=Date.now(),fpsCount=0;
 let curMat=SAND,curItem=null,brushSize=1;
 let drawing=false,etMode=false,paintColor=pack(255,68,68);
-let worms=[],flyingFW=[],fwParticles=[],pmelters=[],meteors=[],lbolts=[],geysers=[],juicer=null,wreckingBalls=[];
+let worms=[],flyingFW=[],fwParticles=[],pmelters=[],meteors=[],lbolts=[],geysers=[],juicer=null,wreckingBalls=[],magnets=[],bubbles=[];
 let nextEid=0;
 
 // ══ STARS ══
@@ -263,17 +268,14 @@ function initSim(){
 
 // ══ UI ══
 function buildUI(){
-  const clrBtn=document.querySelector('[onclick="clearAll()"]');
-  if(clrBtn)clrBtn.style.display='';
+  const clrBtn=document.querySelector('[onclick="clearAll()"]');if(clrBtn)clrBtn.style.display='';
   const etbBtn=document.getElementById('etb');if(etbBtn)etbBtn.style.display='';
   const pbBtn=document.getElementById('pb');if(pbBtn)pbBtn.style.display='';
-  const mr=document.getElementById('mr');mr.innerHTML='';
-  MAT_DEFS.forEach(m=>{
-    const b=document.createElement('button');b.className='mb'+(m.t===curMat?' on':'');
-    b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;
-    b.onclick=()=>{if(etMode){doET(m.t);return;}curMat=m.t;curItem=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.toggle('hidden',m.t!==PAINT_MODE);};
-    mr.appendChild(b);
-  });
+  const mr=document.getElementById('mr');if(!mr)return;mr.innerHTML='';
+  const mr2=document.getElementById('mr2');if(mr2)mr2.innerHTML='';
+  function _mkb(m,row){const b=document.createElement('button');b.className='mb'+(m.t===curMat?' on':'');b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;b.onclick=()=>{if(etMode){doET(m.t);return;}curMat=m.t;curItem=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.toggle('hidden',m.t!==PAINT_MODE&&m.t!==SPILL_MODE);};row.appendChild(b);}
+  MAT_DEFS.forEach(m=>_mkb(m,mr));
+  if(mr2)MAT_DEFS_2.forEach(m=>_mkb(m,mr2));
   const ir=document.getElementById('ir');ir.innerHTML='';
   ITEM_DEFS.forEach(m=>{
     const b=document.createElement('button');b.className='ib';b.dataset.id=m.id;b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;
@@ -283,7 +285,7 @@ function buildUI(){
   document.getElementById('pcl').addEventListener('input',e=>{const h=e.target.value;paintColor=pack(parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16));});
 }
 function setBrush(s){brushSize=s;document.querySelectorAll('.bb2').forEach(b=>b.classList.toggle('on',+b.dataset.sz===s));}
-function clearAll(){types.fill(0);cellColors.fill(0);extra.fill(0);mossLayer.fill(0);worms=[];flyingFW=[];fwParticles=[];pmelters=[];meteors=[];lbolts=[];geysers=[];juicer=null;wreckingBalls=[];}
+function clearAll(){types.fill(0);cellColors.fill(0);extra.fill(0);mossLayer.fill(0);worms=[];flyingFW=[];fwParticles=[];pmelters=[];meteors=[];lbolts=[];geysers=[];juicer=null;wreckingBalls=[];magnets=[];bubbles=[];}
 function togglePause(){paused=!paused;document.getElementById('pb').textContent=paused?'▶ Play':'⏸ Pause';}
 function toggleET(){etMode=!etMode;const b=document.getElementById('etb');b.classList.toggle('amd',etMode);b.textContent=etMode?'🎯 Click...':'🎯 Erase Target';document.querySelectorAll('.mb,.ib').forEach(b2=>b2.classList.toggle('etm',etMode));}
 function doneET(){etMode=false;document.getElementById('etb').classList.remove('amd');document.getElementById('etb').textContent='🎯 Erase Target';document.querySelectorAll('.mb,.ib').forEach(b=>b.classList.remove('etm'));}
@@ -295,9 +297,11 @@ function doETItem(id){
   if(id==='moss'){mossLayer.fill(0);}
   if(id==='gunpowder'){for(let i=0;i<types.length;i++)if(types[i]===GUNPOWDER){types[i]=0;cellColors[i]=0;extra[i]=0;}}
   if(id==='meteor'){meteors=[];}
+  if(id==='juicer'){juicer=null;}
   if(id==='wreckingball'){wreckingBalls=[];}
   if(id==='seed'){}
-  if(id==='juicer'){juicer=null;for(let i2=0;i2<types.length;i2++)if(types[i2]===JUICE){types[i2]=0;cellColors[i2]=0;extra[i2]=0;}}
+  if(id==='magnet'){magnets=[];}
+  if(id==='bubble'){bubbles=[];}
   if(id==='geyser'){geysers=[];for(let ig=0;ig<types.length;ig++)if(extra[ig]===200){types[ig]=0;cellColors[ig]=0;extra[ig]=0;}}
   if(id==='tree'){for(let i=0;i<types.length;i++)if(types[i]===FRUIT){types[i]=0;cellColors[i]=0;extra[i]=0;}}
   doneET();
@@ -335,7 +339,7 @@ function T(x,y){return inB(x,y)?types[y*cols+x]:STONE;}
 function isEmpty(x,y){return T(x,y)===EMPTY;}
 function isLiquid(x,y){const t=T(x,y);return t===WATER||t===ACID||t===OIL;}
 function isBurnable(x,y){const t=T(x,y);return t===WOOD||t===OIL||t===PLANT||t===SNOW;}
-function isHot(x,y){const t=T(x,y);return t===FIRE||t===LAVA;}
+function isHot(x,y){const t=T(x,y);return t===FIRE||t===LAVA||t===MAGMA||t===PLASMA;}
 function isSolid(x,y){const t=T(x,y);return t===STONE||t===WOOD||t===METAL||t===SAND||t===COOLED||t===PLANT||t===DEAD_ORG||t===FIREWORK||t===GUNPOWDER||t===CRYSTAL;}
 function mv(x,y,nx,ny){const i=y*cols+x,ni=ny*cols+nx;types[ni]=types[i];cellColors[ni]=cellColors[i];extra[ni]=extra[i];mossLayer[ni]=mossLayer[i];types[i]=0;cellColors[i]=0;extra[i]=0;mossLayer[i]=0;updated[ni]=1;}
 function sw(x,y,nx,ny){const i=y*cols+x,ni=ny*cols+nx;let t=types[i];types[i]=types[ni];types[ni]=t;let c=cellColors[i];cellColors[i]=cellColors[ni];cellColors[ni]=c;let e=extra[i];extra[i]=extra[ni];extra[ni]=e;let m=mossLayer[i];mossLayer[i]=mossLayer[ni];mossLayer[ni]=m;updated[ni]=1;}
@@ -360,6 +364,8 @@ function placeItem(id,x,y){
   else if(id==='juicer')placeJuicer(x,y);
   else if(id==='wreckingball')wreckingBalls.push({id:nextEid++,x,y:0,alive:true,r:8});
   else if(id==='seed')placeSeed(x,y);
+  else if(id==='magnet')magnets.push({id:nextEid++,x,y,age:0});
+  else if(id==='bubble')bubbles.push({id:nextEid++,x,y,r:12,age:0,alive:true});
 }
 
 // ══ TREE ══
@@ -512,7 +518,7 @@ function updateGeysers(){
 // ══ GAME LOOP ══
 function gameLoop(){
   requestAnimationFrame(gameLoop);
-  if(!paused){updateSim();updateWorms();updateFireworks();updatePMelters();updateMoss();updateMeteors();updateGeysers();updateJuicer();}updateWreckingBalls();tickRSB();tickChaos();tickTasks();
+  if(!paused){updateSim();updateWorms();updateFireworks();updatePMelters();updateMoss();updateMeteors();updateGeysers();updateJuicer();updateWreckingBalls();updateMagnets();updateBubbles();}tickRSB();tickChaos();tickTasks();
   render();
   fpsCount++;const now=Date.now();if(now-lastFpsT>=1000){document.getElementById('fp').textContent=fpsCount+' fps';fpsCount=0;lastFpsT=now;}tickCount++;
 }
@@ -535,61 +541,28 @@ function updateSim(){
       case ANTIGRAVITY:updAntigravity(x,y,i);break;
       case PHOSPHORUS:  updPhosphorus(x,y,i);break;
       case JUICE:       updJuice(x,y,i);break;
-      case HONEY:      updHoney(x,y,i);break;
-      case FUNGUS:     updFungus(x,y,i);break;
+      case HONEY:       updHoney(x,y,i);break;
+      case WAX:         updWax(x,y,i);break;
+      case MAGMA:       updMagma(x,y,i);break;
+      case NEON_GAS:    updNeonGas(x,y,i);break;
+      case SALT:        updSalt(x,y,i);break;
+      case PLASMA:      updPlasma(x,y,i);break;
+      case ACID_CLOUD:  updAcidCloud(x,y,i);break;
+      case FUNGUS:      updFungus(x,y,i);break;
     }
   }
 }
 
 // ══ MATERIAL UPDATES ══
 function updSand(x,y,i){const hot=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy));if(hot){const f=rnd(0,30);cellColors[i]=pack(rnd(220,245),rnd(100,150)+f,rnd(20,50),rnd(160,210));if(Math.random()<0.004){formGlass(x,y);return;}}if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(isLiquid(x,y+1)){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);}}
-function updWater(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(T(x,y+1)===OIL){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}for(const dd of[d,-d]){if(T(x+dd,y)===SAND){if(isEmpty(x+dd*2,y)){mv(x+dd,y,x+dd*2,y);mv(x,y,x+dd,y);return;}if(isEmpty(x+dd,y+1)){mv(x+dd,y,x+dd,y+1);mv(x,y,x+dd,y);return;}}if(isEmpty(x+dd,y)){mv(x,y,x+dd,y);return;}}if([[0,1],[1,0],[-1,0]].some(([dx,dy])=>T(x+dx,y+dy)===LAVA)&&Math.random()<0.05)set(x,y,STEAM,COLORS[STEAM](),1);}
+function updWater(x,y,i){
+  if(extra[i]>0){const s=extra[i]/255;cellColors[i]=pack(Math.floor(26+s*74),Math.floor(100+s*80),Math.floor(180+s*55),Math.floor(235-s*20));if(Math.random()<0.002)extra[i]=Math.max(0,extra[i]-1);}
+  // Saltiness diffuses to adjacent water cells
+  if(extra[i]>0&&tickCount%6===0){[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{const nx=x+dx,ny=y+dy,ni=ny*cols+nx;if(!inB(nx,ny)||types[ni]!==WATER)return;const diff=Math.floor((extra[i]-extra[ni])/2);if(diff>0){extra[ni]=Math.min(255,extra[ni]+diff);extra[i]=Math.max(0,extra[i]-diff);}});}if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(T(x,y+1)===OIL){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}for(const dd of[d,-d]){if(T(x+dd,y)===SAND){if(isEmpty(x+dd*2,y)){mv(x+dd,y,x+dd*2,y);mv(x,y,x+dd,y);return;}if(isEmpty(x+dd,y+1)){mv(x+dd,y,x+dd,y+1);mv(x,y,x+dd,y);return;}}if(isEmpty(x+dd,y)){mv(x,y,x+dd,y);return;}}if([[0,1],[1,0],[-1,0]].some(([dx,dy])=>T(x+dx,y+dy)===LAVA)&&Math.random()<0.05)set(x,y,STEAM,COLORS[STEAM](),1);}
 function updFire(x,y,i){extra[i]--;if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===WATER)&&Math.random()<0.18){if(Math.random()<0.3)set(x,y,SMOKE,COLORS[SMOKE](),rnd(20,40));else clr(x,y);return;}if(extra[i]<=0){if(Math.random()<0.4)set(x,y,SMOKE,COLORS[SMOKE](),rnd(20,50));else clr(x,y);return;}const t=extra[i]/100;cellColors[i]=pack(255,Math.floor(t*200),Math.floor(t*t*80));if(isEmpty(x,y-1)&&Math.random()<0.7){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y-1)&&Math.random()<0.3){mv(x,y,x+d,y-1);return;}[[0,-1],[1,0],[-1,0],[0,1]].forEach(([dx,dy])=>{if(!inB(x+dx,y+dy)||!isBurnable(x+dx,y+dy))return;if(Math.random()<0.015){set(x+dx,y+dy,FIRE,COLORS[FIRE](),rnd(60,100));updated[(y+dy)*cols+(x+dx)]=1;}});if(isEmpty(x,y-1)&&Math.random()<0.05)set(x,y-1,SMOKE,COLORS[SMOKE](),rnd(20,50));}
 function updOil(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)){mv(x,y,x-d,y);}}
 function updAcid(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)){mv(x,y,x-d,y);return;}[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{const nt=T(x+dx,y+dy);if(nt===EMPTY||nt===ACID||nt===METAL||nt===LAVA||nt===FIRE)return;if(Math.random()<0.03){clr(x+dx,y+dy);if(Math.random()<0.4)clr(x,y);}});}
 function updSnow(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(isLiquid(x,y+1)){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}[[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,1]].forEach(([dx,dy])=>{const nt=T(x+dx,y+dy);if((nt===FIRE||nt===LAVA)&&Math.random()<0.06)set(x,y,WATER,COLORS[WATER](),0);if(nt===WATER&&Math.random()<0.008)set(x,y,WATER,COLORS[WATER](),0);});if(Math.random()<0.0004)set(x,y,WATER,COLORS[WATER](),0);}
-function formObsidian(startX,startY){
-  // BFS: convert up to 10 lava cells that touch water → obsidian
-  let count=0;
-  const queue=[{x:startX,y:startY}];
-  const visited=new Set();
-  while(queue.length&&count<10){
-    const {x:cx,y:cy}=queue.shift();
-    const key=cy*cols+cx;
-    if(visited.has(key))continue;
-    visited.add(key);
-    if(T(cx,cy)!==LAVA)continue;
-    const nearWater=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(cx+dx,cy+dy)===WATER);
-    if(!nearWater)continue;
-    set(cx,cy,OBSIDIAN,COLORS[OBSIDIAN]());
-    count++;
-    [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{
-      const nx=cx+dx,ny=cy+dy;
-      if(inB(nx,ny)&&T(nx,ny)===LAVA&&!visited.has(ny*cols+nx))queue.push({x:nx,y:ny});
-    });
-  }
-}
-function formGlass(startX,startY){
-  // BFS: convert up to 10 sand cells that touch fire/lava → glass
-  let count=0;
-  const queue=[{x:startX,y:startY}];
-  const visited=new Set();
-  while(queue.length&&count<10){
-    const {x:cx,y:cy}=queue.shift();
-    const key=cy*cols+cx;
-    if(visited.has(key))continue;
-    visited.add(key);
-    if(T(cx,cy)!==SAND)continue;
-    const nearHeat=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(cx+dx,cy+dy));
-    if(!nearHeat)continue;
-    set(cx,cy,GLASS,COLORS[GLASS]());
-    count++;
-    [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{
-      const nx=cx+dx,ny=cy+dy;
-      if(inB(nx,ny)&&T(nx,ny)===SAND&&!visited.has(ny*cols+nx))queue.push({x:nx,y:ny});
-    });
-  }
-}
 function updLava(x,y,i){extra[i]--;if(extra[i]<=0){set(x,y,COOLED,COLORS[COOLED](),0);return;}const t=extra[i]/240;cellColors[i]=pack(255,clamp(Math.floor(t*120),0,200),0);if(isEmpty(x,y+1)&&Math.random()<0.4){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)&&Math.random()<0.2){mv(x,y,x+d,y+1);return;}if(isEmpty(x+d,y)&&Math.random()<0.1){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.1){mv(x,y,x-d,y);return;}[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{if(isBurnable(x+dx,y+dy)&&Math.random()<0.02)set(x+dx,y+dy,FIRE,COLORS[FIRE](),rnd(60,100));if(T(x+dx,y+dy)===WATER){if(Math.random()<0.08){formObsidian(x,y);set(x+dx,y+dy,STEAM,COLORS[STEAM](),1);}else if(Math.random()<0.04)set(x+dx,y+dy,STEAM,COLORS[STEAM](),1);}});}
 function updSmoke(x,y,i){extra[i]--;if(extra[i]<=0){clr(x,y);return;}cellColors[i]=pack(rnd(80,130),rnd(80,130),rnd(80,130),clamp(Math.floor(extra[i]/80*180),30,180));if(isEmpty(x,y-1)&&Math.random()<0.8){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y)&&Math.random()<0.35){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.35){mv(x,y,x-d,y);}}
 function updSteam(x,y,i){const inC=y<CLOUD_ROWS;if(inC){[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]].forEach(([dx,dy])=>{const nx=x+dx,ny=y+dy;if(!inB(nx,ny))return;const ni=ny*cols+nx;if(types[ni]===STEAM&&!updated[ni]&&Math.random()<0.3){extra[i]=Math.min(15,extra[i]+extra[ni]);types[ni]=0;cellColors[ni]=0;extra[ni]=0;updated[ni]=1;}});const dens=Math.min(1,extra[i]/10);cellColors[i]=pack(Math.floor(200-dens*100),Math.floor(208-dens*100),Math.floor(220-dens*80),Math.floor(110+dens*145));if(Math.random()<0.06){const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}}if(extra[i]>=6&&Math.random()<0.003*(extra[i]-4)){for(let ry=y+1;ry<Math.min(y+5,rows);ry++){if(isEmpty(x,ry)){if(Math.random()<0.3)set(x,ry,WATER,COLORS[WATER](),0);extra[i]=Math.max(0,extra[i]-2);if(extra[i]<=0)clr(x,y);return;}}extra[i]=Math.max(0,extra[i]-1);if(extra[i]<=0)clr(x,y);}return;}if(isEmpty(x,y-1)){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y-1)){mv(x,y,x+d,y-1);return;}if(isEmpty(x-d,y-1)){mv(x,y,x-d,y-1);return;}if(isEmpty(x+d,y)&&Math.random()<0.5){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.5){mv(x,y,x-d,y);return;}if(Math.random()<0.006)clr(x,y);}
@@ -669,84 +642,27 @@ function updPhosphorus(x,y,i){
 }
 
 
-function updJuice(x,y,i){
-  if(juicer&&!juicer.released)return;
-  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
-  const d=Math.random()<0.5?1:-1;
-  for(let s=1;s<=6;s++){
-    if(isEmpty(x+d*s,y+1)){mv(x,y,x+d*s,y+1);return;}
-    if(isEmpty(x-d*s,y+1)){mv(x,y,x-d*s,y+1);return;}
-    if(isEmpty(x+d*s,y)){mv(x,y,x+d*s,y);return;}
-    if(isEmpty(x-d*s,y)){mv(x,y,x-d*s,y);return;}
-  }
+function formObsidian(sx,sy){let n=0;const q=[{x:sx,y:sy}],v=new Set();while(q.length&&n<10){const{x:cx,y:cy}=q.shift(),k=cy*cols+cx;if(v.has(k))continue;v.add(k);if(T(cx,cy)!==LAVA)continue;if(![[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(cx+dx,cy+dy)===WATER))continue;set(cx,cy,OBSIDIAN,COLORS[OBSIDIAN]());n++;[[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{const nx=cx+dx,ny=cy+dy;if(inB(nx,ny)&&T(nx,ny)===LAVA&&!v.has(ny*cols+nx))q.push({x:nx,y:ny});});}
 }
-function placeJuicer(x,y){
-  if(juicer)return;
-  juicer={x,y,age:0,released:false};
-  let pulled=0;
-  for(let i2=0;i2<types.length;i2++){
-    if(types[i2]===FRUIT){
-      types[i2]=0;cellColors[i2]=0;extra[i2]=0;
-      const jy=y-pulled;
-      if(inB(x,jy)){types[jy*cols+x]=JUICE;cellColors[jy*cols+x]=COLORS[JUICE]();extra[jy*cols+x]=1;}
-      pulled++;
-    }
-  }
+function formGlass(sx,sy){let n=0;const q=[{x:sx,y:sy}],v=new Set();while(q.length&&n<10){const{x:cx,y:cy}=q.shift(),k=cy*cols+cx;if(v.has(k))continue;v.add(k);if(T(cx,cy)!==SAND)continue;if(![[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(cx+dx,cy+dy)))continue;set(cx,cy,GLASS,COLORS[GLASS]());n++;[[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{const nx=cx+dx,ny=cy+dy;if(inB(nx,ny)&&T(nx,ny)===SAND&&!v.has(ny*cols+nx))q.push({x:nx,y:ny});});}
 }
-function updateJuicer(){
-  if(!juicer)return;
-  juicer.age++;
-  if(juicer.age>=600){juicer.released=true;juicer=null;}
-}
-function updHoney(x,y,i){
-  if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy))&&Math.random()<0.002){set(x,y,FIRE,COLORS[FIRE](),rnd(40,80));return;}
-  if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.03){clr(x,y);return;}
-  if(tickCount%6!==0)return; // slow motion — updates every 6 ticks
-  // Flows exactly like water but 6x slower
-  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
-  if(T(x,y+1)===OIL){sw(x,y,x,y+1);return;}
-  const d=Math.random()<0.5?1:-1;
-  if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
-  if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
-  if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}
-  if(isEmpty(x-d,y)){mv(x,y,x-d,y);}
-}
-function updFungus(x,y,i){
-  if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy))&&Math.random()<0.03){set(x,y,FIRE,COLORS[FIRE](),rnd(30,60));return;}
-  if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.05){clr(x,y);return;}
-  if(Math.random()>0.004)return;
-  const dirs=[[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];dirs.sort(()=>Math.random()-0.5);
-  for(const[dx,dy]of dirs){const nx=x+dx,ny=y+dy;if(!inB(nx,ny))continue;const nt=T(nx,ny);
-    if(nt===DEAD_ORG||nt===WOOD){set(nx,ny,FUNGUS,COLORS[FUNGUS](),0);break;}
-    if(nt===EMPTY){const hf=[[0,1],[1,0],[-1,0],[0,-1]].some(([sx,sy])=>{const st=T(nx+sx,ny+sy);return st===DEAD_ORG||st===WOOD||st===FUNGUS;});if(hf){set(nx,ny,FUNGUS,COLORS[FUNGUS](),0);break;}}
-  }
-}
-function updateWreckingBalls(){
-  wreckingBalls=wreckingBalls.filter(wb=>{
-    if(!wb.alive)return false;
-    for(let step=0;step<3;step++){
-      wb.y++;if(wb.y>=rows){wb.alive=false;return false;}
-      let blocked=false;
-      for(let dy=-wb.r;dy<=wb.r;dy++)for(let dx=-wb.r;dx<=wb.r;dx++){
-        if(dx*dx+dy*dy>wb.r*wb.r)continue;const nx=wb.x+dx,ny=wb.y+dy;if(!inB(nx,ny))continue;
-        const nt=T(nx,ny);if(nt===OBSIDIAN)blocked=true;
-        if(nt!==EMPTY&&nt!==WORM_CELL){if(nt===GUNPOWDER)explodeGP(nx,ny);clr(nx,ny);}
-      }
-      if(blocked||wb.y+wb.r>=rows-2){
-        for(let dy=-wb.r;dy<=wb.r;dy++)for(let dx=-wb.r;dx<=wb.r;dx++){if(dx*dx+dy*dy<=wb.r*wb.r&&inB(wb.x+dx,wb.y+dy))set(wb.x+dx,wb.y+dy,STONE,COLORS[STONE]());}
-        wb.alive=false;return false;
-      }
-    }return true;
-  });
-}
-function placeSeed(x,y){
-  const type=rnd(0,4);
-  if(type===0){const h=rnd(8,16);for(let dy=0;dy<h;dy++)if(inB(x,y-dy))set(x,y-dy,WOOD,COLORS[WOOD]());for(let i=0;i<rnd(3,6);i++){const by=y-rnd(3,h-1),bl=rnd(3,8),dir=Math.random()<0.5?1:-1;for(let bx=0;bx<bl;bx++){if(inB(x+dir*bx,by))set(x+dir*bx,by,WOOD,COLORS[WOOD]());if(inB(x+dir*bx,by-1)&&Math.random()<0.5)set(x+dir*bx,by-1,PLANT,COLORS[PLANT](),0);}}}
-  else if(type===1){for(let i=0;i<rnd(5,10);i++){const cx=x+rnd(-6,6),cy=y+rnd(-2,0),h=rnd(4,10);for(let dy=0;dy<h;dy++)if(inB(cx,cy-dy))set(cx,cy-dy,CRYSTAL,COLORS[CRYSTAL]());}}
-  else if(type===2){for(let dy=0;dy<rnd(6,12);dy++)for(let dx=-rnd(1,4);dx<=rnd(1,4);dx++)if(inB(x+dx,y-dy)&&isEmpty(x+dx,y-dy)&&Math.random()<0.55)set(x+dx,y-dy,PLANT,COLORS[PLANT](),0);}
-  else if(type===3){const h=rnd(5,10);for(let dy=0;dy<h;dy++)if(inB(x,y-dy))set(x,y-dy,WOOD,COLORS[WOOD]());const capR=rnd(4,8);for(let dx=-capR;dx<=capR;dx++)for(let dy=-3;dy<=0;dy++)if(inB(x+dx,y-h+dy)&&Math.abs(dx)<=capR+dy)set(x+dx,y-h+dy,FUNGUS,COLORS[FUNGUS](),0);}
-  else{const r=rnd(5,9);for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++)if(dx*dx+dy*dy<=r*r&&inB(x+dx,y+dy))set(x+dx,y+dy,STONE,COLORS[STONE]());for(let i2=0;i2<mossLayer.length;i2++){const mx=i2%cols,my=Math.floor(i2/cols);if(Math.sqrt((mx-x)**2+(my-y)**2)<=r+1&&isSolid(mx,my))mossLayer[i2]=1;}}
-}
+function updJuice(x,y,i){if(juicer&&!juicer.released)return;if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;for(let s=1;s<=6;s++){if(isEmpty(x+d*s,y+1)){mv(x,y,x+d*s,y+1);return;}if(isEmpty(x-d*s,y+1)){mv(x,y,x-d*s,y+1);return;}if(isEmpty(x+d*s,y)){mv(x,y,x+d*s,y);return;}if(isEmpty(x-d*s,y)){mv(x,y,x-d*s,y);return;}}}
+function placeJuicer(x,y){if(juicer)return;juicer={x,y,age:0,released:false};let p=0;for(let i=0;i<types.length;i++){if(types[i]===FRUIT){types[i]=0;cellColors[i]=0;extra[i]=0;const jy=y-p;if(inB(x,jy)){types[jy*cols+x]=JUICE;cellColors[jy*cols+x]=COLORS[JUICE]();extra[jy*cols+x]=1;}p++;}}}
+function updateJuicer(){if(!juicer)return;juicer.age++;if(juicer.age>=600){juicer.released=true;juicer=null;}}
+function updHoney(x,y,i){if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy))&&Math.random()<0.002){set(x,y,FIRE,COLORS[FIRE](),rnd(40,80));return;}if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.03){clr(x,y);return;}if(tickCount%6!==0)return;if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(T(x,y+1)===OIL){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)){mv(x,y,x-d,y);}}
+function updWax(x,y,i){const liquid=extra[i]>0,nearHeat=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy));if(!liquid){cellColors[i]=pack(rnd(232,248),rnd(218,232),rnd(170,196));if(nearHeat&&Math.random()<0.06)extra[i]=220;if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.04)clr(x,y);return;}const warmth=extra[i]/220;cellColors[i]=pack(Math.floor(240-warmth*20),Math.floor(200-warmth*30),Math.floor(120+warmth*50));if(!nearHeat)extra[i]=Math.max(0,extra[i]-1);else extra[i]=Math.min(220,extra[i]+1);if(extra[i]<=0)return;if(tickCount%6!==0)return;if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x+d,y)&&Math.random()<0.3){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.3){mv(x,y,x-d,y);}}
+function updMagma(x,y,i){if(tickCount%7===0){extra[i]--;if(extra[i]<=0){set(x,y,OBSIDIAN,COLORS[OBSIDIAN]());return;}}const pulse=(Math.sin(tickCount*0.08)*0.25+0.75);cellColors[i]=pack(255,Math.floor(pulse*140),0);if(isEmpty(x,y+1)&&Math.random()<0.35){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)&&Math.random()<0.18){mv(x,y,x+d,y+1);return;}if(isEmpty(x+d,y)&&Math.random()<0.12){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.12){mv(x,y,x-d,y);return;}[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{if(isBurnable(x+dx,y+dy)&&Math.random()<0.06)set(x+dx,y+dy,FIRE,COLORS[FIRE](),rnd(70,130));if(T(x+dx,y+dy)===WATER&&Math.random()<0.12)set(x+dx,y+dy,STEAM,COLORS[STEAM](),1);});}
+function updNeonGas(x,y,i){extra[i]--;if(extra[i]<=0){clr(x,y);return;}const hue=(tickCount*3+x*7+y*5)%360,r=Math.floor(128+127*Math.sin(hue*Math.PI/180)),g=Math.floor(128+127*Math.sin((hue+120)*Math.PI/180)),b2=Math.floor(128+127*Math.sin((hue+240)*Math.PI/180));cellColors[i]=pack(r,g,b2,clamp(Math.floor(extra[i]/60*200),60,200));if(Math.random()<0.08){const ni=(y+rnd(-1,1))*cols+(x+rnd(-1,1));if(ni>=0&&ni<types.length&&types[ni]!==EMPTY&&types[ni]!==NEON_GAS)cellColors[ni]=pack(r,g,b2,255);}if(isEmpty(x,y-1)){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y-1)){mv(x,y,x+d,y-1);return;}if(isEmpty(x+d,y)&&Math.random()<0.5){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.5){mv(x,y,x-d,y);}}
+function updSalt(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{const nx=x+dx,ny=y+dy,ni=ny*cols+nx;if(!inB(nx,ny))return;const nt=types[ni];if(nt===WATER&&Math.random()<0.1){clr(x,y);extra[ni]=Math.min(255,extra[ni]+35);return;}if(nt===SNOW&&Math.random()<0.3){types[ni]=WATER;cellColors[ni]=COLORS[WATER]();extra[ni]=60;if(Math.random()<0.4)clr(x,y);}if(nt===ACID&&Math.random()<0.12)clr(x,y);});}
+function updPlasma(x,y,i){extra[i]--;if(extra[i]<=0){if(Math.random()<0.3)set(x,y,SMOKE,COLORS[SMOKE](),rnd(10,25));else clr(x,y);return;}const p=Math.sin(tickCount*0.3)*0.25+0.75;cellColors[i]=pack(Math.floor(200+p*55),Math.floor(200+p*55),255,clamp(Math.floor(extra[i]/80*255),60,255));[[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]].forEach(([dx,dy])=>{const nt=T(x+dx,y+dy);if(isBurnable(x+dx,y+dy)&&Math.random()<0.1)set(x+dx,y+dy,FIRE,COLORS[FIRE](),rnd(70,130));if(nt===WATER&&Math.random()<0.12)set(x+dx,y+dy,STEAM,COLORS[STEAM](),1);if(nt===EMPTY&&Math.random()<0.03&&extra[i]>25)set(x+dx,y+dy,PLASMA,pack(200,200,255),Math.max(8,extra[i]-25));});if(isEmpty(x,y-1)){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y-1)){mv(x,y,x+d,y-1);return;}if(isEmpty(x+d,y)&&Math.random()<0.5){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.5){mv(x,y,x-d,y);}}
+
+function updAcidCloud(x,y,i){extra[i]--;if(extra[i]<=0){clr(x,y);return;}const t=extra[i]/90;cellColors[i]=pack(Math.floor(80+t*80),Math.floor(200+t*55),0,Math.floor(140*t+25));[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{const nt=T(x+dx,y+dy);if(nt!==EMPTY&&nt!==ACID_CLOUD&&nt!==METAL&&nt!==OBSIDIAN&&Math.random()<0.012){if(nt===STONE&&Math.random()<0.1)clr(x+dx,y+dy);else if(nt!==STONE)clr(x+dx,y+dy);};});if(isEmpty(x,y-1)&&Math.random()<0.85){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y)&&Math.random()<0.4){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.4){mv(x,y,x-d,y);}}
+function updFungus(x,y,i){if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy))&&Math.random()<0.03){set(x,y,FIRE,COLORS[FIRE](),rnd(30,60));return;}if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.05){clr(x,y);return;}if(Math.random()>0.004)return;const dirs=[[0,1],[1,0],[-1,0],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];dirs.sort(()=>Math.random()-0.5);for(const[dx,dy]of dirs){const nx=x+dx,ny=y+dy;if(!inB(nx,ny))continue;const nt=T(nx,ny);if(nt===DEAD_ORG||nt===WOOD){set(nx,ny,FUNGUS,COLORS[FUNGUS](),0);break;}if(nt===EMPTY){const hf=[[0,1],[1,0],[-1,0],[0,-1]].some(([sx,sy])=>{const st=T(nx+sx,ny+sy);return st===DEAD_ORG||st===WOOD||st===FUNGUS;});if(hf){set(nx,ny,FUNGUS,COLORS[FUNGUS](),0);break;}}}}
+function updateWreckingBalls(){wreckingBalls=wreckingBalls.filter(wb=>{if(!wb.alive)return false;for(let step=0;step<3;step++){wb.y++;if(wb.y>=rows){wb.alive=false;return false;}let blocked=false;for(let dy=-wb.r;dy<=wb.r;dy++)for(let dx=-wb.r;dx<=wb.r;dx++){if(dx*dx+dy*dy>wb.r*wb.r)continue;const nx=wb.x+dx,ny=wb.y+dy;if(!inB(nx,ny))continue;const nt=T(nx,ny);if(nt===OBSIDIAN)blocked=true;if(nt!==EMPTY&&nt!==WORM_CELL){if(nt===GUNPOWDER)explodeGP(nx,ny);clr(nx,ny);}}if(blocked||wb.y+wb.r>=rows-2){for(let dy=-wb.r;dy<=wb.r;dy++)for(let dx=-wb.r;dx<=wb.r;dx++){if(dx*dx+dy*dy<=wb.r*wb.r&&inB(wb.x+dx,wb.y+dy))set(wb.x+dx,wb.y+dy,STONE,COLORS[STONE]());}wb.alive=false;return false;}}return true;});}
+function placeSeed(x,y){const type=rnd(0,4);if(type===0){const h=rnd(8,16);for(let dy=0;dy<h;dy++)if(inB(x,y-dy))set(x,y-dy,WOOD,COLORS[WOOD]());for(let i=0;i<rnd(3,6);i++){const by=y-rnd(3,h-1),bl=rnd(3,8),dir=Math.random()<0.5?1:-1;for(let bx=0;bx<bl;bx++){if(inB(x+dir*bx,by))set(x+dir*bx,by,WOOD,COLORS[WOOD]());if(inB(x+dir*bx,by-1)&&Math.random()<0.5)set(x+dir*bx,by-1,PLANT,COLORS[PLANT](),0);}}}else if(type===1){for(let i=0;i<rnd(5,10);i++){const cx=x+rnd(-6,6),cy=y+rnd(-2,0),h=rnd(4,10);for(let dy=0;dy<h;dy++)if(inB(cx,cy-dy))set(cx,cy-dy,CRYSTAL,COLORS[CRYSTAL]());}}else if(type===2){for(let dy=0;dy<rnd(6,12);dy++)for(let dx=-rnd(1,4);dx<=rnd(1,4);dx++)if(inB(x+dx,y-dy)&&isEmpty(x+dx,y-dy)&&Math.random()<0.55)set(x+dx,y-dy,PLANT,COLORS[PLANT](),0);}else if(type===3){const h=rnd(5,10);for(let dy=0;dy<h;dy++)if(inB(x,y-dy))set(x,y-dy,WOOD,COLORS[WOOD]());const capR=rnd(4,8);for(let dx=-capR;dx<=capR;dx++)for(let dy=-3;dy<=0;dy++)if(inB(x+dx,y-h+dy)&&Math.abs(dx)<=capR+dy)set(x+dx,y-h+dy,FUNGUS,COLORS[FUNGUS](),0);}else{const r=rnd(5,9);for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++)if(dx*dx+dy*dy<=r*r&&inB(x+dx,y+dy))set(x+dx,y+dy,STONE,COLORS[STONE]());for(let i2=0;i2<mossLayer.length;i2++){const mx=i2%cols,my=Math.floor(i2/cols);if(Math.sqrt((mx-x)**2+(my-y)**2)<=r+1&&isSolid(mx,my))mossLayer[i2]=1;}}}
+function updateMagnets(){magnets=magnets.filter(m=>{m.age++;if(m.age>1200)return false;const R=20;for(let dy=-R;dy<=R;dy++)for(let dx=-R;dx<=R;dx++){const dist=Math.sqrt(dx*dx+dy*dy);if(dist<1||dist>R)continue;const cx=m.x+dx,cy=m.y+dy;if(!inB(cx,cy))continue;const ct=types[cy*cols+cx];if(ct===EMPTY)continue;const strength=ct===METAL?0.12:(ct===SAND||ct===SNOW||ct===COOLED)?0.03:0;if(strength>0&&Math.random()<strength*(1-dist/R)){const nx=cx+Math.sign(-dx),ny=cy+Math.sign(-dy);if(inB(nx,ny)&&isEmpty(nx,ny))mv(cx,cy,nx,ny);}}return true;});}
+
+function updateBubbles(){bubbles=bubbles.filter(b=>{if(!b.alive)return false;b.age++;if(tickCount%2===0)b.y--;if(b.y-b.r<1||b.age>700){for(let dy=-b.r;dy<=b.r;dy++)for(let dx=-b.r;dx<=b.r;dx++){if(dx*dx+dy*dy>b.r*b.r)continue;const cx=b.x+dx,cy=b.y+dy;if(!inB(cx,cy))continue;if(types[cy*cols+cx]!==EMPTY&&Math.random()<0.6){const nx=cx+rnd(-4,4),ny=cy-rnd(1,5);if(inB(nx,ny)&&isEmpty(nx,ny))mv(cx,cy,nx,ny);}}b.alive=false;return false;}for(let dy=-b.r+2;dy<=b.r-2;dy++)for(let dx=-b.r+2;dx<=b.r-2;dx++){if(dx*dx+dy*dy>b.r*b.r)continue;const cx=b.x+dx,cy=b.y+dy;if(!inB(cx,cy))continue;if(types[cy*cols+cx]!==EMPTY&&inB(cx,cy-1)&&isEmpty(cx,cy-1)&&Math.random()<0.22)mv(cx,cy,cx,cy-1);}return true;});}
 // ══ RENDER ══
 function render(){
   imgBuf.fill(0xFF050508);
@@ -793,8 +709,9 @@ function render(){
   });
 
 
-  if(juicer){const jx=juicer.x*CELL,jy=juicer.y*CELL;const spin=tickCount*0.15,life=1-juicer.age/600;ctx.save();ctx.strokeStyle=`rgba(255,180,0,${(0.8*life).toFixed(2)})`;ctx.lineWidth=2;for(let r=0;r<3;r++){const a=spin+r*2.09;ctx.beginPath();ctx.arc(jx+Math.cos(a)*CELL*3,jy+Math.sin(a)*CELL*3,CELL,0,Math.PI*2);ctx.stroke();}ctx.fillStyle=`rgba(255,140,0,${(0.4*life).toFixed(2)})`;ctx.beginPath();ctx.arc(jx,jy,CELL*2,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 9px sans-serif';ctx.fillText(Math.ceil((600-juicer.age)/60)+'s',jx-4,jy+3);ctx.restore();}
-  wreckingBalls.forEach(wb=>{if(!wb.alive)return;const px=wb.x*CELL,py=wb.y*CELL,R=wb.r*CELL;ctx.save();const g=ctx.createRadialGradient(px-R*.3,py-R*.3,R*.1,px,py,R);g.addColorStop(0,'rgba(180,120,60,.95)');g.addColorStop(1,'rgba(60,40,20,.9)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,R,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(80,50,20,.8)';ctx.lineWidth=2;ctx.stroke();ctx.restore();});
+  bubbles.forEach(b=>{const px=b.x*CELL,py=b.y*CELL,R=b.r*CELL,life=Math.max(0,1-b.age/700);ctx.save();ctx.strokeStyle=`rgba(180,230,255,${(0.8*life).toFixed(2)})`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(px,py,R,0,Math.PI*2);ctx.stroke();ctx.fillStyle=`rgba(100,180,255,${(0.07*life).toFixed(2)})`;ctx.fill();ctx.restore();});
+  magnets.forEach(m=>{const px=m.x*CELL,py=m.y*CELL,life=Math.max(0,1-m.age/1200),R=20*CELL;ctx.save();const g=ctx.createRadialGradient(px,py,CELL,px,py,R);g.addColorStop(0,`rgba(220,60,60,${(0.35*life).toFixed(2)})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,R,0,Math.PI*2);ctx.fill();ctx.restore();});
+  wreckingBalls.forEach(wb=>{if(!wb.alive)return;const px=wb.x*CELL,py=wb.y*CELL,R=wb.r*CELL;ctx.save();const g=ctx.createRadialGradient(px-R*.3,py-R*.3,R*.1,px,py,R);g.addColorStop(0,'rgba(180,120,60,.95)');g.addColorStop(1,'rgba(60,40,20,.9)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,R,0,Math.PI*2);ctx.fill();ctx.restore();});
   // Meteors
   meteors.forEach(m=>{
     if(!m.alive)return;const px=m.x*CELL,py=m.y*CELL,R=7*CELL;
@@ -803,9 +720,7 @@ function render(){
   });
 }
 
-// ═══════════════════════════════════
-// APP MODES
-// ═══════════════════════════════════
+// ═══ APP MODES ═══
 let appMode='sandbox';
 function openMode(mode){
   appMode=mode;
@@ -813,293 +728,161 @@ function openMode(mode){
   document.getElementById('sp').classList.remove('hidden');
   if(!running)initSim();
   clearAll();
-  ['rsb-ov','chaos-ov','tasks-ov'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  ['rsb-ov','chaos-ov','tasks-ov'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add('hidden');});
   if(mode==='random'){document.getElementById('rsb-ov').classList.remove('hidden');initRSB();}
-  else if(mode==='chaos'){document.getElementById('chaos-ov').classList.remove('hidden');initChaos();}
+  else if(mode==='chaos'){document.getElementById('chaos-ov').classList.remove('hidden');initChaos();document.querySelector('[onclick="clearAll()"]').style.display='none';document.getElementById('etb').style.display='none';document.getElementById('pb').style.display='none';}
   else if(mode==='tasks'){document.getElementById('tasks-ov').classList.remove('hidden');initTasks();}
-  if(mode!=='sandbox')rebuildRestricted();
-  else buildUI();
+  if(mode!=='sandbox')rebuildRestricted();else buildUI();
 }
-// Override openSand to use modes
 function openSand(){openMode('sandbox');}
 
-// ═══════════════════════════════════
-// RANDOM SANDBOX
-// ═══════════════════════════════════
+// ═══ RANDOM SANDBOX ═══
 let rsbCfg=null,rsbTicks=0;
 function initRSB(){randomizeRSB();}
 function randomizeRSB(){
-  const am=MAT_DEFS.map(m=>m.t).filter(t=>t!==ERASER&&t!==PAINT_MODE).filter(()=>Math.random()<0.55);
+  const am=[...MAT_DEFS,...MAT_DEFS_2].map(m=>m.t).filter(t=>t!==ERASER&&t!==PAINT_MODE&&t!==SPILL_MODE).filter(()=>Math.random()<0.55);
   const ai=ITEM_DEFS.map(i=>i.id).filter(()=>Math.random()<0.5);
   const ab=[1,3,6,12,22].filter(()=>Math.random()<0.6);
-  rsbCfg={mats:am.length?am:[SAND],items:ai,brushes:ab.length?ab:[1],
-    hasClear:Math.random()>0.25,hasET:Math.random()>0.45,hasPause:Math.random()>0.35};
-  rsbTicks=rnd(3600,18000);
-  if(appMode==='random'){updateRSBUI();rebuildRestricted();}
+  rsbCfg={mats:am.length?am:[SAND],items:ai,brushes:ab.length?ab:[1],hasClear:Math.random()>0.25,hasET:Math.random()>0.45,hasPause:Math.random()>0.35};
+  rsbTicks=rnd(3600,18000);if(appMode==='random'){updateRSBUI();rebuildRestricted();}
 }
-function updateRSBUI(){
-  const s=Math.ceil(rsbTicks/60),m=Math.floor(s/60),sec=s%60;
-  document.getElementById('rsb-tmr').textContent=m+':'+(sec<10?'0':'')+sec;
-  document.getElementById('rsb-inf').textContent=(rsbCfg.mats.length)+' mats · '+(rsbCfg.items.length)+' items';
-}
-function tickRSB(){
-  if(appMode!=='random')return;
-  rsbTicks--;if(rsbTicks<=0)randomizeRSB();
-  if(tickCount%60===0)updateRSBUI();
-}
+function updateRSBUI(){const s=Math.ceil(rsbTicks/60),m=Math.floor(s/60),sec=s%60;const el=document.getElementById('rsb-tmr');if(el)el.textContent=m+':'+(sec<10?'0':'')+sec;const inf=document.getElementById('rsb-inf');if(inf)inf.textContent=rsbCfg.mats.length+' mats';}
+function tickRSB(){if(appMode!=='random')return;rsbTicks--;if(rsbTicks<=0)randomizeRSB();if(tickCount%60===0)updateRSBUI();}
 
-// ═══════════════════════════════════
-// CHAOS SANDBOX
-// ═══════════════════════════════════
+// ═══ CHAOS SANDBOX ═══
 let chaosPhase='peace',chaosTmr=0,chaosEff=-1;
 const PEACE_T=3600,CHAOS_T=600;
 function initChaos(){chaosPhase='peace';chaosTmr=PEACE_T;updateChaosUI();}
-function updateChaosUI(){
-  if(appMode!=='chaos')return;
-  const ip=chaosPhase==='peace',s=Math.ceil(chaosTmr/60),m=Math.floor(s/60),sec=s%60;
-  const pl=document.getElementById('chaos-pl');if(!pl)return;
-  pl.textContent=ip?'PEACE':'CHAOS';
-  pl.style.color=ip?'#4af':'#f44';pl.style.background=ip?'rgba(64,170,255,.15)':'rgba(255,68,68,.15)';
-  document.getElementById('chaos-tmr').textContent=(ip?'':'! ')+m+':'+(sec<10?'0':'')+sec;
-  document.getElementById('chaos-tmr').style.color=ip?'#ffd700':'#ff4444';
-  document.getElementById('chaos-eff').textContent=ip?'':CNAMES[chaosEff]||'';
-}
-function tickChaos(){
-  if(appMode!=='chaos')return;
-  chaosTmr--;
-  if(chaosPhase==='peace'&&chaosTmr<=0){chaosPhase='chaos';chaosTmr=CHAOS_T;chaosEff=rnd(0,49);triggerChaos(chaosEff);}
-  else if(chaosPhase==='chaos'&&chaosTmr<=0){chaosPhase='peace';chaosTmr=PEACE_T;chaosEff=-1;}
-  if(chaosPhase==='chaos')contChaos(chaosEff);
-  if(tickCount%60===0)updateChaosUI();
-}
+function updateChaosUI(){if(appMode!=='chaos')return;const ip=chaosPhase==='peace',s=Math.ceil(chaosTmr/60),m=Math.floor(s/60),sec=s%60;const pl=document.getElementById('chaos-pl');if(!pl)return;pl.textContent=ip?'PEACE':'CHAOS';pl.style.color=ip?'#4af':'#f44';pl.style.background=ip?'rgba(64,170,255,.15)':'rgba(255,68,68,.15)';const tmr=document.getElementById('chaos-tmr');if(tmr){tmr.textContent=(ip?'':' !')+m+':'+(sec<10?'0':'')+sec;tmr.style.color=ip?'#ffd700':'#ff4444';}const eff=document.getElementById('chaos-eff');if(eff)eff.textContent=ip?'':CNAMES[chaosEff]||'';}
+function tickChaos(){if(appMode!=='chaos')return;chaosTmr--;if(chaosPhase==='peace'&&chaosTmr<=0){chaosPhase='chaos';chaosTmr=CHAOS_T;chaosEff=rnd(0,69);triggerChaos(chaosEff);}else if(chaosPhase==='chaos'&&chaosTmr<=0){chaosPhase='peace';chaosTmr=PEACE_T;chaosEff=-1;}if(chaosPhase==='chaos')contChaos(chaosEff);if(tickCount%60===0)updateChaosUI();}
 const CNAMES=[
- '💥 NUCLEAR STRIKE','🌋 LAVA APOCALYPSE','🟢 ACID BATH','☄️ METEOR STORM','🙃 WORLD FLIP',
- '🌊 MEGA TSUNAMI','❄️ TOTAL FREEZE','🔥 EVERYTHING BURNS','🔮 CRYSTAL INVASION','⚫ VOID SWARM',
- '💣 EXPLOSION GRID','🌧️ ACID DELUGE','🪨 WRECKING BALL STORM','🌋 TOTAL MELTDOWN','🟡 SAND TSUNAMI',
- '💥 SUPERNOVA','🍄 FUNGAL APOCALYPSE','⚡ LIGHTNING STORM','🌿 PLANT TAKEOVER','🔀 MATTER SCRAMBLE',
- '🌋 VOLCANIC ERUPTION','🔮 CRYSTAL BLIZZARD','🪱 WORM APOCALYPSE','✨ PHOSPHORUS STORM','⬛ OBSIDIAN FIELD',
- '🍯 HONEY FLOOD','💣 GUNPOWDER FIELD','🫙 OIL+FIRE','❄️ SNOW AVALANCHE','🎆 FIREWORK BARRAGE',
- '🔥 FIRE SPIRAL','💨 STEAM EXPLOSION','🌊 WATER WORLD','🙃 GRAVITY FLIP','🌿 MOSS FLOOD',
- '💥 CHAIN REACTION','🌋 LAVA RAIN','🟢 ACID COLUMNS','🔮 CRYSTAL SPIRES','⚫ VOID CREEP',
- '💀 70% DELETION','🌋 LAVA COLUMNS','💀 TOTAL DELETION','🌊 FLOOD FROM ABOVE','🪨 STONE RAIN',
- '💥 PERIMETER BLAST','❄️→🔥 FREEZE+BURN','🌋 LAVA+WATER FIELDS','🎨 COLOR EXPLOSION','☠️ EVERYTHING AT ONCE'
+ 'NUCLEAR STRIKE','LAVA APOCALYPSE','ACID BATH','METEOR STORM','WORLD FLIP',
+ 'MEGA TSUNAMI','TOTAL FREEZE','EVERYTHING BURNS','CRYSTAL INVASION','VOID SWARM',
+ 'EXPLOSION GRID','ACID DELUGE','WRECKING BALL STORM','TOTAL MELTDOWN','SAND TSUNAMI',
+ 'SUPERNOVA','FUNGAL APOCALYPSE','LIGHTNING STORM','PLANT TAKEOVER','MATTER SCRAMBLE',
+ 'VOLCANIC ERUPTION','CRYSTAL BLIZZARD','WORM APOCALYPSE','PHOSPHORUS STORM','OBSIDIAN FIELD',
+ 'HONEY FLOOD','GUNPOWDER FIELD','OIL + FIRE','SNOW AVALANCHE','FIREWORK BARRAGE',
+ 'FIRE SPIRAL','STEAM EXPLOSION','WATER WORLD','GRAVITY FLIP','MOSS FLOOD',
+ 'CHAIN REACTION','LAVA RAIN','ACID COLUMNS','CRYSTAL SPIRES','VOID CREEP',
+ '70% DELETION','LAVA COLUMNS','TOTAL DELETION','FLOOD FROM ABOVE','STONE RAIN',
+ 'PERIMETER BLAST','FREEZE + BURN','LAVA+WATER FIELDS','COLOR EXPLOSION','EVERYTHING AT ONCE',
+ 'PAINT CHAOS','STONE SPHERES','HONEY SURGE','NEON STORM','FIRE RIVER',
+ 'CRYSTAL MAZE','TWIN WATERFALLS','LAVA MOAT','JUNGLE','SALT STORM',
+ 'FIREWORK FINALE','PLASMA JETS','WAX SNAP','MAGMA POCKETS','COLOR BANDS',
+ 'CRYSTAL CATHEDRAL','PHOSPHORUS FIELD','MATERIAL SWAP','GIANT WAVE','GLASS STORM'
 ];
-
 function triggerChaos(e){
   switch(e){
-    case 0:{// Nuclear strike — wave of explosions outward from center
-      const cx=Math.floor(cols/2),cy=Math.floor(rows/2);
-      for(let w=0;w<6;w++)setTimeout(()=>{const R=w*8+8;for(let dy=-R;dy<=R;dy++)for(let dx=-R;dx<=R;dx++){const dist=Math.sqrt(dx*dx+dy*dy);if(dist<R-4||dist>R)continue;const nx=cx+dx,ny=cy+dy;if(!inB(nx,ny))continue;clr(nx,ny);if(Math.random()<0.6)set(nx,ny,FIRE,COLORS[FIRE](),rnd(50,120));}},w*350);
-      break;}
-    case 1:{// Lava apocalypse — bottom half becomes lava
-      for(let x=0;x<cols;x++)for(let y=Math.floor(rows/2);y<rows;y++)if(types[y*cols+x]!==STONE&&types[y*cols+x]!==METAL&&types[y*cols+x]!==OBSIDIAN)set(x,y,LAVA,COLORS[LAVA](),rnd(100,240));
-      break;}
-    case 2:{// Acid bath — acid walls close inward
-      for(let y=0;y<rows;y++){set(0,y,ACID,COLORS[ACID]());set(cols-1,y,ACID,COLORS[ACID]());}
-      for(let x=0;x<cols;x++)for(let y=rows-6;y<rows;y++)if(isEmpty(x,y))set(x,y,ACID,COLORS[ACID]());
-      break;}
+    case 0:{const cx=Math.floor(cols/2),cy=Math.floor(rows/2);for(let w=0;w<6;w++)setTimeout(()=>{const R=w*8+8;for(let dy=-R;dy<=R;dy++)for(let dx=-R;dx<=R;dx++){const dist=Math.sqrt(dx*dx+dy*dy);if(dist<R-4||dist>R)continue;const nx=cx+dx,ny=cy+dy;if(!inB(nx,ny))continue;clr(nx,ny);if(Math.random()<0.6)set(nx,ny,FIRE,COLORS[FIRE](),rnd(50,120));}},w*350);break;}
+    case 1:{for(let x=0;x<cols;x++)for(let y=Math.floor(rows/2);y<rows;y++)if(types[y*cols+x]!==STONE&&types[y*cols+x]!==METAL&&types[y*cols+x]!==OBSIDIAN)set(x,y,LAVA,COLORS[LAVA](),rnd(100,240));break;}
+    case 2:{for(let y=0;y<rows;y++){set(0,y,ACID,COLORS[ACID]());set(cols-1,y,ACID,COLORS[ACID]());}for(let x=0;x<cols;x++)for(let y=rows-6;y<rows;y++)if(isEmpty(x,y))set(x,y,ACID,COLORS[ACID]());break;}
     case 3:{for(let i=0;i<15;i++)meteors.push({id:nextEid++,x:rnd(5,cols-5),y:0,alive:true});break;}
-    case 4:case 33:{// World flip
-      for(let y=0;y<Math.floor(rows/2);y++){const y2=rows-1-y;for(let x=0;x<cols;x++){const i1=y*cols+x,i2=y2*cols+x;let t=types[i1];types[i1]=types[i2];types[i2]=t;let c=cellColors[i1];cellColors[i1]=cellColors[i2];cellColors[i2]=c;let ex=extra[i1];extra[i1]=extra[i2];extra[i2]=ex;}}
-      break;}
-    case 5:{// Mega tsunami — wall of water from one side
-      for(let x=0;x<Math.floor(cols*0.35);x++)for(let y=0;y<rows;y++)if(types[y*cols+x]!==STONE&&types[y*cols+x]!==METAL)set(x,y,WATER,COLORS[WATER]());
-      break;}
-    case 6:{// Total freeze
-      for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==STONE&&types[i]!==METAL&&types[i]!==OBSIDIAN){types[i]=SNOW;cellColors[i]=COLORS[SNOW]();extra[i]=0;}
-      break;}
-    case 7:{// Everything burns — all flammables ignite simultaneously
-      for(let i=0;i<types.length;i++){const t=types[i];if(t===WOOD||t===PLANT||t===OIL||t===FUNGUS||t===HONEY){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(60,120);}else if(t===SAND&&Math.random()<0.2){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(20,50);}}
-      break;}
-    case 8:{// Crystal invasion — from 20 points at once
-      for(let i=0;i<20;i++){const x=rnd(0,cols-1),y=rnd(0,rows-1);if(types[y*cols+x]===SAND||types[y*cols+x]===STONE||types[y*cols+x]===COOLED||types[y*cols+x]===EMPTY){set(x,y,CRYSTAL,COLORS[CRYSTAL]());}}
-      break;}
-    case 9:{// Void swarm — 4 particle melters at corners + center
-      [[0.25,0.25],[0.75,0.25],[0.25,0.75],[0.75,0.75],[0.5,0.5]].forEach(([fx,fy])=>pmelters.push({id:nextEid++,x:Math.floor(cols*fx),y:Math.floor(rows*fy),age:0}));
-      break;}
-    case 10:{// Explosion grid — timed across map
-      for(let gx=0;gx<cols;gx+=Math.floor(cols/7))for(let gy=0;gy<rows;gy+=Math.floor(rows/5))setTimeout(()=>explodeGP(gx+rnd(-3,3),gy+rnd(-3,3)),Math.floor(Math.random()*3000));
-      break;}
-    case 12:{// Wrecking ball storm — 8 balls
-      for(let i=0;i<8;i++)wreckingBalls.push({id:nextEid++,x:rnd(10,cols-10),y:0,alive:true,r:8});
-      break;}
-    case 13:{// Total meltdown
-      for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==LAVA&&types[i]!==OBSIDIAN&&types[i]!==ANTIGRAVITY){types[i]=LAVA;cellColors[i]=COLORS[LAVA]();extra[i]=rnd(80,240);}
-      break;}
-    case 14:{// Sand tsunami from right
-      for(let x=Math.floor(cols*0.65);x<cols;x++)for(let y=0;y<rows;y++)if(isEmpty(x,y))set(x,y,SAND,COLORS[SAND]());
-      break;}
-    case 15:{// Supernova — 5 huge chain explosions
-      const pts=[[Math.floor(cols/2),Math.floor(rows/2)],[Math.floor(cols*0.25),Math.floor(rows*0.5)],[Math.floor(cols*0.75),Math.floor(rows*0.5)],[Math.floor(cols*0.5),Math.floor(rows*0.25)],[Math.floor(cols*0.5),Math.floor(rows*0.75)]];
-      pts.forEach((p,i)=>setTimeout(()=>explodeGP(p[0],p[1]),i*700));
-      break;}
-    case 16:{// Fungal apocalypse
-      for(let i=0;i<types.length;i++)if(types[i]===DEAD_ORG||types[i]===WOOD||types[i]===PLANT){types[i]=FUNGUS;cellColors[i]=COLORS[FUNGUS]();}
-      for(let i=0;i<30;i++){const x=rnd(0,cols-1),y=rnd(0,rows-1);if(isEmpty(x,y))set(x,y,FUNGUS,COLORS[FUNGUS]());}
-      break;}
-    case 17:{// Lightning apocalypse — 30 strikes instantly
-      for(let i=0;i<30;i++)setTimeout(()=>strikeLightning(rnd(0,cols-1),rows-1),i*180);
-      break;}
-    case 18:{// Plant takeover — sand becomes plant
-      for(let i=0;i<types.length;i++)if(types[i]===SAND&&Math.random()<0.5){types[i]=PLANT;cellColors[i]=COLORS[PLANT]();extra[i]=0;}
-      break;}
-    case 19:{// Matter scramble — shuffle all non-empty cells
-      for(let i=types.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));if(!types[i]&&!types[j])continue;let t=types[i];types[i]=types[j];types[j]=t;let c=cellColors[i];cellColors[i]=cellColors[j];cellColors[j]=c;let ex=extra[i];extra[i]=extra[j];extra[j]=ex;}
-      break;}
-    case 20:{// Volcanic eruption — lava pillar from bottom
-      const vx=Math.floor(cols/2);for(let x=vx-6;x<=vx+6;x++)for(let y=Math.floor(rows*0.35);y<rows;y++)if(types[y*cols+x]!==STONE&&types[y*cols+x]!==METAL)set(x,y,LAVA,COLORS[LAVA](),rnd(120,240));
-      break;}
-    case 21:{// Crystal blizzard from sky
-      for(let x=0;x<cols;x+=rnd(2,6)){const h=rnd(8,Math.floor(rows*0.5));for(let y=0;y<h;y++)if(inB(x,y))set(x,y,CRYSTAL,COLORS[CRYSTAL]());}
-      break;}
+    case 4:case 33:{for(let y=0;y<Math.floor(rows/2);y++){const y2=rows-1-y;for(let x=0;x<cols;x++){const i1=y*cols+x,i2=y2*cols+x;let t=types[i1];types[i1]=types[i2];types[i2]=t;let c=cellColors[i1];cellColors[i1]=cellColors[i2];cellColors[i2]=c;let ex=extra[i1];extra[i1]=extra[i2];extra[i2]=ex;}}break;}
+    case 5:{for(let x=0;x<Math.floor(cols*0.35);x++)for(let y=0;y<rows;y++)if(types[y*cols+x]!==STONE&&types[y*cols+x]!==METAL)set(x,y,WATER,COLORS[WATER]());break;}
+    case 6:{for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==STONE&&types[i]!==METAL&&types[i]!==OBSIDIAN){types[i]=SNOW;cellColors[i]=COLORS[SNOW]();extra[i]=0;}break;}
+    case 7:{for(let i=0;i<types.length;i++){const t=types[i];if(t===WOOD||t===PLANT||t===OIL||t===FUNGUS||t===HONEY||t===WAX){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(60,120);}else if(t===SAND&&Math.random()<0.2){types[i]=FIRE;cellColors[i]=COLORS[FIRE]();extra[i]=rnd(20,50);}}break;}
+    case 8:{for(let i=0;i<20;i++){const x=rnd(0,cols-1),y=rnd(0,rows-1);if(types[y*cols+x]===SAND||types[y*cols+x]===STONE||types[y*cols+x]===COOLED||types[y*cols+x]===EMPTY)set(x,y,CRYSTAL,COLORS[CRYSTAL]());}break;}
+    case 9:{[[0.25,0.25],[0.75,0.25],[0.25,0.75],[0.75,0.75],[0.5,0.5]].forEach(([fx,fy])=>pmelters.push({id:nextEid++,x:Math.floor(cols*fx),y:Math.floor(rows*fy),age:0}));break;}
+    case 10:{for(let gx=0;gx<cols;gx+=Math.floor(cols/7))for(let gy=0;gy<rows;gy+=Math.floor(rows/5))setTimeout(()=>explodeGP(gx+rnd(-3,3),gy+rnd(-3,3)),Math.floor(Math.random()*3000));break;}
+    case 11:{break;}// acid deluge handled in contChaos
+    case 12:{for(let i=0;i<8;i++)wreckingBalls.push({id:nextEid++,x:rnd(10,cols-10),y:0,alive:true,r:8});break;}
+    case 13:{for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==LAVA&&types[i]!==MAGMA&&types[i]!==OBSIDIAN&&types[i]!==ANTIGRAVITY){types[i]=LAVA;cellColors[i]=COLORS[LAVA]();extra[i]=rnd(80,240);}break;}
+    case 14:{for(let x=Math.floor(cols*0.65);x<cols;x++)for(let y=0;y<rows;y++)if(isEmpty(x,y))set(x,y,SAND,COLORS[SAND]());break;}
+    case 15:{const pts=[[Math.floor(cols/2),Math.floor(rows/2)],[Math.floor(cols*0.25),Math.floor(rows*0.5)],[Math.floor(cols*0.75),Math.floor(rows*0.5)],[Math.floor(cols*0.5),Math.floor(rows*0.25)],[Math.floor(cols*0.5),Math.floor(rows*0.75)]];pts.forEach((p,i)=>setTimeout(()=>explodeGP(p[0],p[1]),i*700));break;}
+    case 16:{for(let i=0;i<types.length;i++)if(types[i]===DEAD_ORG||types[i]===WOOD||types[i]===PLANT){types[i]=FUNGUS;cellColors[i]=COLORS[FUNGUS]();}for(let i=0;i<30;i++){const x=rnd(0,cols-1),y=rnd(0,rows-1);if(isEmpty(x,y))set(x,y,FUNGUS,COLORS[FUNGUS]());}break;}
+    case 17:{for(let i=0;i<30;i++)setTimeout(()=>strikeLightning(rnd(0,cols-1),rows-1),i*180);break;}
+    case 18:{for(let i=0;i<types.length;i++)if(types[i]===SAND&&Math.random()<0.5){types[i]=PLANT;cellColors[i]=COLORS[PLANT]();extra[i]=0;}break;}
+    case 19:{for(let i=types.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));if(!types[i]&&!types[j])continue;let t=types[i];types[i]=types[j];types[j]=t;let c=cellColors[i];cellColors[i]=cellColors[j];cellColors[j]=c;let ex=extra[i];extra[i]=extra[j];extra[j]=ex;}break;}
+    case 20:{const vx=Math.floor(cols/2);for(let x=vx-6;x<=vx+6;x++)for(let y=Math.floor(rows*0.35);y<rows;y++)if(types[y*cols+x]!==STONE&&types[y*cols+x]!==METAL)set(x,y,LAVA,COLORS[LAVA](),rnd(120,240));break;}
+    case 21:{for(let x=0;x<cols;x+=rnd(2,6)){const h=rnd(8,Math.floor(rows*0.5));for(let y=0;y<h;y++)if(inB(x,y))set(x,y,CRYSTAL,COLORS[CRYSTAL]());}break;}
     case 22:{for(let i=0;i<25;i++)spawnWorm(rnd(0,cols-5),rnd(2,rows/2));break;}
-    case 23:{// Phosphorus + water rain
-      for(let x=0;x<cols;x+=3){if(isEmpty(x,0))set(x,0,PHOSPHORUS,COLORS[PHOSPHORUS]());if(isEmpty(x+1,0))set(x+1,0,WATER,COLORS[WATER]());}
-      break;}
-    case 24:{// Obsidian field — lava bottom then water top
-      for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.55);y<rows;y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(100,200));
-      setTimeout(()=>{for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.45);y++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());},2500);
-      break;}
-    case 25:{// Honey flood — bottom third
-      for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.65);y<rows;y++)if(isEmpty(x,y))set(x,y,HONEY,COLORS[HONEY]());
-      break;}
-    case 26:{// Gunpowder field — fill then ignite
-      for(let x=0;x<cols;x+=3)for(let y=0;y<rows;y+=3)if(isEmpty(x,y))set(x,y,GUNPOWDER,COLORS[GUNPOWDER](),2);
-      break;}
-    case 27:{// Oil flood + fire
-      for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.5);y<rows;y++)if(isEmpty(x,y))set(x,y,OIL,COLORS[OIL]());
-      setTimeout(()=>{for(let x=0;x<cols;x+=8)set(x,Math.floor(rows*0.5),FIRE,COLORS[FIRE](),rnd(60,100));},2000);
-      break;}
-    case 28:{// Snow avalanche — fill top
-      for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.45);y++)if(isEmpty(x,y))set(x,y,SNOW,COLORS[SNOW]());
-      break;}
-    case 29:{// Firework barrage
-      for(let x=0;x<cols;x+=4)for(let y=Math.floor(rows*0.4);y<rows;y+=4)if(isEmpty(x,y))set(x,y,FIREWORK,COLORS[FIREWORK](),255);
-      break;}
-    case 30:{// Fire spiral outward from center
-      const fcx=Math.floor(cols/2),fcy=Math.floor(rows/2);
-      for(let a=0,r2=0;r2<Math.max(cols,rows);a+=0.12,r2=a*2.5){const fx=Math.floor(fcx+Math.cos(a)*r2),fy=Math.floor(fcy+Math.sin(a)*r2);if(inB(fx,fy))set(fx,fy,FIRE,COLORS[FIRE](),rnd(40,90));}
-      break;}
-    case 31:{// Steam explosion — all water → steam
-      for(let i=0;i<types.length;i++)if(types[i]===WATER){types[i]=STEAM;cellColors[i]=COLORS[STEAM]();extra[i]=rnd(5,15);}
-      break;}
-    case 32:{// Water world — fill empty cells and convert sand/snow
-      for(let i=0;i<types.length;i++)if(types[i]===EMPTY||types[i]===SAND||types[i]===SNOW){types[i]=WATER;cellColors[i]=COLORS[WATER]();}
-      break;}
-    case 34:{// Moss floods entire map
-      for(let i=0;i<mossLayer.length;i++)if(isSolid(i%cols,Math.floor(i/cols)))mossLayer[i]=1;
-      break;}
-    case 35:{// Chain reaction — horizontal gunpowder strips
-      for(let y=Math.floor(rows*0.15);y<rows;y+=Math.floor(rows/7))for(let x=0;x<cols;x++)if(isEmpty(x,y))set(x,y,GUNPOWDER,COLORS[GUNPOWDER](),1);
-      break;}
-    case 36:{// Lava rain from sky
-      for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.3);y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(80,180));
-      break;}
-    case 37:{// Acid columns across map
-      for(let x=0;x<cols;x+=Math.floor(cols/10))for(let y=0;y<rows;y++)set(x,y,ACID,COLORS[ACID]());
-      break;}
-    case 38:{// Crystal spires from bottom
-      for(let x=0;x<cols;x+=rnd(4,9)){const h=rnd(Math.floor(rows*0.25),Math.floor(rows*0.8));for(let y=rows-1;y>rows-h;y--)if(isEmpty(x,y)||types[y*cols+x]===SAND||types[y*cols+x]===COOLED)set(x,y,CRYSTAL,COLORS[CRYSTAL]());}
-      break;}
-    case 39:{// Void creep — melters spawn in sequence
-      for(let i=0;i<6;i++)setTimeout(()=>pmelters.push({id:nextEid++,x:rnd(0,cols-1),y:rnd(0,rows-1),age:0}),i*700);
-      break;}
-    case 40:case 42:{// Mass deletion
-      const pct=e===42?0.7:0.6;for(let i=0;i<types.length;i++)if(Math.random()<pct&&types[i]!==EMPTY){types[i]=0;cellColors[i]=0;extra[i]=0;}
-      break;}
-    case 41:{// Lava columns from bottom
-      for(let x=0;x<cols;x+=Math.floor(cols/9)){const h=rnd(Math.floor(rows*0.3),rows);for(let y=rows-1;y>rows-h;y--)set(x,y,LAVA,COLORS[LAVA](),rnd(100,240));}
-      break;}
-    case 43:{// Flood from above
-      for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.5);y++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());
-      break;}
-    case 44:{// Stone rain — stone columns from top
-      for(let x=0;x<cols;x+=rnd(2,5))for(let y=0;y<Math.floor(rows*0.35);y++)set(x,y,STONE,COLORS[STONE]());
-      break;}
-    case 45:{// Perimeter blast — explosions around edges
-      for(let i=0;i<24;i++){const t=i/24,px=i<8?Math.floor(t*8*cols/8):i<16?cols-1:i<20?Math.floor((i-16)*cols/4):0,py=i<8?0:i<16?Math.floor((i-8)*rows/8):i<20?rows-1:Math.floor((i-20)*rows/4);setTimeout(()=>explodeGP(clamp(px,0,cols-1),clamp(py,0,rows-1)),i*250);}
-      break;}
-    case 46:{// Freeze & burn
-      for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==STONE&&types[i]!==METAL){types[i]=SNOW;cellColors[i]=COLORS[SNOW]();}
-      setTimeout(()=>{for(let x=0;x<cols;x+=6)set(x,rows-1,FIRE,COLORS[FIRE](),rnd(60,100));},2500);
-      break;}
-    case 47:{// Lava + water collision landscape
-      for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.55);y<rows;y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(100,200));
-      for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.4);y++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());
-      break;}
-    case 48:{// Color explosion
-      for(let i=0;i<types.length;i++)if(types[i]!==EMPTY)cellColors[i]=pack(rnd(0,255),rnd(0,255),rnd(0,255));
-      break;}
-    case 49:{// Everything at once
-      triggerChaos(rnd(0,15));
-      setTimeout(()=>triggerChaos(rnd(16,35)),1500);
-      setTimeout(()=>triggerChaos(rnd(36,48)),3500);
-      break;}
+    case 23:{for(let x=0;x<cols;x+=3){if(isEmpty(x,0))set(x,0,PHOSPHORUS,COLORS[PHOSPHORUS]());if(isEmpty(x+1,0))set(x+1,0,WATER,COLORS[WATER]());}break;}
+    case 24:{for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.55);y<rows;y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(100,200));setTimeout(()=>{for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.45);y++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());},2500);break;}
+    case 25:{for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.65);y<rows;y++)if(isEmpty(x,y))set(x,y,HONEY,COLORS[HONEY]());break;}
+    case 26:{for(let x=0;x<cols;x+=3)for(let y=0;y<rows;y+=3)if(isEmpty(x,y))set(x,y,GUNPOWDER,COLORS[GUNPOWDER](),2);break;}
+    case 27:{for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.5);y<rows;y++)if(isEmpty(x,y))set(x,y,OIL,COLORS[OIL]());setTimeout(()=>{for(let x=0;x<cols;x+=8)set(x,Math.floor(rows*0.5),FIRE,COLORS[FIRE](),rnd(60,100));},2000);break;}
+    case 28:{for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.45);y++)if(isEmpty(x,y))set(x,y,SNOW,COLORS[SNOW]());break;}
+    case 29:{for(let x=0;x<cols;x+=4)for(let y=Math.floor(rows*0.4);y<rows;y+=4)if(isEmpty(x,y))set(x,y,FIREWORK,COLORS[FIREWORK](),255);break;}
+    case 30:{const fcx=Math.floor(cols/2),fcy=Math.floor(rows/2);for(let a=0,r2=0;r2<Math.max(cols,rows);a+=0.12,r2=a*2.5){const fx=Math.floor(fcx+Math.cos(a)*r2),fy=Math.floor(fcy+Math.sin(a)*r2);if(inB(fx,fy))set(fx,fy,FIRE,COLORS[FIRE](),rnd(40,90));}break;}
+    case 31:{for(let i=0;i<types.length;i++)if(types[i]===WATER){types[i]=STEAM;cellColors[i]=COLORS[STEAM]();extra[i]=rnd(5,15);}break;}
+    case 32:{for(let i=0;i<types.length;i++)if(types[i]===EMPTY||types[i]===SAND||types[i]===SNOW){types[i]=WATER;cellColors[i]=COLORS[WATER]();}break;}
+    case 34:{for(let i=0;i<mossLayer.length;i++)if(isSolid(i%cols,Math.floor(i/cols)))mossLayer[i]=1;break;}
+    case 35:{for(let y=Math.floor(rows*0.15);y<rows;y+=Math.floor(rows/7))for(let x=0;x<cols;x++)if(isEmpty(x,y))set(x,y,GUNPOWDER,COLORS[GUNPOWDER](),1);break;}
+    case 36:{for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.3);y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(80,180));break;}
+    case 37:{for(let x=0;x<cols;x+=Math.floor(cols/10))for(let y=0;y<rows;y++)set(x,y,ACID,COLORS[ACID]());break;}
+    case 38:{for(let x=0;x<cols;x+=rnd(4,9)){const h=rnd(Math.floor(rows*0.25),Math.floor(rows*0.8));for(let y=rows-1;y>rows-h;y--)if(isEmpty(x,y)||types[y*cols+x]===SAND||types[y*cols+x]===COOLED)set(x,y,CRYSTAL,COLORS[CRYSTAL]());}break;}
+    case 39:{for(let i=0;i<6;i++)setTimeout(()=>pmelters.push({id:nextEid++,x:rnd(0,cols-1),y:rnd(0,rows-1),age:0}),i*700);break;}
+    case 40:case 42:{const pct=e===42?0.7:0.6;for(let i=0;i<types.length;i++)if(Math.random()<pct&&types[i]!==EMPTY){types[i]=0;cellColors[i]=0;extra[i]=0;}break;}
+    case 41:{for(let x=0;x<cols;x+=Math.floor(cols/9)){const h=rnd(Math.floor(rows*0.3),rows);for(let y=rows-1;y>rows-h;y--)set(x,y,LAVA,COLORS[LAVA](),rnd(100,240));}break;}
+    case 43:{for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.5);y++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());break;}
+    case 44:{for(let x=0;x<cols;x+=rnd(2,5))for(let y=0;y<Math.floor(rows*0.35);y++)set(x,y,STONE,COLORS[STONE]());break;}
+    case 45:{for(let i=0;i<24;i++){const t=i/24,px=i<8?Math.floor(t*8*cols/8):i<16?cols-1:i<20?Math.floor((i-16)*cols/4):0,py=i<8?0:i<16?Math.floor((i-8)*rows/8):i<20?rows-1:Math.floor((i-20)*rows/4);setTimeout(()=>explodeGP(clamp(px,0,cols-1),clamp(py,0,rows-1)),i*250);}break;}
+    case 46:{for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&types[i]!==STONE&&types[i]!==METAL){types[i]=SNOW;cellColors[i]=COLORS[SNOW]();}setTimeout(()=>{for(let x=0;x<cols;x+=6)set(x,rows-1,FIRE,COLORS[FIRE](),rnd(60,100));},2500);break;}
+    case 47:{for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.55);y<rows;y++)if(isEmpty(x,y))set(x,y,LAVA,COLORS[LAVA](),rnd(100,200));for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.4);y++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());break;}
+    case 48:{for(let i=0;i<types.length;i++)if(types[i]!==EMPTY)cellColors[i]=pack(rnd(0,255),rnd(0,255),rnd(0,255));break;}
+    case 49:{triggerChaos(rnd(0,15));setTimeout(()=>triggerChaos(rnd(16,35)),1500);setTimeout(()=>triggerChaos(rnd(36,48)),3500);break;}
+    case 50:{const pal={};[...MAT_DEFS,...MAT_DEFS_2].forEach(m=>{pal[m.t]=pack(rnd(50,255),rnd(50,255),rnd(50,255));});for(let i=0;i<types.length;i++)if(types[i]!==EMPTY&&pal[types[i]])cellColors[i]=pal[types[i]];break;}
+    case 51:{for(let n=0;n<rnd(6,10);n++){const sx=rnd(8,cols-8),sy=rnd(8,rows-8),sr=rnd(4,9);for(let dy=-sr;dy<=sr;dy++)for(let dx=-sr;dx<=sr;dx++)if(dx*dx+dy*dy<=sr*sr&&inB(sx+dx,sy+dy))set(sx+dx,sy+dy,STONE,COLORS[STONE]());}break;}
+    case 52:{for(let x=0;x<cols;x++)for(let y=Math.floor(rows*0.55);y<rows;y++)if(isEmpty(x,y)||types[y*cols+x]===SAND)set(x,y,HONEY,COLORS[HONEY]());break;}
+    case 53:{for(let x=0;x<cols;x++)for(let y=0;y<Math.floor(rows*0.6);y++)if(isEmpty(x,y))set(x,y,NEON_GAS,COLORS[NEON_GAS](),rnd(80,180));break;}
+    case 54:{const fcx=Math.floor(cols/2),fcy=Math.floor(rows/2);for(let t2=0;t2<Math.max(cols,rows)*1.5;t2++){const fx=Math.floor(t2*cols/Math.max(cols,rows)/1.5),fy=Math.floor(t2*rows/Math.max(cols,rows)/1.5);for(let w=-3;w<=3;w++){const nx=clamp(fx+w,0,cols-1);if(inB(nx,fy))set(nx,fy,FIRE,COLORS[FIRE](),rnd(50,90));}}break;}
+    case 55:{const gw=Math.floor(cols/8),gh=Math.floor(rows/6);for(let gx=0;gx<cols;gx+=gw)for(let y=0;y<rows;y++)if(isEmpty(gx,y)&&Math.random()<0.7)set(gx,y,CRYSTAL,COLORS[CRYSTAL]());for(let gy=0;gy<rows;gy+=gh)for(let x=0;x<cols;x++)if(isEmpty(x,gy)&&Math.random()<0.7)set(x,gy,CRYSTAL,COLORS[CRYSTAL]());break;}
+    case 56:{for(let y=0;y<Math.floor(rows*0.7);y++){for(let x=0;x<12;x++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());for(let x=cols-12;x<cols;x++)if(isEmpty(x,y))set(x,y,WATER,COLORS[WATER]());}break;}
+    case 57:{for(let x=0;x<cols;x++){for(let dy=0;dy<5;dy++){if(inB(x,dy))set(x,dy,LAVA,COLORS[LAVA](),rnd(80,160));if(inB(x,rows-1-dy))set(x,rows-1-dy,LAVA,COLORS[LAVA](),rnd(80,160));}}for(let y=5;y<rows-5;y++){for(let dx=0;dx<5;dx++){if(inB(dx,y))set(dx,y,LAVA,COLORS[LAVA](),rnd(80,160));if(inB(cols-1-dx,y))set(cols-1-dx,y,LAVA,COLORS[LAVA](),rnd(80,160));}}break;}
+    case 58:{for(let i=0;i<types.length;i++)if(types[i]===EMPTY&&Math.random()<0.25)set(i%cols,Math.floor(i/cols),PLANT,COLORS[PLANT](),0);break;}
+    case 59:{for(let x=0;x<cols;x+=rnd(2,4))for(let y=0;y<Math.floor(rows*0.4);y++)if(isEmpty(x,y))set(x,y,SALT,COLORS[SALT]());break;}
+    case 60:{for(let i=0;i<15;i++)setTimeout(()=>{const fx=rnd(5,cols-5);for(let dy=0;dy<3;dy++)if(isEmpty(fx,rows-1-dy))set(fx,rows-1-dy,FIREWORK,COLORS[FIREWORK](),255);},i*350);break;}
+    case 61:{for(let x=0;x<cols;x+=Math.floor(cols/8))setTimeout(()=>{for(let y=rows-1;y>rows-8;y--)if(isEmpty(x,y))set(x,y,PLASMA,COLORS[PLASMA](),rnd(60,110));},Math.floor(x/(cols/8))*400);break;}
+    case 62:{for(let i=0;i<types.length;i++)if(types[i]===WAX&&Math.random()<0.7){extra[i]=220;}break;}
+    case 63:{for(let n=0;n<rnd(5,9);n++){const mx=rnd(8,cols-8),my=rnd(8,rows-8),mr=rnd(3,7);for(let dy=-mr;dy<=mr;dy++)for(let dx=-mr;dx<=mr;dx++)if(dx*dx+dy*dy<=mr*mr&&inB(mx+dx,my+dy))set(mx+dx,my+dy,MAGMA,COLORS[MAGMA](),255);}break;}
+    case 64:{for(let y=0;y<rows;y++){const col=pack(rnd(40,255),rnd(40,255),rnd(40,255));for(let x=0;x<cols;x++)if(types[y*cols+x]!==EMPTY)cellColors[y*cols+x]=col;}break;}
+    case 65:{const cx=Math.floor(cols/2);for(let dx=-12;dx<=12;dx++){const h=Math.floor((1-Math.abs(dx)/12)*rows*0.6)+rnd(5,15);for(let dy=0;dy<h;dy++)if(inB(cx+dx,rows-1-dy))set(cx+dx,rows-1-dy,CRYSTAL,COLORS[CRYSTAL]());}break;}
+    case 66:{for(let x=0;x<cols;x+=rnd(5,10))for(let y=0;y<rows;y+=rnd(4,8))if(isEmpty(x,y))set(x,y,PHOSPHORUS,COLORS[PHOSPHORUS]());setTimeout(()=>{for(let x=0;x<cols;x+=8)if(isEmpty(x,0))set(x,0,WATER,COLORS[WATER]());},1500);break;}
+    case 67:{const types2=[SAND,WATER,FIRE,STONE,PLANT,SNOW,LAVA,OIL,CRYSTAL,HONEY];const shuffled=[...types2].sort(()=>Math.random()-0.5);const map=Object.fromEntries(types2.map((t,i)=>[t,shuffled[i]]));for(let i=0;i<types.length;i++)if(map[types[i]]){types[i]=map[types[i]];cellColors[i]=(COLORS[types[i]]||COLORS[SAND])();}break;}
+    case 68:{for(let x=0;x<Math.floor(cols*0.4);x++)for(let y=Math.floor(rows*0.2);y<rows;y++)if(types[y*cols+x]===EMPTY||types[y*cols+x]===SAND)set(x,y,WATER,COLORS[WATER]());break;}
+    case 69:{for(let i=0;i<types.length;i++)if(types[i]===SAND&&Math.random()<0.6){types[i]=GLASS;cellColors[i]=COLORS[GLASS]();}break;}
   }
 }
 function contChaos(e){
   if(tickCount%4!==0)return;
   switch(e){
-    case 2:// Acid walls creep inward
-      for(let y=0;y<rows;y+=2){if(Math.random()<0.4&&isEmpty(0,y))set(0,y,ACID,COLORS[ACID]());if(Math.random()<0.4&&isEmpty(cols-1,y))set(cols-1,y,ACID,COLORS[ACID]());}break;
-    case 8:// Crystal keeps spreading
-      if(Math.random()<0.6){const i2=Math.floor(Math.random()*types.length);if(types[i2]===SAND||types[i2]===STONE||types[i2]===COOLED){types[i2]=CRYSTAL;cellColors[i2]=COLORS[CRYSTAL]();}}break;
-    case 11:// Acid deluge — heavy rain
-      for(let i2=0;i2<8;i2++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,ACID,COLORS[ACID]());}break;
-    case 16:// Fungus keeps spreading aggressively
-      if(Math.random()<0.5){const i2=Math.floor(Math.random()*types.length);if(types[i2]===WOOD||types[i2]===DEAD_ORG||types[i2]===SAND){types[i2]=FUNGUS;cellColors[i2]=COLORS[FUNGUS]();}}break;
-    case 17:// Lightning keeps striking
-      if(Math.random()<0.3)strikeLightning(rnd(0,cols-1),rows-1);break;
-    case 18:// Plants keep growing
-      if(Math.random()<0.4){const i2=Math.floor(Math.random()*types.length);if(types[i2]===SAND){types[i2]=PLANT;cellColors[i2]=COLORS[PLANT]();extra[i2]=0;}}break;
-    case 21:// Crystal keeps falling
-      for(let i2=0;i2<4;i2++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,CRYSTAL,COLORS[CRYSTAL]());}break;
-    case 23:// Phosphorus + water keeps raining
-      for(let i2=0;i2<3;i2++){const x=rnd(0,cols-2);if(isEmpty(x,0))set(x,0,PHOSPHORUS,COLORS[PHOSPHORUS]());if(isEmpty(x+1,0))set(x+1,0,WATER,COLORS[WATER]());}break;
-    case 26:// Gunpowder keeps appearing
-      for(let i2=0;i2<3;i2++){const x=rnd(0,cols-1),y=rnd(0,rows-1);if(isEmpty(x,y))set(x,y,GUNPOWDER,COLORS[GUNPOWDER](),1);}break;
-    case 36:// Lava keeps raining
-      for(let i2=0;i2<5;i2++){const x=rnd(0,cols-1);if(isEmpty(x,0)||types[0*cols+x]===SAND)set(x,0,LAVA,COLORS[LAVA](),rnd(80,160));}break;
-    case 37:// Acid columns keep appearing
-      if(Math.random()<0.3){const x=rnd(0,cols-1);for(let y=0;y<rows;y+=3)if(isEmpty(x,y))set(x,y,ACID,COLORS[ACID]());}break;
-    case 44:// Stone keeps falling
-      for(let i2=0;i2<4;i2++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,STONE,COLORS[STONE]());}break;
-    case 48:// Colors keep changing
-      if(Math.random()<0.4){const i2=Math.floor(Math.random()*types.length);if(types[i2]!==EMPTY)cellColors[i2]=pack(rnd(0,255),rnd(0,255),rnd(0,255));}break;
+    case 2:{const y=rnd(0,rows-1);if(Math.random()<0.4&&isEmpty(0,y))set(0,y,ACID,COLORS[ACID]());if(Math.random()<0.4&&isEmpty(cols-1,y))set(cols-1,y,ACID,COLORS[ACID]());break;}
+    case 8:{if(Math.random()<0.6){const i2=Math.floor(Math.random()*types.length);if(types[i2]===SAND||types[i2]===STONE){types[i2]=CRYSTAL;cellColors[i2]=COLORS[CRYSTAL]();}}break;}
+    case 11:{for(let i=0;i<8;i++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,ACID,COLORS[ACID]());}break;}
+    case 16:{if(Math.random()<0.5){const i2=Math.floor(Math.random()*types.length);if(types[i2]===WOOD||types[i2]===DEAD_ORG){types[i2]=FUNGUS;cellColors[i2]=COLORS[FUNGUS]();}}break;}
+    case 17:{if(Math.random()<0.3)strikeLightning(rnd(0,cols-1),rows-1);break;}
+    case 18:{if(Math.random()<0.4){const i2=Math.floor(Math.random()*types.length);if(types[i2]===SAND){types[i2]=PLANT;cellColors[i2]=COLORS[PLANT]();extra[i2]=0;}}break;}
+    case 21:{for(let i=0;i<4;i++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,CRYSTAL,COLORS[CRYSTAL]());}break;}
+    case 36:{for(let i=0;i<5;i++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,LAVA,COLORS[LAVA](),rnd(80,160));}break;}
+    case 37:{if(Math.random()<0.3){const x=rnd(0,cols-1);for(let y=0;y<rows;y+=3)if(isEmpty(x,y))set(x,y,ACID,COLORS[ACID]());}break;}
+    case 53:{for(let i=0;i<3;i++){const x=rnd(0,cols-1);if(isEmpty(x,0))set(x,0,NEON_GAS,COLORS[NEON_GAS](),rnd(80,150));}break;}
+    case 61:{if(Math.random()<0.2){const x=rnd(0,cols-1);if(isEmpty(x,rows-1))set(x,rows-1,PLASMA,COLORS[PLASMA](),rnd(50,90));}break;}
   }
 }
 
-// ═══════════════════════════════════
-// SANDBOX TASKS
-// ═══════════════════════════════════
+// ═══ TASKS ═══
 let tDone=0,activeTasks=[],tUnlocked={mats:new Set([SAND,WATER,WORM_CELL]),items:new Set(['worm']),brushes:new Set([1,3]),hasClear:false,hasET:false,hasPause:false};
 const TU=[
-  {at:3,type:'mat',t:FIRE,n:'🔥 Fire'},{at:6,type:'mat',t:STONE,n:'🪨 Stone'},{at:12,type:'mat',t:WOOD,n:'🪵 Wood'},
-  {at:24,type:'mat',t:PLANT,n:'🌿 Plant'},{at:30,type:'brush',t:6,n:'Large Brush'},{at:48,type:'mat',t:SNOW,n:'❄️ Snow'},
-  {at:60,type:'brush',t:12,n:'XL Brush'},{at:72,type:'item',t:'firework',n:'🎆 Firework'},{at:96,type:'mat',t:LAVA,n:'🌋 Lava'},
-  {at:90,type:'brush',t:22,n:'XXL Brush'},{at:120,type:'mat',t:OIL,n:'🫙 Oil'},{at:150,type:'item',t:'tree',n:'🌳 Tree'},
-  {at:192,type:'mat',t:STEAM,n:'💨 Steam'},{at:240,type:'mat',t:METAL,n:'⚙️ Metal'},{at:300,type:'item',t:'gunpowder',n:'💥 Gunpowder'},
-  {at:384,type:'mat',t:ACID,n:'🟢 Acid'},{at:480,type:'item',t:'moss',n:'🌿 Moss'},{at:600,type:'mat',t:CRYSTAL,n:'🔮 Crystal'},
-  {at:768,type:'item',t:'meteor',n:'☄️ Meteor'},{at:900,type:'mat',t:ANTIGRAVITY,n:'🟣 Antigravity'},
-  {at:1000,type:'item',t:'lightning',n:'⚡ Lightning'},{at:1100,type:'mat',t:PHOSPHORUS,n:'✨ Phosphorus'},
-  {at:1200,type:'item',t:'juicer',n:'🧃 Juicer'},{at:2500,type:'ctrl',t:'hasClear',n:'🗑️ Clear'},
-  {at:3000,type:'ctrl',t:'hasET',n:'🎯 Erase Target'},{at:4000,type:'ctrl',t:'hasPause',n:'⏸ Pause'},
+  {at:3,type:'mat',t:FIRE,n:'Fire'},{at:6,type:'mat',t:STONE,n:'Stone'},{at:12,type:'mat',t:WOOD,n:'Wood'},
+  {at:24,type:'mat',t:PLANT,n:'Plant'},{at:30,type:'brush',t:6,n:'Large Brush'},{at:48,type:'mat',t:SNOW,n:'Snow'},
+  {at:60,type:'brush',t:12,n:'XL Brush'},{at:72,type:'item',t:'firework',n:'Firework'},{at:96,type:'mat',t:LAVA,n:'Lava'},
+  {at:90,type:'brush',t:22,n:'XXL Brush'},{at:120,type:'mat',t:OIL,n:'Oil'},{at:150,type:'item',t:'tree',n:'Tree'},
+  {at:192,type:'mat',t:STEAM,n:'Steam'},{at:240,type:'mat',t:METAL,n:'Metal'},{at:300,type:'item',t:'gunpowder',n:'Gunpowder'},
+  {at:384,type:'mat',t:ACID,n:'Acid'},{at:480,type:'item',t:'moss',n:'Moss'},{at:480,type:'mat',t:HONEY,n:'Honey'},
+  {at:600,type:'mat',t:CRYSTAL,n:'Crystal'},{at:720,type:'mat',t:SALT,n:'Salt'},
+  {at:768,type:'item',t:'meteor',n:'Meteor'},{at:900,type:'mat',t:ANTIGRAVITY,n:'Antigravity'},
+  {at:1000,type:'item',t:'lightning',n:'Lightning'},{at:1100,type:'mat',t:PHOSPHORUS,n:'Phosphorus'},
+  {at:1400,type:'item',t:'wreckingball',n:'Wrecking Ball'},{at:1800,type:'item',t:'seed',n:'Seed'},
+  {at:2000,type:'item',t:'juicer',n:'Juicer'},{at:2500,type:'ctrl',t:'hasClear',n:'Clear'},
+  {at:3000,type:'ctrl',t:'hasET',n:'Erase Target'},{at:4000,type:'ctrl',t:'hasPause',n:'Pause'},
 ];
-const MN={[SAND]:'Sand',[WATER]:'Water',[FIRE]:'Fire',[STONE]:'Stone',[WOOD]:'Wood',[OIL]:'Oil',
-  [ACID]:'Acid',[SNOW]:'Snow',[LAVA]:'Lava',[STEAM]:'Steam',[COOLED]:'Cooled Lava',
-  [PLANT]:'Plant',[METAL]:'Metal',[FRUIT]:'Fruit',[ASH]:'Ash',[CRYSTAL]:'Crystal',
-  [ANTIGRAVITY]:'Antigravity',[PHOSPHORUS]:'Phosphorus',[JUICE]:'Juice',[GLASS]:'Glass',[WORM_CELL]:'Worm'};
+const MN={[SAND]:'Sand',[WATER]:'Water',[FIRE]:'Fire',[STONE]:'Stone',[WOOD]:'Wood',[OIL]:'Oil',[ACID]:'Acid',[SNOW]:'Snow',[LAVA]:'Lava',[STEAM]:'Steam',[COOLED]:'Cooled',[PLANT]:'Plant',[METAL]:'Metal',[FRUIT]:'Fruit',[ASH]:'Ash',[CRYSTAL]:'Crystal',[ANTIGRAVITY]:'Antigravity',[PHOSPHORUS]:'Phosphorus',[JUICE]:'Juice',[GLASS]:'Glass',[HONEY]:'Honey',[OBSIDIAN]:'Obsidian',[FUNGUS]:'Fungus',[WAX]:'Wax',[MAGMA]:'Magma',[SALT]:'Salt',[WORM_CELL]:'Worm'};
 let tCache={},tCacheTick=0;
-function cntT(t){
-  if(tickCount-tCacheTick>90){tCache={};tCacheTick=tickCount;for(let i=0;i<types.length;i++)tCache[types[i]]=(tCache[types[i]]||0)+1;tCache._moss=mossLayer.reduce((a,v)=>a+(v?1:0),0);}
-  return tCache[t]||0;
-}
+function cntT(t){if(tickCount-tCacheTick>90){tCache={};tCacheTick=tickCount;for(let i=0;i<types.length;i++)tCache[types[i]]=(tCache[types[i]]||0)+1;tCache._moss=mossLayer.reduce((a,v)=>a+(v?1:0),0);}return tCache[t]||0;}
 function makeTask(){
   const am=[...tUnlocked.mats].filter(t=>t!==WORM_CELL);
   if(!am.length)return{desc:'Place 50 Sand',prog:()=>Math.min(1,cntT(SAND)/50)};
   const canHeat=tUnlocked.mats.has(FIRE)||tUnlocked.mats.has(LAVA);
-  const canSteam=tUnlocked.mats.has(WATER)&&canHeat;
-  const canAsh=canHeat&&(tUnlocked.mats.has(WOOD)||tUnlocked.mats.has(PLANT)||tUnlocked.mats.has(OIL)||tUnlocked.mats.has(FUNGUS));
   const canGlass=tUnlocked.mats.has(SAND)&&canHeat;
   const canObsidian=tUnlocked.mats.has(LAVA)&&tUnlocked.mats.has(WATER);
   const gens=[
@@ -1108,94 +891,52 @@ function makeTask(){
     ()=>{const t=am[rnd(0,am.length-1)],n=rnd(1,5)*20;return{desc:`Place ${n} ${MN[t]||'cells'}`,prog:()=>Math.min(1,cntT(t)/n)};},
     ()=>{const n=rnd(1,4);return{desc:`Have ${n} live worm${n>1?'s':''} at once`,prog:()=>Math.min(1,worms.length/n)};},
     ()=>{const t1=am[rnd(0,am.length-1)],t2=am[rnd(0,am.length-1)],n=rnd(1,4)*50;return{desc:`Have ${n} ${MN[t1]} AND ${n} ${MN[t2]} at once`,prog:()=>Math.min(1,Math.min(cntT(t1),cntT(t2))/n)};},
-    ()=>{const t=am[rnd(0,am.length-1)],n=rnd(10,50)*100;return{desc:`Cover board: ${n} ${MN[t]||'cells'}`,prog:()=>Math.min(1,cntT(t)/n)};},
-    ()=>({desc:'Have a Dead Worm (let one age out)',prog:()=>cntT(DEAD_ORG)>=1?1:0}),
+    ()=>({desc:'Have a Dead Worm on screen',prog:()=>cntT(DEAD_ORG)>=1?1:0}),
     ()=>{const n=rnd(2,5);return{desc:`Have ${n} worms digging at once`,prog:()=>Math.min(1,worms.length/n)};},
     ...(canGlass?[()=>{const n=rnd(1,3)*5;return{desc:`Form ${n} Glass (heat Sand)`,prog:()=>Math.min(1,cntT(GLASS)/n)};}]:[]),
     ...(tUnlocked.mats.has(LAVA)?[()=>{const n=rnd(2,8)*25;return{desc:`Cool ${n} Lava into rubble`,prog:()=>Math.min(1,cntT(COOLED)/n)};}]:[]),
-    ...(canObsidian?[()=>{const n=rnd(1,4)*3;return{desc:`Form ${n} Obsidian (Lava meets Water)`,prog:()=>Math.min(1,cntT(OBSIDIAN)/n)};}]:[]),
-    ...(tUnlocked.mats.has(CRYSTAL)?[()=>{const n=rnd(2,10)*50;return{desc:`Grow ${n} Crystal cells`,prog:()=>Math.min(1,cntT(CRYSTAL)/n)};}]:[]),
-    ...(tUnlocked.mats.has(PLANT)?[()=>{const n=rnd(2,10)*50;return{desc:`Grow ${n} Plant cells`,prog:()=>Math.min(1,cntT(PLANT)/n)};}]:[]),
+    ...(canObsidian?[()=>{const n=rnd(1,4)*3;return{desc:`Form ${n} Obsidian`,prog:()=>Math.min(1,cntT(OBSIDIAN)/n)};}]:[]),
+    ...(tUnlocked.mats.has(CRYSTAL)?[()=>{const n=rnd(2,10)*50;return{desc:`Grow ${n} Crystal`,prog:()=>Math.min(1,cntT(CRYSTAL)/n)};}]:[]),
+    ...(tUnlocked.mats.has(PLANT)?[()=>{const n=rnd(2,10)*50;return{desc:`Grow ${n} Plant`,prog:()=>Math.min(1,cntT(PLANT)/n)};}]:[]),
     ...(tUnlocked.mats.has(HONEY)?[()=>{const n=rnd(1,5)*20;return{desc:`Have ${n} Honey cells`,prog:()=>Math.min(1,cntT(HONEY)/n)};}]:[]),
-    ...(tUnlocked.mats.has(FUNGUS)?[()=>{const n=rnd(1,4)*20;return{desc:`Grow ${n} Fungus`,prog:()=>Math.min(1,cntT(FUNGUS)/n)};}]:[]),
+    ...(tUnlocked.mats.has(SALT)?[()=>{const n=rnd(1,4)*20;return{desc:`Dissolve Salt in Water`,prog:()=>Math.min(1,cntT(SALT)<5?1:0)};}]:[]),
     ...(tUnlocked.items.has('moss')?[()=>{const n=rnd(1,5)*100;return{desc:`Cover ${n} cells with Moss`,prog:()=>Math.min(1,(tCache._moss||0)/n)};}]:[]),
     ...(tUnlocked.items.has('firework')?[()=>({desc:'Have 3 fireworks in flight at once',prog:()=>Math.min(1,flyingFW.length/3)})]:[]),
     ...(tUnlocked.items.has('tree')?[()=>{const n=rnd(5,20);return{desc:`Grow ${n} Fruit from a Tree`,prog:()=>Math.min(1,cntT(FRUIT)/n)};}]:[]),
-    ...(tUnlocked.items.has('juicer')?[()=>{const n=rnd(3,10)*20;return{desc:`Release ${n} Juice from a Juicer`,prog:()=>Math.min(1,cntT(JUICE)/n)};}]:[]),
+    ...(tUnlocked.items.has('wreckingball')?[()=>({desc:'Drop a Wrecking Ball',prog:()=>wreckingBalls.length>0?1:0})]:[]),
+    ...(tUnlocked.items.has('bubble')?[()=>({desc:'Float a Bubble to the top',prog:()=>bubbles.some(b=>b.age>200)?1:0})]:[]),
   ];
   return gens[rnd(0,gens.length-1)]();
 }
-function initTasks(){
-  tDone=0;tUnlocked={mats:new Set([SAND,WATER,WORM_CELL]),items:new Set(['worm']),brushes:new Set([1,3]),hasClear:false,hasET:false,hasPause:false};
-  activeTasks=[];for(let i=0;i<5;i++)activeTasks.push({...makeTask(),done:false});
-  renderTaskUI();rebuildRestricted();
-}
+function initTasks(){tDone=0;tUnlocked={mats:new Set([SAND,WATER,WORM_CELL]),items:new Set(['worm']),brushes:new Set([1,3]),hasClear:false,hasET:false,hasPause:false};activeTasks=[];for(let i=0;i<5;i++)activeTasks.push({...makeTask(),done:false});renderTaskUI();rebuildRestricted();}
 function tickTasks(){
   if(appMode!=='tasks')return;
   let any=false;
-  activeTasks.forEach(t=>{if(!t.done&&t.prog()>=1){t.done=true;tDone++;any=true;
-    TU.forEach(u=>{if(u.at===tDone){
-      if(u.type==='mat')tUnlocked.mats.add(u.t);
-      else if(u.type==='item')tUnlocked.items.add(u.t);
-      else if(u.type==='brush')tUnlocked.brushes.add(u.t);
-      else if(u.type==='ctrl')tUnlocked[u.t]=true;
-      showUnlock(u.n);
-    }});
-  }});
+  activeTasks.forEach(t=>{if(!t.done&&t.prog()>=1){t.done=true;tDone++;any=true;TU.forEach(u=>{if(u.at===tDone){if(u.type==='mat')tUnlocked.mats.add(u.t);else if(u.type==='item')tUnlocked.items.add(u.t);else if(u.type==='brush')tUnlocked.brushes.add(u.t);else if(u.type==='ctrl')tUnlocked[u.t]=true;showUnlock(u.n);}});}});
   if(any){activeTasks=activeTasks.filter(t=>!t.done);while(activeTasks.length<5)activeTasks.push({...makeTask(),done:false});renderTaskUI();rebuildRestricted();}
   if(tickCount%90===0)renderTaskUI();
 }
-function showUnlock(name){
-  const el=document.createElement('div');
-  el.style.cssText='position:fixed;top:72px;left:50%;transform:translateX(-50%);background:#0a4a0a;border:1.5px solid #4f4;border-radius:10px;padding:8px 18px;color:#4f4;font-weight:900;font-size:13px;z-index:9999;pointer-events:none';
-  el.textContent='🔓 Unlocked: '+name;document.body.appendChild(el);
-  setTimeout(()=>el.remove(),3000);
-}
-function renderTaskUI(){
-  if(appMode!=='tasks')return;
-  document.getElementById('tdone').textContent=tDone;
-  const tl=document.getElementById('tlist');tl.innerHTML='';
-  activeTasks.forEach(task=>{
-    const p=Math.round(task.prog()*100);
-    const d=document.createElement('div');
-    d.style.cssText='background:rgba(255,255,255,.07);border-radius:5px;padding:2px 6px;font-size:8px;font-weight:700;color:#ccc;flex-shrink:0;max-width:145px;overflow:hidden';
-    d.innerHTML=task.desc+'<div style="height:2px;background:#333;border-radius:1px;margin-top:2px"><div style="height:100%;width:'+p+'%;background:'+(p>=100?'#4f4':'#ffd700')+';border-radius:1px"></div></div>';
-    tl.appendChild(d);
-  });
-}
+function showUnlock(name){const el=document.createElement('div');el.style.cssText='position:fixed;top:72px;left:50%;transform:translateX(-50%);background:#0a4a0a;border:1.5px solid #4f4;border-radius:10px;padding:8px 18px;color:#4f4;font-weight:900;font-size:13px;z-index:9999;pointer-events:none';el.textContent='Unlocked: '+name;document.body.appendChild(el);setTimeout(()=>el.remove(),3000);}
+function renderTaskUI(){if(appMode!=='tasks')return;const td=document.getElementById('tdone');if(td)td.textContent=tDone;const tl=document.getElementById('tlist');if(!tl)return;tl.innerHTML='';activeTasks.forEach(task=>{const p=Math.round(task.prog()*100);const d=document.createElement('div');d.style.cssText='background:rgba(255,255,255,.07);border-radius:5px;padding:2px 6px;font-size:8px;font-weight:700;color:#ccc;flex-shrink:0;max-width:145px;overflow:hidden';d.innerHTML=task.desc+'<div style="height:2px;background:#333;border-radius:1px;margin-top:2px"><div style="height:100%;width:'+p+'%;background:'+(p>=100?'#4f4':'#ffd700')+';border-radius:1px"></div></div>';tl.appendChild(d);});}
 
-// ═══════════════════════════════════
-// RESTRICTED UI
-// ═══════════════════════════════════
+// ═══ RESTRICTED UI ═══
 function rebuildRestricted(){
   let mats,items,brushes,hasClear,hasET,hasPause;
-  if(appMode==='random'&&rsbCfg){
-    ({mats,items,brushes,hasClear,hasET,hasPause}=rsbCfg);
-  } else if(appMode==='tasks'){
-    mats=[...tUnlocked.mats];items=[...tUnlocked.items];brushes=[...tUnlocked.brushes];
-    hasClear=tUnlocked.hasClear;hasET=tUnlocked.hasET;hasPause=tUnlocked.hasPause;
-  } else {buildUI();return;}
-  const mr=document.getElementById('mr');mr.innerHTML='';
-  MAT_DEFS.forEach(m=>{
-    if(!mats.includes(m.t)&&m.t!==ERASER)return;
-    const b=document.createElement('button');b.className='mb'+(curMat===m.t?' on':'');
-    b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;
-    b.onclick=()=>{if(etMode){doET(m.t);return;}curMat=m.t;curItem=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.toggle('hidden',m.t!==PAINT_MODE);};
-    mr.appendChild(b);
-  });
-  const ir=document.getElementById('ir');ir.innerHTML='';
-  ITEM_DEFS.forEach(m=>{
-    if(!items.includes(m.id))return;
-    const b=document.createElement('button');b.className='ib';b.dataset.id=m.id;b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;
-    b.onclick=()=>{if(etMode){doETItem(m.id);return;}curItem=m.id;curMat=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.add('hidden');};
-    ir.appendChild(b);
-  });
+  if(appMode==='random'&&rsbCfg){({mats,items,brushes,hasClear,hasET,hasPause}=rsbCfg);}
+  else if(appMode==='tasks'){mats=[...tUnlocked.mats];items=[...tUnlocked.items];brushes=[...tUnlocked.brushes];hasClear=tUnlocked.hasClear;hasET=tUnlocked.hasET;hasPause=tUnlocked.hasPause;}
+  else{buildUI();return;}
+  const mr=document.getElementById('mr');const mr2=document.getElementById('mr2');if(mr)mr.innerHTML='';if(mr2)mr2.innerHTML='';
+  function _mkrb(m,row){if(!mats.includes(m.t)&&m.t!==ERASER)return;const b=document.createElement('button');b.className='mb'+(curMat===m.t?' on':'');b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;b.onclick=()=>{if(etMode){doET(m.t);return;}curMat=m.t;curItem=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.toggle('hidden',m.t!==PAINT_MODE&&m.t!==SPILL_MODE);};row.appendChild(b);}
+  if(mr)MAT_DEFS.forEach(m=>_mkrb(m,mr));
+  if(mr2)MAT_DEFS_2.forEach(m=>_mkrb(m,mr2));
+  const ir=document.getElementById('ir');if(ir){ir.innerHTML='';ITEM_DEFS.forEach(m=>{if(!items.includes(m.id))return;const b=document.createElement('button');b.className='ib';b.dataset.id=m.id;b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;b.onclick=()=>{if(etMode){doETItem(m.id);return;}curItem=m.id;curMat=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.add('hidden');};ir.appendChild(b);});}
   document.querySelectorAll('.bb2').forEach(b=>{b.style.display=brushes.includes(+b.dataset.sz)?'flex':'none';});
-  document.querySelector('[onclick="clearAll()"]').style.display=hasClear?'':'none';
-  document.getElementById('etb').style.display=hasET?'':'none';
-  document.getElementById('pb').style.display=hasPause?'':'none';
+  const clrBtn=document.querySelector('[onclick="clearAll()"]');if(clrBtn)clrBtn.style.display=hasClear?'':'none';
+  const etbBtn=document.getElementById('etb');if(etbBtn)etbBtn.style.display=hasET?'':'none';
+  const pbBtn=document.getElementById('pb');if(pbBtn)pbBtn.style.display=hasPause?'':'none';
   if(curMat!==null&&!mats.includes(curMat)&&curMat!==ERASER)curMat=mats[0]||SAND;
 }
+
 </script>
 </body>
 </html>
