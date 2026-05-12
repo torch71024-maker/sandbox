@@ -66,45 +66,70 @@ html,body{height:100%;overflow:hidden;background:#0d0d1a;font-family:'Nunito',sa
     <button class="sb" onclick="openSand()">
       <div style="display:flex;align-items:center;gap:12px"><div class="si">⏳</div><div class="sl">Falling Sand</div></div>
       <div class="sd">
-        <b style="color:#ffd700">🟡 Sand</b> — Falls and piles. Pushed by water. Glows near heat.<br>
-        <b style="color:#80b4ff">💧 Water</b> — Flows, fills, extinguishes fire, pushes sand.<br>
-        <b style="color:#ff7040">🔥 Fire</b> — Spreads to wood, oil &amp; plants. Put out by water.<br>
-        <b style="color:#aaa">🪨 Stone</b> — Solid wall. Dissolved by acid.<br>
-        <b style="color:#c07840">🪵 Wood</b> — Solid. Burns.<br>
-        <b style="color:#c8a840">🫙 Oil</b> — Flows, floats on water. Flammable.<br>
-        <b style="color:#60ff40">🟢 Acid</b> — Dissolves nearly everything, including itself.<br>
-        <b style="color:#b0c8ff">❄️ Snow</b> — Falls like sand. Melts near heat into water.<br>
-        <b style="color:#ff6020">🌋 Lava</b> — Flows, ignites things, cools to dark rubble.<br>
-        <b style="color:#c0d0e8">💨 Steam</b> — Rises to top, clumps into clouds, rains (30%).<br>
-        <b style="color:#40c060">🌿 Plant</b> — Grows upward. 3× faster near water.<br>
-        <b style="color:#aaa">⚙️ Metal</b> — Solid. Acid-immune. Rusts orange near water.<br>
+        <b style="color:#ffd700">🟡 Sand</b> — Falls, piles, glows near heat, melts to glass.<br>
+        <b style="color:#80b4ff">💧 Water</b> — Flows, fills, extinguishes fire. Salt dissolves in it, turning it lighter blue.<br>
+        <b style="color:#ff7040">🔥 Fire</b> — Spreads to wood, oil, wax, chalk &amp; plants. Put out by water.<br>
+        <b style="color:#aaa">🪨 Stone</b> — Solid. Dissolved by acid.<br>
+        <b style="color:#c07840">🪵 Wood</b> — Solid, burns. Trees grow from it.<br>
+        <b style="color:#c8a840">🫙 Oil</b> — Flows, floats on water. Very flammable.<br>
+        <b style="color:#60ff40">🟢 Acid</b> — Dissolves nearly everything including metal.<br>
+        <b style="color:#b0c8ff">❄️ Snow</b> — Falls like sand. Melts near heat. Dissolved rapidly by salt.<br>
+        <b style="color:#ff6020">🌋 Lava</b> — Flows, ignites, cools to rubble. Meets water → obsidian crust.<br>
+        <b style="color:#c0d0e8">💨 Steam</b> — Rises, clumps into clouds, rains back down (30% chance).<br>
+        <b style="color:#40c060">🌿 Plant</b> — Grows upward, 3× faster near water. Burns.<br>
+        <b style="color:#aaa">⚙️ Metal</b> — Solid, acid-immune, rusts orange near water.<br>
         <b style="color:#4deeea">🔮 Crystal</b> — Spreads to sand &amp; stone. Shatters in heat.<br>
-        <b style="color:#cc44ff">🟣 Antigravity</b> — Permanent field. Lifts everything above it in a cone. Water kills it.<br>
-        <b style="color:#80ff00">✨ Phosphorus</b> — Glows green. Instantly ignites on any water contact.<br>
+        <b style="color:#cc44ff">🟣 Antigravity</b> — Lifts everything above it. Water kills it.<br>
+        <b style="color:#80ff00">✨ Phosphorus</b> — Ignites explosively on water contact.<br>
+        <b style="color:#e8b040">🍯 Honey</b> — Flows like water but 6× slower. Flammable.<br>
+        <b style="color:#e8d8a0">🕯️ Wax</b> — Solid. Melts fast near any heat, flows slowly, solidifies when cooled.<br>
+        <b style="color:#ff4400">🔴 Magma</b> — Permanent lava — never cools. Converts to obsidian after ~30s.<br>
+        <b style="color:#ddd">🧂 Salt</b> — Falls like sand. Dissolves in water (lightens it). Melts snow rapidly.<br>
+        <b style="color:#cc44ff">💜 Neon Gas</b> — Rises fast, cycles rainbow colors, tints nearby cells.<br>
+        <b style="color:#aaddff">⚡ Plasma</b> — Ultra-hot rising gas. Ignites everything, expands briefly.<br>
+        <b style="color:#c8a060">🟨 Acid Cloud</b> — Rising toxic gas, dissolves most materials it touches.<br>
+        <b style="color:#a060c0">🍄 Fungus</b> — Spreads over dead worms &amp; wood. Burns, dissolves in acid.<br>
+        <b style="color:#ddbbff">🌈 Bismuth</b> — Rainbow-cycling solid. Melts near magma into slow iridescent liquid.<br>
+        <b style="color:#c8a060">🧽 Sponge</b> — Absorbs water/juice/honey through its whole body. Releases steam when heated.<br>
+        <b style="color:#eee">⬜ Chalk</b> — Solid white. Crumbles to dust on water contact. Burnable.<br>
+        <b style="color:#ccc">⚗️ Thermite</b> — Silvery powder. Completely inert until fire touches it — then burns white-hot straight downward through anything, including obsidian and metal.<br>
         <b style="color:#e8c060">🎨 Paint</b> — Recolors cells without changing properties.<br>
+        <b style="color:#e060e0">🌈 Spill</b> — Like paint but applies random colors per cell.<br>
         <br><b>Items:</b><br>
-        <b>🪱 Worm</b> — Digs through solids, avoids liquids &amp; fire. Dies after 20s.<br>
-        <b>🎆 Firework</b> — Falls like sand. Launches when heated. Explodes in color.<br>
-        <b>🌳 Tree</b> — Wood trunk with fruiting plant canopy. Oranges grow &amp; fall.<br>
+        <b>🪱 Worm</b> — Digs through solids, avoids liquids &amp; fire. Dies after 20s → Dead Organic.<br>
+        <b>🎆 Firework</b> — Falls, launches when heated, explodes in color.<br>
+        <b>🌳 Tree</b> — Massive wood trunk with fruiting canopy. Oranges ripen and fall.<br>
         <b>☁️ Particle Melter</b> — Converts nearby solids to sand, then pulls them in.<br>
-        <b>🌿 Moss</b> — Green overlay on solids. Spreads fast. Burns fast.<br>
-        <b>💥 Gunpowder</b> — 5-second fuse. Massive explosion. Destroys stone &amp; metal.<br>
-        <b>☄️ Meteor</b> — Falls from top burning everything. Huge impact explosion.<br>
-        <b>⚡ Lightning</b> — Yellow flash bolt. Ignites flammables. Fire at strike point.<br>
-        <b>💦 Geyser</b> — Stone vent that erupts water &amp; steam periodically. Grows stronger over time.
+        <b>🌿 Moss</b> — Green overlay. Spreads fast across solids. Burns fast.<br>
+        <b>💥 Gunpowder</b> — 5-second fuse, radius-20 explosion, destroys stone and metal.<br>
+        <b>☄️ Meteor</b> — Blazing impact from above. Massive explosion on landing.<br>
+        <b>⚡ Lightning</b> — Flash bolt, ignites flammables, leaves fire at the strike point.<br>
+        <b>💦 Geyser</b> — Stone vent that erupts water &amp; steam. Grows stronger over time.<br>
+        <b>🧃 Juicer</b> — Pulls all fruit from trees and converts it to juice. Releases after 10s.<br>
+        <b>🪨 Wrecking Ball</b> — Falls from top, crushes everything in its path, lands as a stone sphere.<br>
+        <b>🌱 Seed</b> — Stamps one of 5 random organic structures: tree, crystal spires, coral bush, mushroom, or mossy mound.<br>
+        <b>🧲 Magnet</b> — Pulls metal strongly and sand weakly toward it for 20 seconds.<br>
+        <b>🫧 Bubble</b> — Rising sphere that carries particles upward. Pops at the top, scattering them.<br>
+        <b>🏛️ Architect</b> — Stamps a large random structure: house, arch bridge, crumbling ruins, or castle wall.<br>
+        <b>🪸 Coral Reef</b> — Grows a colorful branching coral structure over 10 seconds. Bleaches white after 1 minute.<br>
+        <b>🔩 Pixel Drill</b> — Bores a single-pixel-wide hole straight to the bottom.<br>
+        <b>🌧️ Rain Cloud</b> — Floating cloud that rains water for 30 seconds.<br>
+        <b>🌋 Volcano</b> — Builds a stone cone that erupts magma, lava, and fire for 30 seconds.<br>
+        <b>🌀 Portal</b> — Place multiple portals; particles entering one teleport to a random other.<br>
+        <b>🕳️ Wormhole</b> — Extracts a circular chunk of the board and deposits it elsewhere after 1.8 seconds.
       </div>
     </button>
     <button class="sb" onclick="openMode('random')" style="background:linear-gradient(135deg,#0a1a4a,#1a3a8a)">
       <div style="display:flex;align-items:center;gap:12px"><div class="si">🎲</div><div class="sl">Random Sandbox</div></div>
-      <div class="sd">Materials, items, and brush sizes change randomly every 1–5 minutes. Even Clear and Pause may vanish!</div>
+      <div class="sd">Every 1–5 minutes: a random subset of materials, items, and brush sizes is available. Clear, Erase Target, and Pause may disappear too. You might get everything or almost nothing.</div>
     </button>
     <button class="sb" onclick="openMode('chaos')" style="background:linear-gradient(135deg,#3a0a0a,#8a1a1a)">
       <div style="display:flex;align-items:center;gap:12px"><div class="si">💀</div><div class="sl">Chaos Sandbox</div></div>
-      <div class="sd">60 seconds of peace — then 10 seconds of random chaos. 70 disaster types. Repeat forever.</div>
+      <div class="sd">60 seconds of peace, then 10 seconds of a random disaster — lava floods, crystal invasions, matter scrambles, neon storms, giant waves, and 65 more. Repeat until the sandbox is unrecognisable.</div>
     </button>
     <button class="sb" onclick="openMode('tasks')" style="background:linear-gradient(135deg,#0a2a0a,#1a5a1a)">
       <div style="display:flex;align-items:center;gap:12px"><div class="si">📋</div><div class="sl">Sandbox Tasks</div></div>
-      <div class="sd">5 random tasks. Start with Sand, Water, Worms. Complete tasks to unlock more materials.</div>
+      <div class="sd">5 active tasks at a time. Start with only Sand, Water, and Worms. Complete tasks to unlock Fire, Stone, Wood, Lava, Honey, Crystal, and eventually Meteors, Juicers, and more. Unlock requirement doubles every time.</div>
     </button>
   </div>
 </div>
@@ -121,7 +146,6 @@ html,body{height:100%;overflow:hidden;background:#0d0d1a;font-family:'Nunito',sa
   <div class="cw" id="cw"><canvas id="c"></canvas></div>
   <div class="ctrl">
     <div class="rl">Materials</div><div class="mr" id="mr"></div>
-    <div class="mr" id="mr2"></div>
     <div id="ppr" class="hidden">
       <span style="font-size:10px;color:#aaa;font-weight:800">Color:</span>
       <input type="color" id="pcl" value="#ff4444">
@@ -148,39 +172,43 @@ html,body{height:100%;overflow:hidden;background:#0d0d1a;font-family:'Nunito',sa
 const EMPTY=0,SAND=1,WATER=2,FIRE=3,STONE=4,WOOD=5,OIL=6,ACID=7,SNOW=8,
       LAVA=9,SMOKE=10,STEAM=11,COOLED=12,PLANT=13,METAL=15,
       FRUIT=17,ASH=18,FIREWORK=19,WORM_CELL=21,DEAD_ORG=23,
-      GUNPOWDER=25,CRYSTAL=28,ANTIGRAVITY=29,PHOSPHORUS=30,JUICE=31,GLASS=32,HONEY=33,OBSIDIAN=34,FUNGUS=35,WAX=36,MAGMA=37,NEON_GAS=38,SALT=39,PLASMA=40,ACID_CLOUD=42,ERASER=99,PAINT_MODE=98,SPILL_MODE=97;
+      GUNPOWDER=25,CRYSTAL=28,ANTIGRAVITY=29,PHOSPHORUS=30,JUICE=31,GLASS=32,HONEY=33,OBSIDIAN=34,FUNGUS=35,WAX=36,MAGMA=37,NEON_GAS=38,SALT=39,PLASMA=40,ACID_CLOUD=42,ERASER=99,PAINT_MODE=98,SPILL_MODE=97,BISMUTH=43,SPONGE=44,DRY_ICE=45,CHALK=46,THERMITE=47;
 const CLOUD_ROWS=8;
 const SPARK_COLS=[[255,60,60],[60,200,255],[80,255,60],[255,240,40],[255,80,220],[60,180,255],[255,160,30]];
 
 const MAT_DEFS=[
-  {t:SAND,        l:'Sand',        i:'🟡',bg:'#8B6914'},
-  {t:WATER,       l:'Water',       i:'💧',bg:'#1a4a9a'},
-  {t:FIRE,        l:'Fire',        i:'🔥',bg:'#8B1a00'},
-  {t:STONE,       l:'Stone',       i:'🪨',bg:'#444'},
-  {t:WOOD,        l:'Wood',        i:'🪵',bg:'#4a2a08'},
-  {t:OIL,         l:'Oil',         i:'🫙',bg:'#5a4010'},
-  {t:ACID,        l:'Acid',        i:'🟢',bg:'#1a6a00'},
-  {t:SNOW,        l:'Snow',        i:'❄️',bg:'#4a5a8a'},
-  {t:LAVA,        l:'Lava',        i:'🌋',bg:'#8B1800'},
-  {t:STEAM,       l:'Steam',       i:'💨',bg:'#384868'},
-  {t:PLANT,       l:'Plant',       i:'🌿',bg:'#0a4a1a'},
-  {t:METAL,       l:'Metal',       i:'⚙️',bg:'#303040'},
-  {t:CRYSTAL,     l:'Crystal',     i:'🔮',bg:'#0a3060'},
+  {t:SAND,       l:'Sand',       i:'🟡',bg:'#8B6914'},
+  {t:WATER,      l:'Water',      i:'💧',bg:'#1a4a9a'},
+  {t:FIRE,       l:'Fire',       i:'🔥',bg:'#8B1a00'},
+  {t:STONE,      l:'Stone',      i:'🪨',bg:'#444'},
+  {t:WOOD,       l:'Wood',       i:'🪵',bg:'#4a2a08'},
+  {t:OIL,        l:'Oil',        i:'🫙',bg:'#5a4010'},
+  {t:ACID,       l:'Acid',       i:'🟢',bg:'#1a6a00'},
+  {t:SNOW,       l:'Snow',       i:'❄️',bg:'#4a5a8a'},
+  {t:LAVA,       l:'Lava',       i:'🌋',bg:'#8B1800'},
+  {t:STEAM,      l:'Steam',      i:'💨',bg:'#384868'},
+  {t:PLANT,      l:'Plant',      i:'🌿',bg:'#0a4a1a'},
+  {t:METAL,      l:'Metal',      i:'⚙️',bg:'#303040'},
+  {t:CRYSTAL,    l:'Crystal',    i:'🔮',bg:'#0a3060'},
+  {t:ANTIGRAVITY,l:'Antigravity',i:'🟣',bg:'#200040'},
+  {t:PHOSPHORUS, l:'Phosphorus', i:'✨',bg:'#1a3a00'},
 ];
 const MAT_DEFS_2=[
-  {t:ANTIGRAVITY, l:'Antigravity', i:'🟣',bg:'#200040'},
-  {t:PHOSPHORUS,  l:'Phosphorus',  i:'✨',bg:'#1a3a00'},
-  {t:HONEY,       l:'Honey',       i:'🍯',bg:'#4a2800'},
-  {t:WAX,         l:'Wax',         i:'🕯️',bg:'#3a3020'},
-  {t:MAGMA,       l:'Magma',       i:'🔴',bg:'#5a0000'},
-  {t:SALT,        l:'Salt',        i:'🧂',bg:'#303038'},
-  {t:NEON_GAS,    l:'Neon Gas',    i:'💜',bg:'#1a003a'},
-  {t:PLASMA,      l:'Plasma',      i:'⚡',bg:'#002040'},
-  {t:ACID_CLOUD,  l:'Acid Cloud',  i:'🟨',bg:'#2a2a00'},
-  {t:FUNGUS,      l:'Fungus',      i:'🍄',bg:'#2a0a3a'},
-  {t:PAINT_MODE,  l:'Paint',       i:'🎨',bg:'#6a1040'},
-  {t:SPILL_MODE,  l:'Spill',       i:'🌈',bg:'#4a0a4a'},
-  {t:ERASER,      l:'Erase',       i:'🔲',bg:'#1a1a1a'},
+  {t:HONEY,      l:'Honey',      i:'🍯',bg:'#4a2800'},
+  {t:WAX,        l:'Wax',        i:'🕯️',bg:'#3a3020'},
+  {t:MAGMA,      l:'Magma',      i:'🔴',bg:'#5a0000'},
+  {t:SALT,       l:'Salt',       i:'🧂',bg:'#303038'},
+  {t:NEON_GAS,   l:'Neon Gas',   i:'💜',bg:'#1a003a'},
+  {t:PLASMA,     l:'Plasma',     i:'⚡',bg:'#002040'},
+  {t:ACID_CLOUD, l:'Acid Cloud', i:'🟨',bg:'#2a2a00'},
+  {t:FUNGUS,     l:'Fungus',     i:'🍄',bg:'#2a0a3a'},
+  {t:BISMUTH,    l:'Bismuth',    i:'🌈',bg:'#1a1a3a'},
+  {t:SPONGE,     l:'Sponge',     i:'🧽',bg:'#5a3a00'},
+  {t:CHALK,      l:'Chalk',      i:'⬜',bg:'#3a3a3a'},
+  {t:THERMITE,   l:'Thermite',   i:'⚗️',bg:'#2a2a20'},
+  {t:PAINT_MODE, l:'Paint',      i:'🎨',bg:'#6a1040'},
+  {t:SPILL_MODE, l:'Spill',      i:'🌈',bg:'#4a0a4a'},
+  {t:ERASER,     l:'Erase',      i:'🔲',bg:'#1a1a1a'},
 ];
 const ITEM_DEFS=[
   {id:'worm',      l:'Worm',           i:'🪱',bg:'#3a2a0a'},
@@ -197,6 +225,13 @@ const ITEM_DEFS=[
   {id:'seed',      l:'Seed',           i:'🌱',bg:'#0a2a00'},
   {id:'magnet',    l:'Magnet',         i:'🧲',bg:'#2a0a0a'},
   {id:'bubble',    l:'Bubble',         i:'🫧',bg:'#001a2a'},
+  {id:'architect',  l:'Architect',      i:'🏛️',bg:'#2a1a00'},
+  {id:'coralreef',  l:'Coral Reef',     i:'🪸',bg:'#3a0a1a'},
+  {id:'pixeldrill', l:'Pixel Drill',    i:'🔩',bg:'#1a1a0a'},
+  {id:'raincloud',  l:'Rain Cloud',     i:'🌧️',bg:'#1a2a3a'},
+  {id:'volcano',    l:'Volcano',        i:'🌋',bg:'#3a0a00'},
+  {id:'portal',     l:'Portal',         i:'🌀',bg:'#0a003a'},
+  {id:'wormhole',   l:'Wormhole',       i:'🕳️',bg:'#0a000a'},
 ];
 
 // ══ COLORS ══
@@ -237,6 +272,10 @@ const COLORS={
   [SALT]:()=>pack(rnd(210,240),rnd(210,235),rnd(215,240)),
   [PLASMA]:()=>pack(rnd(180,255),rnd(180,255),255,rnd(160,230)),
   [ACID_CLOUD]:()=>pack(rnd(100,170),rnd(200,255),0,rnd(120,180)),
+  [BISMUTH]:()=>pack(rnd(100,200),rnd(80,180),rnd(150,240)),
+  [SPONGE]:()=>pack(rnd(160,190),rnd(130,160),rnd(60,90)),
+  [CHALK]:()=>pack(rnd(238,255),rnd(235,252),rnd(232,248)),
+  [THERMITE]:()=>pack(rnd(175,205),rnd(175,205),rnd(175,208)),
   [PHOSPHORUS]:  ()=>pack(rnd(50,90),rnd(220,255),0),
 };
 
@@ -247,7 +286,7 @@ let running=false,paused=false,tickCount=0;
 let lastFpsT=Date.now(),fpsCount=0;
 let curMat=SAND,curItem=null,brushSize=1;
 let drawing=false,etMode=false,paintColor=pack(255,68,68);
-let worms=[],flyingFW=[],fwParticles=[],pmelters=[],meteors=[],lbolts=[],geysers=[],juicer=null,wreckingBalls=[],magnets=[],bubbles=[];
+let worms=[],flyingFW=[],fwParticles=[],pmelters=[],meteors=[],lbolts=[],geysers=[],juicer=null,wreckingBalls=[],magnets=[],bubbles=[],drills=[],rainclouds=[],volcanos=[],portals=[],coralReefs=[];let shakeAmt=0;
 let nextEid=0;
 
 // ══ STARS ══
@@ -272,20 +311,12 @@ function buildUI(){
   const etbBtn=document.getElementById('etb');if(etbBtn)etbBtn.style.display='';
   const pbBtn=document.getElementById('pb');if(pbBtn)pbBtn.style.display='';
   const mr=document.getElementById('mr');if(!mr)return;mr.innerHTML='';
-  const mr2=document.getElementById('mr2');if(mr2)mr2.innerHTML='';
-  function _mkb(m,row){const b=document.createElement('button');b.className='mb'+(m.t===curMat?' on':'');b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;b.onclick=()=>{if(etMode){doET(m.t);return;}curMat=m.t;curItem=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.toggle('hidden',m.t!==PAINT_MODE&&m.t!==SPILL_MODE);};row.appendChild(b);}
-  MAT_DEFS.forEach(m=>_mkb(m,mr));
-  if(mr2)MAT_DEFS_2.forEach(m=>_mkb(m,mr2));
-  const ir=document.getElementById('ir');ir.innerHTML='';
-  ITEM_DEFS.forEach(m=>{
-    const b=document.createElement('button');b.className='ib';b.dataset.id=m.id;b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;
-    b.onclick=()=>{if(etMode){doETItem(m.id);return;}curItem=m.id;curMat=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.add('hidden');};
-    ir.appendChild(b);
-  });
+  [...MAT_DEFS,...MAT_DEFS_2].forEach(m=>{const b=document.createElement('button');b.className='mb'+(m.t===curMat?' on':'');b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;b.onclick=()=>{if(etMode){doET(m.t);return;}curMat=m.t;curItem=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.toggle('hidden',m.t!==PAINT_MODE&&m.t!==SPILL_MODE);};mr.appendChild(b);});
+  const ir=document.getElementById('ir');if(ir){ir.innerHTML='';ITEM_DEFS.forEach(m=>{const b=document.createElement('button');b.className='ib';b.dataset.id=m.id;b.style.background=m.bg;b.innerHTML=`${m.i} ${m.l}`;b.onclick=()=>{if(etMode){doETItem(m.id);return;}curItem=m.id;curMat=null;document.querySelectorAll('.mb,.ib').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('ppr').classList.add('hidden');};ir.appendChild(b);});}
   document.getElementById('pcl').addEventListener('input',e=>{const h=e.target.value;paintColor=pack(parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16));});
 }
 function setBrush(s){brushSize=s;document.querySelectorAll('.bb2').forEach(b=>b.classList.toggle('on',+b.dataset.sz===s));}
-function clearAll(){types.fill(0);cellColors.fill(0);extra.fill(0);mossLayer.fill(0);worms=[];flyingFW=[];fwParticles=[];pmelters=[];meteors=[];lbolts=[];geysers=[];juicer=null;wreckingBalls=[];magnets=[];bubbles=[];}
+function clearAll(){types.fill(0);cellColors.fill(0);extra.fill(0);mossLayer.fill(0);worms=[];flyingFW=[];fwParticles=[];pmelters=[];meteors=[];lbolts=[];geysers=[];juicer=null;wreckingBalls=[];magnets=[];bubbles=[];drills=[];rainclouds=[];volcanos=[];portals=[];coralReefs=[];shakeAmt=0;}
 function togglePause(){paused=!paused;document.getElementById('pb').textContent=paused?'▶ Play':'⏸ Pause';}
 function toggleET(){etMode=!etMode;const b=document.getElementById('etb');b.classList.toggle('amd',etMode);b.textContent=etMode?'🎯 Click...':'🎯 Erase Target';document.querySelectorAll('.mb,.ib').forEach(b2=>b2.classList.toggle('etm',etMode));}
 function doneET(){etMode=false;document.getElementById('etb').classList.remove('amd');document.getElementById('etb').textContent='🎯 Erase Target';document.querySelectorAll('.mb,.ib').forEach(b=>b.classList.remove('etm'));}
@@ -302,6 +333,10 @@ function doETItem(id){
   if(id==='seed'){}
   if(id==='magnet'){magnets=[];}
   if(id==='bubble'){bubbles=[];}
+  if(id==='pixeldrill'){drills=[];}
+  if(id==='raincloud'){rainclouds=[];}
+  if(id==='volcano'){volcanos=[];}
+  if(id==='portal'){portals=[];}
   if(id==='geyser'){geysers=[];for(let ig=0;ig<types.length;ig++)if(extra[ig]===200){types[ig]=0;cellColors[ig]=0;extra[ig]=0;}}
   if(id==='tree'){for(let i=0;i<types.length;i++)if(types[i]===FRUIT){types[i]=0;cellColors[i]=0;extra[i]=0;}}
   doneET();
@@ -338,7 +373,7 @@ function inB(x,y){return x>=0&&x<cols&&y>=0&&y<rows;}
 function T(x,y){return inB(x,y)?types[y*cols+x]:STONE;}
 function isEmpty(x,y){return T(x,y)===EMPTY;}
 function isLiquid(x,y){const t=T(x,y);return t===WATER||t===ACID||t===OIL;}
-function isBurnable(x,y){const t=T(x,y);return t===WOOD||t===OIL||t===PLANT||t===SNOW;}
+function isBurnable(x,y){const t=T(x,y);return t===WOOD||t===OIL||t===PLANT||t===SNOW||t===CHALK||t===WAX||t===HONEY||t===FUNGUS;}
 function isHot(x,y){const t=T(x,y);return t===FIRE||t===LAVA||t===MAGMA||t===PLASMA;}
 function isSolid(x,y){const t=T(x,y);return t===STONE||t===WOOD||t===METAL||t===SAND||t===COOLED||t===PLANT||t===DEAD_ORG||t===FIREWORK||t===GUNPOWDER||t===CRYSTAL;}
 function mv(x,y,nx,ny){const i=y*cols+x,ni=ny*cols+nx;types[ni]=types[i];cellColors[ni]=cellColors[i];extra[ni]=extra[i];mossLayer[ni]=mossLayer[i];types[i]=0;cellColors[i]=0;extra[i]=0;mossLayer[i]=0;updated[ni]=1;}
@@ -366,6 +401,13 @@ function placeItem(id,x,y){
   else if(id==='seed')placeSeed(x,y);
   else if(id==='magnet')magnets.push({id:nextEid++,x,y,age:0});
   else if(id==='bubble')bubbles.push({id:nextEid++,x,y,r:12,age:0,alive:true});
+  else if(id==='architect')placeArchitect(x,y);
+  else if(id==='coralreef')coralReefs.push({id:nextEid++,x,y,age:0,seeds:[{x,y,dir:-Math.PI/2,len:0,maxLen:rnd(18,30)}],cells:[]});
+  else if(id==='pixeldrill')drills.push({id:nextEid++,x,y:0});
+  else if(id==='raincloud')rainclouds.push({id:nextEid++,x,y:rnd(4,9),w:rnd(18,26),age:0});
+  else if(id==='volcano')placeVolcano(x,y);
+  else if(id==='portal')portals.push({id:nextEid++,x,y,col:pack(rnd(80,255),rnd(0,120),rnd(200,255)),age:0});
+  else if(id==='wormhole')placeWormhole(x,y);
 }
 
 // ══ TREE ══
@@ -518,7 +560,7 @@ function updateGeysers(){
 // ══ GAME LOOP ══
 function gameLoop(){
   requestAnimationFrame(gameLoop);
-  if(!paused){updateSim();updateWorms();updateFireworks();updatePMelters();updateMoss();updateMeteors();updateGeysers();updateJuicer();updateWreckingBalls();updateMagnets();updateBubbles();}tickRSB();tickChaos();tickTasks();
+  if(!paused){updateSim();updateWorms();updateFireworks();updatePMelters();updateMoss();updateMeteors();updateGeysers();updateJuicer();updateWreckingBalls();updateMagnets();updateBubbles();updateDrills();updateRainclouds();updateVolcanos();updatePortals();updateCoralReefs();if(shakeAmt>0){shakeAmt=Math.max(0,shakeAmt-0.06);for(let _n=0;_n<25;_n++){const _i=Math.floor(Math.random()*types.length);const _x=_i%cols,_y=Math.floor(_i/cols);if(types[_i]===SAND||types[_i]===SNOW||types[_i]===SALT||types[_i]===CHALK){const _nx=_x+rnd(-3,3),_ny=_y+rnd(-2,2);if(inB(_nx,_ny)&&isEmpty(_nx,_ny))mv(_x,_y,_nx,_ny);}}}}tickRSB();tickChaos();tickTasks();
   render();
   fpsCount++;const now=Date.now();if(now-lastFpsT>=1000){document.getElementById('fp').textContent=fpsCount+' fps';fpsCount=0;lastFpsT=now;}tickCount++;
 }
@@ -549,6 +591,10 @@ function updateSim(){
       case PLASMA:      updPlasma(x,y,i);break;
       case ACID_CLOUD:  updAcidCloud(x,y,i);break;
       case FUNGUS:      updFungus(x,y,i);break;
+      case BISMUTH:     updBismuth(x,y,i);break;
+      case SPONGE:      updSponge(x,y,i);break;
+      case CHALK:       updChalk(x,y,i);break;
+      case THERMITE:    updThermite(x,y,i);break;
     }
   }
 }
@@ -650,7 +696,7 @@ function updJuice(x,y,i){if(juicer&&!juicer.released)return;if(isEmpty(x,y+1)){m
 function placeJuicer(x,y){if(juicer)return;juicer={x,y,age:0,released:false};let p=0;for(let i=0;i<types.length;i++){if(types[i]===FRUIT){types[i]=0;cellColors[i]=0;extra[i]=0;const jy=y-p;if(inB(x,jy)){types[jy*cols+x]=JUICE;cellColors[jy*cols+x]=COLORS[JUICE]();extra[jy*cols+x]=1;}p++;}}}
 function updateJuicer(){if(!juicer)return;juicer.age++;if(juicer.age>=600){juicer.released=true;juicer=null;}}
 function updHoney(x,y,i){if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy))&&Math.random()<0.002){set(x,y,FIRE,COLORS[FIRE](),rnd(40,80));return;}if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.03){clr(x,y);return;}if(tickCount%6!==0)return;if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}if(T(x,y+1)===OIL){sw(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}if(isEmpty(x+d,y)){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)){mv(x,y,x-d,y);}}
-function updWax(x,y,i){const liquid=extra[i]>0,nearHeat=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy));if(!liquid){cellColors[i]=pack(rnd(232,248),rnd(218,232),rnd(170,196));if(nearHeat&&Math.random()<0.06)extra[i]=220;if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.04)clr(x,y);return;}const warmth=extra[i]/220;cellColors[i]=pack(Math.floor(240-warmth*20),Math.floor(200-warmth*30),Math.floor(120+warmth*50));if(!nearHeat)extra[i]=Math.max(0,extra[i]-1);else extra[i]=Math.min(220,extra[i]+1);if(extra[i]<=0)return;if(tickCount%6!==0)return;if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x+d,y)&&Math.random()<0.3){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.3){mv(x,y,x-d,y);}}
+function updWax(x,y,i){const liquid=extra[i]>0,nearHeat=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy));if(!liquid){cellColors[i]=pack(rnd(232,248),rnd(218,232),rnd(170,196));if(nearHeat&&Math.random()<0.4)extra[i]=220;if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>T(x+dx,y+dy)===ACID)&&Math.random()<0.04)clr(x,y);return;}const warmth=extra[i]/220;cellColors[i]=pack(Math.floor(240-warmth*20),Math.floor(200-warmth*30),Math.floor(120+warmth*50));if(!nearHeat)extra[i]=Math.max(0,extra[i]-1);else extra[i]=Math.min(220,extra[i]+3);if(extra[i]<=0)return;if(tickCount%6!==0)return;if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x+d,y)&&Math.random()<0.3){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.3){mv(x,y,x-d,y);}}
 function updMagma(x,y,i){if(tickCount%7===0){extra[i]--;if(extra[i]<=0){set(x,y,OBSIDIAN,COLORS[OBSIDIAN]());return;}}const pulse=(Math.sin(tickCount*0.08)*0.25+0.75);cellColors[i]=pack(255,Math.floor(pulse*140),0);if(isEmpty(x,y+1)&&Math.random()<0.35){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)&&Math.random()<0.18){mv(x,y,x+d,y+1);return;}if(isEmpty(x+d,y)&&Math.random()<0.12){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.12){mv(x,y,x-d,y);return;}[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{if(isBurnable(x+dx,y+dy)&&Math.random()<0.06)set(x+dx,y+dy,FIRE,COLORS[FIRE](),rnd(70,130));if(T(x+dx,y+dy)===WATER&&Math.random()<0.12)set(x+dx,y+dy,STEAM,COLORS[STEAM](),1);});}
 function updNeonGas(x,y,i){extra[i]--;if(extra[i]<=0){clr(x,y);return;}const hue=(tickCount*3+x*7+y*5)%360,r=Math.floor(128+127*Math.sin(hue*Math.PI/180)),g=Math.floor(128+127*Math.sin((hue+120)*Math.PI/180)),b2=Math.floor(128+127*Math.sin((hue+240)*Math.PI/180));cellColors[i]=pack(r,g,b2,clamp(Math.floor(extra[i]/60*200),60,200));if(Math.random()<0.08){const ni=(y+rnd(-1,1))*cols+(x+rnd(-1,1));if(ni>=0&&ni<types.length&&types[ni]!==EMPTY&&types[ni]!==NEON_GAS)cellColors[ni]=pack(r,g,b2,255);}if(isEmpty(x,y-1)){mv(x,y,x,y-1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y-1)){mv(x,y,x+d,y-1);return;}if(isEmpty(x+d,y)&&Math.random()<0.5){mv(x,y,x+d,y);return;}if(isEmpty(x-d,y)&&Math.random()<0.5){mv(x,y,x-d,y);}}
 function updSalt(x,y,i){if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}const d=Math.random()<0.5?1:-1;if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{const nx=x+dx,ny=y+dy,ni=ny*cols+nx;if(!inB(nx,ny))return;const nt=types[ni];if(nt===WATER&&Math.random()<0.1){clr(x,y);extra[ni]=Math.min(255,extra[ni]+35);return;}if(nt===SNOW&&Math.random()<0.3){types[ni]=WATER;cellColors[ni]=COLORS[WATER]();extra[ni]=60;if(Math.random()<0.4)clr(x,y);}if(nt===ACID&&Math.random()<0.12)clr(x,y);});}
@@ -663,6 +709,212 @@ function placeSeed(x,y){const type=rnd(0,4);if(type===0){const h=rnd(8,16);for(l
 function updateMagnets(){magnets=magnets.filter(m=>{m.age++;if(m.age>1200)return false;const R=20;for(let dy=-R;dy<=R;dy++)for(let dx=-R;dx<=R;dx++){const dist=Math.sqrt(dx*dx+dy*dy);if(dist<1||dist>R)continue;const cx=m.x+dx,cy=m.y+dy;if(!inB(cx,cy))continue;const ct=types[cy*cols+cx];if(ct===EMPTY)continue;const strength=ct===METAL?0.12:(ct===SAND||ct===SNOW||ct===COOLED)?0.03:0;if(strength>0&&Math.random()<strength*(1-dist/R)){const nx=cx+Math.sign(-dx),ny=cy+Math.sign(-dy);if(inB(nx,ny)&&isEmpty(nx,ny))mv(cx,cy,nx,ny);}}return true;});}
 
 function updateBubbles(){bubbles=bubbles.filter(b=>{if(!b.alive)return false;b.age++;if(tickCount%2===0)b.y--;if(b.y-b.r<1||b.age>700){for(let dy=-b.r;dy<=b.r;dy++)for(let dx=-b.r;dx<=b.r;dx++){if(dx*dx+dy*dy>b.r*b.r)continue;const cx=b.x+dx,cy=b.y+dy;if(!inB(cx,cy))continue;if(types[cy*cols+cx]!==EMPTY&&Math.random()<0.6){const nx=cx+rnd(-4,4),ny=cy-rnd(1,5);if(inB(nx,ny)&&isEmpty(nx,ny))mv(cx,cy,nx,ny);}}b.alive=false;return false;}for(let dy=-b.r+2;dy<=b.r-2;dy++)for(let dx=-b.r+2;dx<=b.r-2;dx++){if(dx*dx+dy*dy>b.r*b.r)continue;const cx=b.x+dx,cy=b.y+dy;if(!inB(cx,cy))continue;if(types[cy*cols+cx]!==EMPTY&&inB(cx,cy-1)&&isEmpty(cx,cy-1)&&Math.random()<0.22)mv(cx,cy,cx,cy-1);}return true;});}
+
+// ── BISMUTH — rainbow iridescent, melts near magma ──
+function updBismuth(x,y,i){
+  const liquid=extra[i]>0;
+  const nearMagma=[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>{const t=T(x+dx,y+dy);return t===MAGMA||t===LAVA;});
+  const hue=(tickCount*2+x*11+y*7)%360;
+  const r=Math.floor(128+108*Math.sin(hue*Math.PI/180));
+  const g=Math.floor(128+108*Math.sin((hue+120)*Math.PI/180));
+  const b2=Math.floor(128+108*Math.sin((hue+240)*Math.PI/180));
+  if(!liquid){cellColors[i]=pack(r,g,b2);if(nearMagma&&Math.random()<0.04)extra[i]=200;return;}
+  cellColors[i]=pack(r,g,b2,Math.floor(extra[i]/200*210+45));
+  if(!nearMagma)extra[i]=Math.max(0,extra[i]-1);else extra[i]=Math.min(200,extra[i]+1);
+  if(extra[i]<=0)return;
+  if(tickCount%5!==0)return;
+  if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
+  const d=Math.random()<0.5?1:-1;
+  if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
+  if(isEmpty(x+d,y)&&Math.random()<0.35){mv(x,y,x+d,y);return;}
+  if(isEmpty(x-d,y)&&Math.random()<0.35){mv(x,y,x-d,y);}
+}
+// ── SPONGE — absorbs liquids, releases steam when heated ──
+function updSponge(x,y,i){
+  const sat=extra[i];
+  cellColors[i]=pack(Math.floor(175-sat*0.45),Math.floor(140-sat*0.3),Math.floor(75-sat*0.2));
+  [[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{
+    const nt=T(x+dx,y+dy),ni=(y+dy)*cols+(x+dx);
+    if((nt===WATER||nt===JUICE)&&extra[i]<240&&Math.random()<0.15){clr(x+dx,y+dy);extra[i]=Math.min(255,extra[i]+30);}
+    else if(nt===HONEY&&Math.random()<0.05){clr(x+dx,y+dy);extra[i]=Math.min(255,extra[i]+15);}
+    else if(nt===ACID&&Math.random()<0.08){if(Math.random()<0.3)clr(x,y);}
+  });
+  // Spread saturation through connected sponge
+  if(tickCount%3===0){[[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{const ni=(y+dy)*cols+(x+dx);if(!inB(x+dx,y+dy)||types[ni]!==SPONGE)return;const diff=Math.floor((extra[i]-extra[ni])/2);if(diff>0){extra[ni]=Math.min(255,extra[ni]+diff);extra[i]=Math.max(0,extra[i]-diff);}});}
+  if(extra[i]>0&&[[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy))&&Math.random()<0.08){
+    const rx=x+rnd(-1,1),ry=y-1;if(inB(rx,ry)&&isEmpty(rx,ry))set(rx,ry,STEAM,COLORS[STEAM](),1);
+    extra[i]=Math.max(0,extra[i]-5);
+  }
+}
+// ── CHALK — solid white, crumbles into dust when wet ──
+function updChalk(x,y,i){
+  cellColors[i]=pack(rnd(240,255),rnd(238,252),rnd(235,250));
+  [[0,1],[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{
+    const nt=T(x+dx,y+dy);
+    if(nt===WATER&&Math.random()<0.07)set(x,y,SMOKE,pack(238,238,238,140),rnd(18,35));
+    if(nt===ACID&&Math.random()<0.05)clr(x,y);
+  });
+  if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy))&&Math.random()<0.03)
+    set(x,y,FIRE,COLORS[FIRE](),rnd(15,35));
+}
+// ── THERMITE — inert powder, burns downward through anything when ignited ──
+function updThermite(x,y,i){
+  if(extra[i]===0){
+    cellColors[i]=pack(rnd(175,205),rnd(175,205),rnd(175,208));
+    if(isEmpty(x,y+1)){mv(x,y,x,y+1);return;}
+    const d=Math.random()<0.5?1:-1;
+    if(isEmpty(x+d,y+1)){mv(x,y,x+d,y+1);return;}
+    if(isEmpty(x-d,y+1)){mv(x,y,x-d,y+1);return;}
+    if([[0,1],[1,0],[-1,0],[0,-1]].some(([dx,dy])=>isHot(x+dx,y+dy)))extra[i]=255;
+  } else {
+    extra[i]=Math.max(0,extra[i]-1);
+    if(extra[i]<=0){clr(x,y);return;}
+    const t2=extra[i]/255;
+    cellColors[i]=pack(255,Math.floor(220*t2+35),0);
+    if(Math.random()<0.5){const sx=x+rnd(-2,2),sy=y+rnd(-3,-1);if(inB(sx,sy)&&isEmpty(sx,sy))set(sx,sy,FIRE,pack(255,rnd(100,200),0),rnd(8,22));}
+    if(Math.random()<0.25){const sx=x+rnd(-1,1),sy=y-rnd(1,2);if(inB(sx,sy)&&isEmpty(sx,sy))set(sx,sy,SMOKE,pack(70,55,35,160),rnd(12,28));}
+    // Burn downward through anything
+    if(inB(x,y+1)){
+      const bt=T(x,y+1);
+      if(bt===EMPTY){mv(x,y,x,y+1);}
+      else if(bt!==THERMITE){clr(x,y+1);}
+    }
+    // Spread ignition to adjacent thermite
+    [[1,0],[-1,0],[0,-1]].forEach(([dx,dy])=>{const ni=(y+dy)*cols+(x+dx);if(inB(x+dx,y+dy)&&types[ni]===THERMITE&&extra[ni]===0&&Math.random()<0.06)extra[ni]=255;});
+  }
+}
+// ── ENTITY UPDATE FUNCTIONS ──────────────────────────────────────────────────
+function updateDrills(){
+  drills=drills.filter(d=>{
+    d.y+=2;if(d.y>=rows)return false;
+    if(inB(d.x,d.y)&&types[d.y*cols+d.x]!==EMPTY)clr(d.x,d.y);
+    if(inB(d.x,d.y-1)&&types[(d.y-1)*cols+d.x]!==EMPTY)clr(d.x,d.y-1);
+    return true;
+  });
+}
+function updateRainclouds(){
+  rainclouds=rainclouds.filter(rc=>{
+    rc.age++;if(rc.age>1800)return false;
+    if(tickCount%3===0){const rx=clamp(rc.x+rnd(-Math.floor(rc.w/2),Math.floor(rc.w/2)),0,cols-1);for(let sy=rc.y+2;sy<rows;sy++){if(!inB(rx,sy))break;if(isEmpty(rx,sy)){set(rx,sy,WATER,COLORS[WATER]());break;}else if(types[sy*cols+rx]!==EMPTY)break;}}
+    if(tickCount%120===0)rc.x=clamp(rc.x+rnd(-4,4),rc.w/2,cols-rc.w/2);
+    return true;
+  });
+}
+function updateVolcanos(){
+  volcanos=volcanos.filter(v=>v.age<=1800);
+  volcanos.forEach(v=>{
+    v.age++;
+    if(tickCount%45!==0)return;
+    for(let n=0;n<4;n++){
+      const spread=rnd(-4,4);
+      const vy=v.y+rnd(-2,0);
+      if(!inB(v.x+spread,vy)||!isEmpty(v.x+spread,vy))continue;
+      const type2=Math.random()<0.35?MAGMA:Math.random()<0.5?LAVA:FIRE;
+      if(type2===MAGMA)set(v.x+spread,vy,MAGMA,COLORS[MAGMA](),255);
+      else if(type2===LAVA)set(v.x+spread,vy,LAVA,COLORS[LAVA](),rnd(100,200));
+      else set(v.x+spread,vy,FIRE,COLORS[FIRE](),rnd(30,70));
+    }
+  });
+}
+function updatePortals(){
+  if(portals.length<2)return;
+  portals.forEach(p=>{
+    p.age++;
+    if(tickCount%2!==0)return;
+    [[0,-1],[1,0],[-1,0],[0,1]].forEach(([dx,dy])=>{
+      const nx=p.x+dx,ny=p.y+dy;if(!inB(nx,ny)||types[ny*cols+nx]===EMPTY)return;
+      const others=portals.filter(o=>o.id!==p.id);if(!others.length)return;
+      const dest=others[Math.floor(Math.random()*others.length)];
+      const tx=dest.x-dx,ty=dest.y-dy;
+      if(inB(tx,ty)&&isEmpty(tx,ty))mv(nx,ny,tx,ty);
+    });
+  });
+}
+
+
+
+function updateCoralReefs(){
+  coralReefs=coralReefs.filter(cr=>{
+    cr.age++;
+    // Bleach to white at 60 seconds (3600 ticks)
+    if(cr.age===3600){
+      cr.cells.forEach(c=>{if(inB(c.x,c.y)&&types[c.y*cols+c.x]===STONE)cellColors[c.y*cols+c.x]=pack(rnd(228,255),rnd(228,252),rnd(228,252));});
+      return false;
+    }
+    if(cr.age>3600)return false;
+    if(cr.age>600)return true; // grown, just waiting to bleach
+    if(tickCount%5!==0)return true;
+    const newS=[];
+    cr.seeds.forEach(s=>{
+      if(s.len>=s.maxLen)return;s.len++;
+      const nx=Math.round(s.x+Math.cos(s.dir)),ny=Math.round(s.y+Math.sin(s.dir)-0.4);
+      if(!inB(nx,ny))return;
+      if(isEmpty(nx,ny)||T(nx,ny)===WATER){
+        const hue=(nx*13+ny*7+cr.age*4)%360;
+        set(nx,ny,STONE,pack(clamp(Math.floor(128+100*Math.sin(hue*Math.PI/180))+80,80,255),clamp(Math.floor(60+60*Math.sin((hue+120)*Math.PI/180))+40,40,200),clamp(Math.floor(100+100*Math.sin((hue+240)*Math.PI/180))+60,60,240)));
+        if(!cr.cells)cr.cells=[];cr.cells.push({x:nx,y:ny});
+        s.x=nx;s.y=ny;s.dir+=rnd(-3,3)*0.15;
+        if(Math.random()<0.25&&s.len>4)newS.push({x:nx,y:ny,dir:s.dir+Math.PI/3*(Math.random()<0.5?1:-1),len:0,maxLen:Math.floor(s.maxLen*0.6)});
+      }
+    });
+    cr.seeds.push(...newS);return true;
+  });
+}
+// ── ONE-SHOT PLACEMENT FUNCTIONS ─────────────────────────────────────────────
+function placeArchitect(x,y){
+  const type=rnd(0,3);
+  if(type===0){// Large house/tower
+    const h=rnd(45,75),w=rnd(36,55),bx=x-Math.floor(w/2);
+    for(let dy=0;dy<h;dy++)for(let dx=0;dx<=w;dx++){
+      if((dx===0||dx===w||dy===h-1)&&inB(bx+dx,y-dy))set(bx+dx,y-dy,STONE,COLORS[STONE]());
+      else if(dy===Math.floor(h/3)&&inB(bx+dx,y-dy))set(bx+dx,y-dy,WOOD,COLORS[WOOD]());
+      else if(dy===Math.floor(h*2/3)&&inB(bx+dx,y-dy))set(bx+dx,y-dy,WOOD,COLORS[WOOD]());
+    }
+    for(let rx=0;rx<=Math.floor(w/2)+5;rx++){if(inB(bx+rx,y-h-rx))set(bx+rx,y-h-rx,STONE,COLORS[STONE]());if(inB(bx+w-rx,y-h-rx))set(bx+w-rx,y-h-rx,STONE,COLORS[STONE]());}
+  }else if(type===1){// Grand arch bridge
+    const w=rnd(80,130),bx=x-Math.floor(w/2);
+    for(let dx=0;dx<=w;dx++){const ah=Math.floor(38*Math.sin(dx/w*Math.PI));for(let dy=0;dy<=ah;dy++)if(inB(bx+dx,y-dy)&&(dy===0||dy===ah||dx===0||dx===w||dx===1||dx===w-1))set(bx+dx,y-dy,STONE,COLORS[STONE]());}
+    for(let dx=0;dx<=w;dx++)if(inB(bx+dx,y))set(bx+dx,y,WOOD,COLORS[WOOD]());
+    // Support pillars
+    for(let px2=Math.floor(w/4);px2<=Math.floor(w*3/4);px2+=Math.floor(w/4)){for(let dy=0;dy<10;dy++)if(inB(bx+px2,y+dy))set(bx+px2,y+dy,STONE,COLORS[STONE]());}
+  }else if(type===2){// Sprawling ruins
+    for(let n=0;n<rnd(8,14);n++){const px2=x+rnd(-55,55),ph=rnd(12,45),pw=rnd(2,5);for(let dy=0;dy<ph;dy++)for(let dx=0;dx<pw;dx++)if(inB(px2+dx,y-dy)&&(Math.random()<0.88||dy<3))set(px2+dx,y-dy,STONE,COLORS[STONE]());}
+    // Fallen debris
+    for(let n=0;n<rnd(5,10);n++){const px2=x+rnd(-60,60);for(let dx=-rnd(3,8);dx<=rnd(3,8);dx++)if(inB(px2+dx,y))set(px2+dx,y,STONE,COLORS[STONE]());}
+  }else{// Massive castle wall with towers
+    const w=rnd(100,150),bx=x-Math.floor(w/2);
+    for(let dx=0;dx<=w;dx++){const mh=dx%10<6?6:0;for(let dy=0;dy<40+mh;dy++)if(inB(bx+dx,y-dy))set(bx+dx,y-dy,STONE,COLORS[STONE]());}
+    // Corner towers
+    for(const tx of[bx-5,bx+w+1]){for(let dy=-8;dy<52;dy++)for(let dx=-5;dx<=5;dx++)if(dx*dx*0.04+dy*dy*0.0<30&&inB(tx+dx,y-dy))set(tx+dx,y-dy,STONE,COLORS[STONE]());}
+  }
+}
+function placeSnowglobe(x,y){
+  for(let n=0;n<rnd(3,6);n++){const sx=rnd(5,cols-5),sy=rows-rnd(3,8),sr=rnd(3,7);for(let dy=-sr;dy<=sr;dy++)for(let dx=-sr;dx<=sr;dx++)if(dx*dx+dy*dy<=sr*sr&&inB(sx+dx,sy+dy))set(sx+dx,sy+dy,STONE,COLORS[STONE]());}
+  for(let sx=0;sx<cols;sx++)for(let sy=0;sy<rnd(5,18);sy++)if(isEmpty(sx,sy))set(sx,sy,SNOW,COLORS[SNOW]());
+  for(let sx=0;sx<cols;sx++){let sy=0;while(sy<rows&&isEmpty(sx,sy))sy++;if(sy<rows&&sy>0)for(let dy=0;dy<rnd(2,5);dy++)if(isEmpty(sx,sy-1-dy))set(sx,sy-1-dy,SNOW,COLORS[SNOW]());}
+}
+function placeVolcano(x,y){
+  const h=rnd(12,20);
+  for(let dy=0;dy<h;dy++){const w=Math.floor((1-dy/h)*9)+1;for(let dx=-w;dx<=w;dx++)if(inB(x+dx,y-dy))set(x+dx,y-dy,STONE,COLORS[STONE]());}
+  volcanos.push({id:nextEid++,x,y:y-h,age:0});
+}
+function placeRiver(x,y){
+  let cx=0,cy=rnd(Math.floor(rows*0.2),Math.floor(rows*0.75));
+  const w=rnd(3,5);
+  while(cx<cols){
+    for(let dy=-w;dy<=w;dy++){if(!inB(cx,cy+dy))continue;const i2=(cy+dy)*cols+cx;types[i2]=WATER;cellColors[i2]=COLORS[WATER]();extra[i2]=0;}
+    cx++;
+    const wave=Math.sin(cx*0.08)*4+Math.sin(cx*0.17+1.2)*3+Math.sin(cx*0.04+2.5)*5;
+    cy=clamp(cy+Math.round(wave*0.12),w+2,rows-w-3);
+  }
+}
+function placeWormhole(x,y){
+  const r=rnd(8,13),captured=[];
+  for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){if(dx*dx+dy*dy>r*r)continue;const nx=x+dx,ny=y+dy;if(!inB(nx,ny))continue;const i2=ny*cols+nx;if(types[i2]!==EMPTY){captured.push({dx,dy,t:types[i2],c:cellColors[i2],e:extra[i2]});types[i2]=0;cellColors[i2]=0;extra[i2]=0;}}
+  if(!captured.length)return;
+  const tx=rnd(r+5,cols-r-5),ty=rnd(r+5,rows-r-5);
+  setTimeout(()=>{captured.forEach(p=>{const nx=tx+p.dx,ny=ty+p.dy;if(inB(nx,ny)&&isEmpty(nx,ny))set(nx,ny,p.t,p.c,p.e);});},1800);
+}
 // ══ RENDER ══
 function render(){
   imgBuf.fill(0xFF050508);
@@ -680,6 +932,7 @@ function render(){
     for(let dy=0;dy<CELL;dy++){const py=y*CELL+dy;if(py>=cnv.height)continue;const row=py*cnv.width+x*CELL;for(let dx=0;dx<CELL;dx++){const px=row+dx;if(px>=imgBuf.length)continue;const base=imgBuf[px];const br=base&0xff,bg=(base>>8)&0xff,bb=(base>>16)&0xff;imgBuf[px]=pack(Math.floor(mr2*0.5+br*0.5),Math.floor(mg2*0.55+bg*0.45),Math.floor(mb2*0.5+bb*0.5));}}
   }
   ctx.putImageData(imgData,0,0);
+  if(shakeAmt>0)ctx.restore();
 
   // Lightning bolts — glowing yellow flash
   lbolts=lbolts.filter(bolt=>{
@@ -709,10 +962,15 @@ function render(){
   });
 
 
-  bubbles.forEach(b=>{const px=b.x*CELL,py=b.y*CELL,R=b.r*CELL,life=Math.max(0,1-b.age/700);ctx.save();ctx.strokeStyle=`rgba(180,230,255,${(0.8*life).toFixed(2)})`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(px,py,R,0,Math.PI*2);ctx.stroke();ctx.fillStyle=`rgba(100,180,255,${(0.07*life).toFixed(2)})`;ctx.fill();ctx.restore();});
-  magnets.forEach(m=>{const px=m.x*CELL,py=m.y*CELL,life=Math.max(0,1-m.age/1200),R=20*CELL;ctx.save();const g=ctx.createRadialGradient(px,py,CELL,px,py,R);g.addColorStop(0,`rgba(220,60,60,${(0.35*life).toFixed(2)})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,R,0,Math.PI*2);ctx.fill();ctx.restore();});
-  wreckingBalls.forEach(wb=>{if(!wb.alive)return;const px=wb.x*CELL,py=wb.y*CELL,R=wb.r*CELL;ctx.save();const g=ctx.createRadialGradient(px-R*.3,py-R*.3,R*.1,px,py,R);g.addColorStop(0,'rgba(180,120,60,.95)');g.addColorStop(1,'rgba(60,40,20,.9)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,R,0,Math.PI*2);ctx.fill();ctx.restore();});
-  // Meteors
+  // Drills
+  drills.forEach(d=>{const px=d.x*CELL,py=d.y*CELL;ctx.save();ctx.fillStyle='rgba(190,190,190,0.92)';ctx.fillRect(px-CELL*0.5,py-CELL*3,CELL,CELL*3);ctx.fillStyle='rgba(255,200,0,0.95)';ctx.beginPath();ctx.moveTo(px-CELL*0.5,py);ctx.lineTo(px+CELL*0.5,py);ctx.lineTo(px,py+CELL*2.5);ctx.closePath();ctx.fill();ctx.restore();});
+  // Rain clouds
+  rainclouds.forEach(rc=>{const px=rc.x*CELL,py=rc.y*CELL,w=rc.w*CELL,life=Math.max(0,1-rc.age/1800);ctx.save();ctx.fillStyle=`rgba(130,145,168,${(0.8*life).toFixed(2)})`;const puffs=[[0,0,1],[w*.25,-w*.12,0.82],[w*.5,w*.05,0.72],[-w*.25,-w*.08,0.78],[-w*.5,w*.04,0.65]];puffs.forEach(([ox,oy,s])=>{ctx.beginPath();ctx.arc(px+ox,py+oy,w*0.22*s,0,Math.PI*2);ctx.fill();});ctx.restore();});
+  // Portals
+  portals.forEach(p=>{const px=p.x*CELL,py=p.y*CELL,R=CELL*2.5,spin=p.age*0.05;const cr=p.col&0xff,cg=(p.col>>8)&0xff,cb=(p.col>>16)&0xff;ctx.save();ctx.strokeStyle=`rgb(${cr},${cg},${cb})`;ctx.lineWidth=2;ctx.shadowBlur=12;ctx.shadowColor=`rgb(${cr},${cg},${cb})`;ctx.beginPath();ctx.arc(px,py,R,0,Math.PI*2);ctx.stroke();for(let a=0;a<6;a++){const angle=spin+a*Math.PI/3;ctx.beginPath();ctx.arc(px+Math.cos(angle)*R*.5,py+Math.sin(angle)*R*.5,CELL*.4,0,Math.PI*2);ctx.fillStyle=`rgba(${cr},${cg},${cb},0.5)`;ctx.fill();}ctx.restore();});
+    // Volcano overlay
+  volcanos.forEach(v=>{if(tickCount%45<8){const px=v.x*CELL,py=v.y*CELL;ctx.save();ctx.fillStyle='rgba(255,100,0,0.3)';ctx.beginPath();ctx.arc(px,py,CELL*5,0,Math.PI*2);ctx.fill();ctx.restore();}});
+    // Meteors
   meteors.forEach(m=>{
     if(!m.alive)return;const px=m.x*CELL,py=m.y*CELL,R=7*CELL;
     const g=ctx.createRadialGradient(px,py,CELL,px,py,R);g.addColorStop(0,'rgba(255,200,50,0.9)');g.addColorStop(.5,'rgba(255,80,0,0.7)');g.addColorStop(1,'rgba(0,0,0,0)');
